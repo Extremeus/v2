@@ -46,7 +46,7 @@ Begin VB.Form Form1
          PaintManager.HotTracking=   -1  'True
          ItemCount       =   5
          Item(0).Caption =   "Status"
-         Item(0).ControlCount=   29
+         Item(0).ControlCount=   30
          Item(0).Control(0)=   "pHP"
          Item(0).Control(1)=   "pMP"
          Item(0).Control(2)=   "lName"
@@ -76,6 +76,7 @@ Begin VB.Form Form1
          Item(0).Control(26)=   "Picture1"
          Item(0).Control(27)=   "Command1"
          Item(0).Control(28)=   "Command3"
+         Item(0).Control(29)=   "Command9"
          Item(1).Caption =   "Attack"
          Item(1).Tooltip =   "Attack Options"
          Item(1).ControlCount=   13
@@ -103,21 +104,29 @@ Begin VB.Form Form1
          Item(4).Control(0)=   "GroupBox5"
          Item(4).Control(1)=   "GroupBox10"
          Item(4).Control(2)=   "GroupBox11"
+         Begin VB.CommandButton Command9 
+            Caption         =   "Görev Check"
+            Height          =   495
+            Left            =   3960
+            TabIndex        =   215
+            Top             =   2040
+            Width           =   1095
+         End
          Begin VB.CommandButton Command3 
-            Caption         =   "Command3"
-            Height          =   330
+            Caption         =   "Görev VER"
+            Height          =   450
             Left            =   2760
             TabIndex        =   122
             Top             =   2640
             Width           =   1110
          End
          Begin VB.CommandButton Command1 
-            Caption         =   "Command1"
-            Height          =   1695
+            Caption         =   "Görev AL"
+            Height          =   495
             Left            =   2760
             TabIndex        =   103
-            Top             =   960
-            Width           =   3015
+            Top             =   2040
+            Width           =   1095
          End
          Begin XtremeSuiteControls.CheckBox CheckBox8 
             Height          =   255
@@ -3479,15 +3488,36 @@ WriteLong KO_ADR_DLG + KO_OFF_KUTU2, 0
 End If
 End Sub
 
-
-
-
 Private Sub Command1_Click()
-Paket "640643000000" 'Worm Görev AL
+'64 WIZ_QUEST
+
+'04 CHECK FUL FILL
+'05 QUEST DELETE OP CODE
+'06 ACCEPT QUEST OP CODE
+'07 COMPLETE QUEST OP CODE
+
+'43 WORM QUEST DECTOHEX = QUEST_HELPER.tbl sütun 1
+
+'000000 DETAYLAR BÝLÝNMÝYOR
+
+'QUEST_HELPER : 255-0-1-2-3-4
+'4 GÖREV ALMA           /WORM 34
+'3 GÖREV VERME          /WORM 33
+'2                      /
+'1 CHECK FULFILL        /WORM 31
 
 
-Paket "640733000000" 'görev verme ekraný aç /worm
-Paket "55001031333031335F5061747269632E6C7561FF" 'görevi ver /worm
+Paket "640634000000"                        'Worm QUEST ACCEPT
+End Sub
+
+Private Sub Command9_Click()
+'Paket "640431000000"                       'WORM QUEST_CHECK
+End Sub
+
+Private Sub Command3_Click()
+Paket "640742000000"                              'Worm QUEST COMPLETE             'görev verme ekraný aç /worm
+Paket "55001031333031335F5061747269632E6C7561FF"  'Worm COMPLETE NPC_SAY           'görevi ver /worm
+Paket "55001031333031335F5061747269632E6C7561FF"
 End Sub
 
 Private Sub Command11_Click()
@@ -3584,10 +3614,7 @@ Paket "6803" + "D831CA17" + "0100" + Strings.Mid(AlignDWORD(Text14.Text), 1, 8) 
  ' 10K EXP FLASH 6803D831CA170100102700000000
 End Sub
 
-Private Sub Command3_Click()
-On Error Resume Next
-Paket "3104" + Strings.Mid(AlignDWORD(Text1.Text), 1, 6) + "00" + KarakterID + KarakterID + "F7020500A0019BFF040000000000"
-End Sub
+
 
 Private Sub Command31_Click()
 On Error Resume Next
@@ -3682,6 +3709,8 @@ End Sub
 Private Sub effect4_Timer()
 
 End Sub
+
+
 
 Private Sub FloodTimer_Timer()
 If Check10.value = 1 Then
