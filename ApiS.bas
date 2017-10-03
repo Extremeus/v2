@@ -11,8 +11,11 @@ Public Declare Sub CopyMemory Lib "kernel32.dll" Alias "RtlMoveMemory" (Destinat
 Public Declare Function GetTickCount Lib "kernel32" () As Long
 Public Declare Function CloseHandle Lib "kernel32" (ByVal hObject As Long) As Long
 Public Declare Function ReadProcessMem Lib "kernel32" Alias "ReadProcessMemory" (ByVal hProcess As Long, ByVal lpBaseAddress As Any, ByRef lpBuffer As Any, ByVal nSize As Long, lpNumberOfBytesWritten As Long) As Long
-Private Declare Function CreateMailslot Lib "kernel32" Alias "CreateMailslotA" (ByVal lpName As String, ByVal nMaxMessageSize As Long, ByVal lReadTimeout As Long, lpSecurityAttributes As Any) As Long
-Private Declare Function GetMailslotInfo Lib "kernel32" (ByVal hMailSlot As Long, lpMaxMessageSize As Long, lpNextSize As Long, lpMessageCount As Long, lpReadTimeout As Long) As Long
+Public Declare Function WriteProcessMem Lib "kernel32" Alias "WriteProcessMemory" (ByVal hProcess As Long, ByVal lpBaseAddress As Any, ByRef lpBuffer As Any, ByVal nSize As Long, lpNumberOfBytesWritten As Long) As Long
+Public Declare Function ReadFile Lib "kernel32" (ByVal hFile As Long, lpBuffer As Any, ByVal nNumberOfBytesToRead As Long, lpNumberOfBytesRead As Long, lpOverlapped As Long) As Long
+Public Declare Function CreateMailslot Lib "kernel32" Alias "CreateMailslotA" (ByVal lpName As String, ByVal nMaxMessageSize As Long, ByVal lReadTimeout As Long, lpSecurityAttributes As Any) As Long
+Public Declare Function GetMailslotInfo Lib "kernel32" (ByVal hMailslot As Long, lpMaxMessageSize As Long, lpNextSize As Long, lpMessageCount As Long, lpReadTimeout As Long) As Long
+Public Declare Function ReadFileSimple Lib "kernel32" Alias "ReadFile" (ByVal hFile As Long, ByVal lpBuffer As String, ByVal nNumberOfBytesToRead As Long, lpNumberOfBytesRead As Long, ByVal Zero As Long) As Long
 Private Declare Function LoadLibrary Lib "kernel32" Alias "LoadLibraryA" (ByVal lpLibFileName As String) As Long
 Private Declare Function GetProcAddress Lib "kernel32" (ByVal hModule As Long, ByVal lpProcName As String) As Long
 Private Declare Function GetModuleHandle Lib "kernel32" Alias "GetModuleHandleA" (ByVal lpModuleName As String) As Long
@@ -21,20 +24,21 @@ Public Declare Function CreateRemoteThread Lib "kernel32" (ByVal hProcess As Lon
 Public Declare Function WaitForSingleObject Lib "kernel32" (ByVal hHandle As Long, ByVal dwMilliseconds As Long) As Long
 'Private Declare Function VirtualFreeEx Lib "kernel32" (ByVal hProcess As Long, lpAddress As Any, ByVal dwSize As Long, ByVal dwFreeType As Long) As Long
 Public Declare Function VirtualFreeEx Lib "kernel32" (ByVal hProcess As Long, lpAddress As Any, ByVal dwSize As Long, ByVal dwFreeType As Long) As Long
-Private Declare Function ReadFile Lib "kernel32" (ByVal hFile As Long, lpBuffer As Any, ByVal nNumberOfBytesToRead As Long, lpNumberOfBytesRead As Long, lpOverlapped As Long) As Long
+
+Public Declare Function GetModuleInformation Lib "psapi.dll" (ByVal hProcess As Long, ByVal hModule As Long, lpmodinfo As MODULEINFO, ByVal cb As Long) As Long
 
 Public Declare Function VirtualAllocEx Lib "kernel32" (ByVal hProcess As Long, ByVal lpAddress As Long, ByVal dwSize As Long, ByVal flAllocationType As Long, ByVal flProtect As Long) As Long
 Private Declare Function GetPrivateProfileSection Lib "kernel32" Alias "GetPrivateProfileSectionA" (ByVal lpAppName As String, ByVal lpReturnedString As String, ByVal nSize As Long, ByVal lpFileName As String) As Long
-Private Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal Y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
+Private Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal x As Long, ByVal Y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
 Private Declare Function WritePrivateProfileSection Lib "kernel32" Alias "WritePrivateProfileSectionA" (ByVal lpAppName As String, ByVal lPaketing As String, ByVal lpFileName As String) As Long
 Public Declare Function GetAsyncKeyState Lib "user32" (ByVal vKey As Long) As Integer
 Public Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Long
 Private Declare Function GetWindowThreadProcessId Lib "user32" (ByVal hwnd As Long, lpdwProcessId As Long) As Long
 Private Declare Function OpenProcess Lib "kernel32" (ByVal dwDesiredAccess As Long, ByVal bInheritHandle As Long, ByVal dwProcessId As Long) As Long
 Public Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
-Public Declare Function WriteProcessMem Lib "kernel32" Alias "WriteProcessMemory" (ByVal hProcess As Long, ByVal lpBaseAddress As Any, ByRef lpBuffer As Any, ByVal nSize As Long, lpNumberOfBytesWritten As Long) As Long
-Public Declare Function EnumProcessModules Lib "PSAPI.DLL" (ByVal hProcess As Long, ByRef lphModule As Long, ByVal cb As Long, ByRef cbNeeded As Long) As Long
-Public Declare Function GetModuleFileNameExA Lib "PSAPI.DLL" (ByVal hProcess As Long, ByVal hModule As Long, ByVal ModuleName As String, ByVal nSize As Long) As Long
+'Public Declare Function WriteProcessMem Lib "kernel32" Alias "WriteProcessMemory" (ByVal hProcess As Long, ByVal lpBaseAddress As Any, ByRef lpBuffer As Any, ByVal nSize As Long, lpNumberOfBytesWritten As Long) As Long
+Public Declare Function EnumProcessModules Lib "psapi.dll" (ByVal hProcess As Long, ByRef lphModule As Long, ByVal cb As Long, ByRef cbNeeded As Long) As Long
+Public Declare Function GetModuleFileNameExA Lib "psapi.dll" (ByVal hProcess As Long, ByVal hModule As Long, ByVal ModuleName As String, ByVal nSize As Long) As Long
 Private Const PROCESS_CREATE_THREAD = &H2
 Private Const PROCESS_VM_OPERATION = &H8
 Private Const PROCESS_VM_WRITE = &H20
@@ -245,6 +249,8 @@ Public KO_RCVHKB As Long
 Public KO_RECV_PTR As Long
 Public KO_RECV_FNC As Long
 
+Public RecvHandle2 As Long
+Public hook As Long
 Public KO_PTR_CHR As Long
 Public KO_PTR_PKT As Long
 Public KO_PTR_DLG As Long
@@ -276,7 +282,26 @@ Public KO_OFF_GoY As Long
 Public KO_OFF_Go2 As Long
 Public KO_OFF_ZONE As Long
 
-
+'dinput
+Public DINPUT_Handle As Long
+Public DINPUT_lpBaseOfDLL As Long
+Public DINPUT_SizeOfImage As Long
+Public DINPUT_EntryPoint As Long
+Public DINPUT_KEYDMA As Long
+Public DINPUT_K_1 As Long
+Public DINPUT_K_2 As Long
+Public DINPUT_K_3 As Long
+Public DINPUT_K_4 As Long
+Public DINPUT_K_5 As Long
+Public DINPUT_K_6 As Long
+Public DINPUT_K_7 As Long
+Public DINPUT_K_8 As Long
+Public DINPUT_K_Z As Long
+Public DINPUT_K_B As Long
+Public DINPUT_K_C As Long
+Public DINPUT_K_S As Long
+Public DINPUT_K_R As Long
+Public DINPUT_K_E As Long
 '--------------------------------------------------------------------------------------------------------------------------
 
 'Constants
@@ -432,19 +457,108 @@ Dim pbw As Long
 WriteProcessMem KO_HANDLE, addr, pVal, 1, pbw
 End Sub
 Public Function AttachKO() As Boolean
+Dim RecvMailSlot2 As String
+Dim RecvMailSlot As String
+
+RecvMailSlot = "\\.\mailslot\ByS0x" & Hex(GetTickCount)
+
     GetWindowThreadProcessId FindWindow(vbNullString, "Knight OnLine Client"), KO_PID
     KO_HANDLE = OpenProcess(PROCESS_ALL_ACCESS, False, KO_PID)
+    
+    RecvHandle = EstablishMailSlot(RecvMailSlot)
+    FindHook RecvMailSlot
+    
         If KO_HANDLE = 0 Then
             MsgBox ("Oyunu Yönetici Olarak Aç!!.")
             AttachKO = False
             Exit Function
-                Dim RecvMailSlot As String
-    RecvMailSlot = "\\.\mailslot\Cro" & Hex(GetTickCount)
-    RecvHandle = EstablishMailSlot(RecvMailSlot)
-    FindHook RecvMailSlot
-        End If
+            
     If KO_PID = 0 Then End
     AttachKO = True
+    End If
+    hook = HookDI8
+    Form1.kututopla.Enabled = True
+End Function
+Function MemPatch(Handle As Long, addr As Long, Patch As String)
+Dim pBytes() As Byte, size As Long
+Hex2Byte Patch, pBytes
+size = UBound(pBytes) - LBound(pBytes) + 1
+WriteProcessMem KO_HANDLE, addr, pBytes(LBound(pBytes)), size, vbNull
+End Function
+
+
+Public Function HookDI8() As Boolean
+Dim ret As Long
+Dim lmodinfo As MODULEINFO
+DINPUT_Handle = 0
+DINPUT_Handle = FindModuleHandle("dinput8.dll")
+ret = GetModuleInformation(KO_HANDLE, DINPUT_Handle, lmodinfo, Len(lmodinfo))
+If ret <> 0 Then
+With lmodinfo
+DINPUT_EntryPoint = .EntryPoint
+DINPUT_lpBaseOfDLL = .lpBaseOfDLL
+DINPUT_SizeOfImage = .SizeOfImage
+End With
+Else
+Exit Function
+End If
+SetupDInput
+HookDI8 = True
+End Function
+Sub SetupDInput()
+DINPUT_KEYDMA = FindDInputKeyPtr
+If DINPUT_KEYDMA <> 0 Then
+DINPUT_K_1 = DINPUT_KEYDMA + 2
+DINPUT_K_2 = DINPUT_KEYDMA + 3
+DINPUT_K_3 = DINPUT_KEYDMA + 4
+DINPUT_K_4 = DINPUT_KEYDMA + 5
+DINPUT_K_5 = DINPUT_KEYDMA + 6
+DINPUT_K_6 = DINPUT_KEYDMA + 7
+DINPUT_K_7 = DINPUT_KEYDMA + 8
+DINPUT_K_8 = DINPUT_KEYDMA + 9
+DINPUT_K_Z = DINPUT_KEYDMA + 44
+DINPUT_K_B = DINPUT_KEYDMA + 48
+DINPUT_K_C = DINPUT_KEYDMA + 46
+DINPUT_K_S = DINPUT_KEYDMA + 31
+DINPUT_K_R = DINPUT_KEYDMA + 19
+DINPUT_K_E = DINPUT_KEYDMA + &H12
+End If
+End Sub
+Function ReadByteArray(addr As Long, pmem() As Byte, pSize As Long)
+Dim value As Byte
+ReDim pmem(1 To pSize) As Byte
+ReadProcessMem KO_HANDLE, addr, pmem(1), pSize, 0&
+End Function
+Function FindDInputKeyPtr() As Long
+Dim pBytes() As Byte
+Dim pSize As Long
+Dim x As Long
+pSize = DINPUT_SizeOfImage
+ReDim pBytes(1 To pSize)
+ReadByteArray DINPUT_lpBaseOfDLL, pBytes, pSize
+For x = 1 To pSize - 10
+If pBytes(x) = &H57 And pBytes(x + 1) = &H6A And pBytes(x + 2) = &H40 And pBytes(x + 3) = &H33 And pBytes(x + 4) = &HC0 And pBytes(x + 5) = &H59 And pBytes(x + 6) = &HBF Then
+FindDInputKeyPtr = val("&H" & IIf(Len(Hex(pBytes(x + 10))) = 1, "0" & Hex(pBytes(x + 10)), Hex(pBytes(x + 10))) & IIf(Len(Hex(pBytes(x + 9))) = 1, "0" & Hex(pBytes(x + 9)), Hex(pBytes(x + 9))) & IIf(Len(Hex(pBytes(x + 8))) = 1, "0" & Hex(pBytes(x + 8)), Hex(pBytes(x + 8))) & IIf(Len(Hex(pBytes(x + 7))) = 1, "0" & Hex(pBytes(x + 7)), Hex(pBytes(x + 7))))
+Exit For
+End If
+Next
+End Function
+Public Function FindModuleHandle(ModuleName As String) As Long
+Dim hModules(1 To 256) As Long
+Dim BytesReturned As Long
+Dim ModuleNumber As Byte
+Dim TotalModules As Byte
+Dim Filename As String * 128
+Dim ModName As String
+EnumProcessModules KO_HANDLE, hModules(1), 1024, BytesReturned
+TotalModules = BytesReturned / 4
+For ModuleNumber = 1 To TotalModules
+GetModuleFileNameExA KO_HANDLE, hModules(ModuleNumber), Filename, 128
+ModName = Left(Filename, InStr(Filename, Chr(0)) - 1)
+If UCase(Right(ModName, Len(ModuleName))) = UCase(ModuleName) Then
+FindModuleHandle = hModules(ModuleNumber)
+End If
+Next
 End Function
 Function Otokutuac()
 Dim mem As Long
@@ -591,31 +705,31 @@ If packetbytes <> 0 Then
 End If
 End Function
 Function ExecuteRemoteCode(pCode() As Byte, Optional WaitExecution As Boolean = False) As Long
-Dim hThread As Long, Ret As Long
+Dim hThread As Long, ret As Long
 WriteByteArray codebytes, pCode, UBound(pCode) - LBound(pCode) + 1
   If codebytes <> 0 Then
    hThread = CreateRemoteThread(ByVal KO_HANDLE, 0, 0, ByVal codebytes, 0, 0, 0)
    If hThread Then
-      Ret = WaitForSingleObject(hThread, INFINITE)
+      ret = WaitForSingleObject(hThread, INFINITE)
    End If
    CloseHandle hThread
 End If
 End Function
 Sub AsmKodCalistir(pCode() As Byte)
-Dim hThread As Long, Ret As Long
+Dim hThread As Long, ret As Long
 WriteByteArray codebytes, pCode, UBound(pCode) - LBound(pCode) + 1
   If codebytes <> 0 Then
    hThread = CreateRemoteThread(ByVal KO_HANDLE, 0, 0, ByVal codebytes, 0, 0, 0)
    If hThread Then
-      Ret = WaitForSingleObject(hThread, INFINITE)
+      ret = WaitForSingleObject(hThread, INFINITE)
    End If
    CloseHandle hThread
 End If
 End Sub
-Public Function YürüXY(X As Single, Y As Single) As Boolean
-    If CInt(CharX) = CInt(X) And CInt(CharY) = CInt(Y) Then YürüXY = True: Exit Function
+Public Function YürüXY(x As Single, Y As Single) As Boolean
+    If CInt(CharX) = CInt(x) And CInt(CharY) = CInt(Y) Then YürüXY = True: Exit Function
     WriteLong KO_ADR_CHR + KO_OFF_Go2, 2
-    WriteFloat KO_ADR_CHR + KO_OFF_MX, X
+    WriteFloat KO_ADR_CHR + KO_OFF_MX, x
     WriteFloat KO_ADR_CHR + KO_OFF_MY, Y
     WriteLong KO_ADR_CHR + KO_OFF_Go1, 1
     YürüXY = False: Exit Function
@@ -831,7 +945,7 @@ End If
 Next
 End Function
 Public Function HexItemID(ByVal Slot As Integer) As String
-        Dim offset, X, offset3, offset4 As Long
+        Dim offset, x, offset3, offset4 As Long
         Dim Base, Sonuc As Long
         offset = ReadLong(KO_ADR_DLG + &H1B8)
         offset = ReadLong(offset + (&H210 + (4 * Slot))) 'inventory slot
@@ -841,7 +955,7 @@ Public Function HexItemID(ByVal Slot As Integer) As String
         HexItemID = Strings.Mid(AlignDWORD(Sonuc), 1, 8)
 End Function
 Public Function LongItemID(ByVal Slot As Integer) As Long
-        Dim offset, X, offset3, offset4 As Long
+        Dim offset, x, offset3, offset4 As Long
         Dim Base, Sonuc As Long
         offset = ReadLong(KO_ADR_DLG + &H1B8)
         offset = ReadLong(offset + (&H210 + (4 * Slot))) 'inventory slot
@@ -887,42 +1001,47 @@ If Aranan = Kelime Then AraText = True: Exit For Else: AraText = False
 Next
 End Function
 
-Function NpcIDFinder(FýndName As String) As String
+Function NpcIDFinder(FindName As String) As String
 Dim EBP As Long, ESI As Long, EAX As Long, FEnd As Long
 Dim base_addr As Long
 zMobName = ""
-EBP = ReadLong(ReadLong(KO_FLDB) + &H34)
+zMobX = 0
+zMobY = 0
+zMobZ = 0
+zMobID = 0
+Paket "1D"
+EBP = ReadLong(ReadLong(ReadLong(KO_FLDB) + &H34 + &H1D))
 FEnd = ReadLong(ReadLong(EBP + 4) + 4)
 ESI = ReadLong(EBP)
 While ESI <> EBP
 base_addr = ReadLong(ESI + &H10)
 EAX = ReadLong(ESI + 8)
-    If ReadLong(ESI + 8) <> FEnd Then
-        While ReadLong(EAX) <> FEnd
-        EAX = ReadLong(EAX)
-        Wend
-    ESI = EAX
-    Else
-    EAX = ReadLong(ESI + 4)
-        While ESI = ReadLong(EAX + 8)
-        ESI = EAX
-        EAX = ReadLong(EAX + 4)
-        Wend
-            If ReadLong(ESI + 8) <> EAX Then
-            ESI = EAX
-            End If
-    End If
+If ReadLong(ESI + 8) <> FEnd Then
+While ReadLong(EAX) <> FEnd
+EAX = ReadLong(EAX)
+Wend
+ESI = EAX
+Else
+EAX = ReadLong(ESI + 4)
+While ESI = ReadLong(EAX + 8)
+ESI = EAX
+EAX = ReadLong(EAX + 4)
+Wend
+If ReadLong(ESI + 8) <> EAX Then
+ESI = EAX
+End If
+End If
 If ReadLong(base_addr + &H698) > 15 Then
 zMobName = ReadString(ReadLong(base_addr + &H688), ReadLong(base_addr + &H698))
 Else
 zMobName = ReadString(base_addr + &H688, ReadLong(base_addr + &H698))
 End If
 
-If AraText(FýndName, zMobName) = True Then
- NpcIDFinder = AlignDWORD(ReadLong(base_addr + KO_OFF_ID), 4)
- zMobZ = ReadFloat(base_addr + KO_OFF_Z)
- zMobID = AlignDWORD(ReadLong(base_addr + KO_OFF_ID), 4)
- End If
+If AraText(FindName, zMobName) = True Then
+NpcIDFinder = AlignDWORD(ReadLong(base_addr + KO_OFF_ID), 4)
+zMobZ = ReadFloat(base_addr + KO_OFF_Z)
+zMobID = AlignDWORD(ReadLong(base_addr + KO_OFF_ID), 4)
+End If
 Wend
 End Function
 
@@ -997,15 +1116,15 @@ Function ItemleriAl()
 End Function
 
 Function BankItemName(ByVal Slot As Integer) As String
-        Dim a, b, C, L, adr As Long
+        Dim a, b, c, L, adr As Long
         a = ReadLong(KO_ADR_DLG + 516)
         b = ReadLong(a + 296 + (4 * Slot))
-        C = ReadLong(b + &H68)
-        L = ReadLong(C + &H1C)
+        c = ReadLong(b + &H68)
+        L = ReadLong(c + &H1C)
         If L > 15 Then
-          adr = ReadLong(C + &HC)
+          adr = ReadLong(c + &HC)
           Else
-          adr = C + &HC
+          adr = c + &HC
           End If
           BankItemName = ""
           If L > 0 Then
@@ -1013,12 +1132,12 @@ Function BankItemName(ByVal Slot As Integer) As String
          End If
 End Function
 Function BankItemID(ByVal Slot As Integer) As Long
-        Dim a, b, C As Long
+        Dim a, b, c As Long
         a = ReadLong(KO_ADR_DLG + 516)
         b = ReadLong(a + 296 + (4 * Slot))
-        C = ReadLong(b + &H68)
-        If C <> 0 Then
-        BankItemID = C
+        c = ReadLong(b + &H68)
+        If c <> 0 Then
+        BankItemID = c
         Else
         BankItemID = 0
         End If
@@ -1039,7 +1158,7 @@ End Sub
 
 
 Public Function HexBankItemID(ByVal Slot As Integer) As String
-        Dim offset, X, offset3, offset4 As Long
+        Dim offset, x, offset3, offset4 As Long
         Dim Base, Sonuc As Long
         offset = ReadLong(KO_ADR_DLG + 516)
         offset = ReadLong(offset + 296 + (4 * Slot))  'inventory slot
@@ -1644,15 +1763,7 @@ End Function
 
 
 
-Public Sub FindHook(MailSlotName As String)
-Dim KO_RECVHK As Long, KO_RCVHKB As Long
-KO_RECVHK = &HB57208
-KO_RCVHKB = ReadLong(KO_RECVHK)
-'KO_RECVHK = &HB57208
-'KO_RCVHKB = &H53E980
-Debug.Print Hex(KO_RECVHK) & "//" & Hex(KO_RCVHKB)
-recvHook MailSlotName, KO_RCVHKB, KO_RECVHK
-End Sub
+
 Public Function getCallDiff(Source As Long, Destination As Long) As Long
 Dim Diff As Long
 Diff = 0
@@ -1704,24 +1815,150 @@ Hex2Byte pHook, ph
 ByteDizisiYaz RecvBase, ph, UBound(ph) - LBound(ph) + 1
 End Sub
 
-Sub DispatchMailSlot(Handle As Long)
+Public Function recv()
+Dim RecvMailSlot As String
+RecvMailSlot = "\\.\mailslot\zuhas" & Hex(GetTickCount)
+RecvHandle = EstablishMailSlot(RecvMailSlot)
+FindHook RecvMailSlot
+End Function
+Public Sub FindHook(MailSlotName As String)
+'KO_RECVHK = &HB57208
+KO_RECVHK = LongOku(LongOku(KO_PTR_DLG - &H14)) + &H8
+KO_RCVHKB = LongOku(KO_RECVHK)
+
+'KO_RECVHK = ReadLong(ReadLong(KO_PTR_DLG - &H14)) + &H8
+'KO_RCVHKB = ReadLong(KO_RECVHK)
+
+
+
+recvHook MailSlotName, KO_RCVHKB, KO_RECVHK
+'recvHook MailSlotName, KO_RCVHKB2, KO_RECVHK2
+'recvHook MailSlotName, KO_RCVHKB3, KO_RECVHK3
+End Sub
+Public Function FindHook2(MailSlotName As String)
+Dim hooks As Long
+Dim a, b, c, d As Integer
+Randomize
+a = CInt(Rnd * 9)
+Randomize
+b = CInt(Rnd * 9)
+Randomize
+c = CInt(Rnd * 9)
+Randomize
+d = CInt(Rnd * 9)
+Randomize
+
+MSName = "\\.\mailslot\RossMax" & Right(App.ThreadID, 2) & "_" & a & b & c & d & CInt(Rnd * 9999)
+Debug.Print MSName
+MSHandle = EstablishMailSlot(MSName)
+
+hooks = KO_PTR_DLG + &H84
+        
+Select Case ByteOku(hooks)
+Case 8
+KO_RCVHKB = &HB57208
+KO_RECVHK = &H53E980
+HookRecvPackets
+recvHook MailSlotName, KO_RCVHKB, KO_RECVHK
+Case 9
+KO_RCVHKB = &H53E980
+KO_RECVHK = &HB57208
+HookRecvPackets
+recvHook MailSlotName, KO_RCVHKB, KO_RECVHK
+Case 10
+KO_RCVHKB = &H9C6F7C
+KO_RECVHK = &H9C6F80
+HookRecvPackets
+
+Case Else
+KO_RCVHKB = &HB57208
+KO_RECVHK = &H53E980
+recvHook MailSlotName, KO_RCVHKB, KO_RECVHK
+HookRecvPackets
+End Select
+
+
+End Function
+Sub HookRecvPackets()
+        Dim CreateFileAADDR As Long, WriteFileADDR As Long, CloseHandleADDR As Long
+        Dim pBytesMSName() As Byte, pBytes() As Byte
+        Dim pStr As String, pStrKO_RECVFNC As String
+
+        CreateFileAADDR = GetProcAddress(GetModuleHandle("kernel32.dll"), "CreateFileA")
+        WriteFileADDR = GetProcAddress(GetModuleHandle("kernel32.dll"), "WriteFile")
+        CloseHandleADDR = GetProcAddress(GetModuleHandle("kernel32.dll"), "CloseHandle")
+
+        KO_RECV_FNC = VirtualAllocEx(KO_HANDLE, 0, 1024, MEM_COMMIT, PAGE_READWRITE)
+
+        pBytesMSName = StrConv(MSName, vbFromUnicode)
+        WriteByteArray KO_RECV_FNC + &H400, pBytesMSName, UBound(pBytesMSName) - LBound(pBytesMSName) + 1
+
+        pStr = AlignDWORD(CreateFileAADDR)
+        ConvHEX2ByteArray pStr, pBytes
+        WriteByteArray KO_RECV_FNC + &H32A, pBytes, UBound(pBytes) - LBound(pBytes) + 1
+
+        pStr = AlignDWORD(WriteFileADDR)
+        ConvHEX2ByteArray pStr, pBytes
+        WriteByteArray KO_RECV_FNC + &H334, pBytes, UBound(pBytes) - LBound(pBytes) + 1
+
+        pStr = AlignDWORD(CloseHandleADDR)
+        ConvHEX2ByteArray pStr, pBytes
+        WriteByteArray KO_RECV_FNC + &H33E, pBytes, UBound(pBytes) - LBound(pBytes) + 1
+
+        pStr = AlignDWORD(KO_RCVHKB)
+        ConvHEX2ByteArray pStr, pBytes
+        WriteByteArray KO_RECV_FNC + &H208, pBytes, UBound(pBytes) - LBound(pBytes) + 1
+        
+        pStr = AlignDWORD(KO_RECVHK)
+        ConvHEX2ByteArray pStr, pBytes
+        WriteByteArray KO_RECV_FNC + &H212, pBytes, UBound(pBytes) - LBound(pBytes) + 1
+
+        pStr = AlignDWORD(KO_RECV_FNC)
+        ConvHEX2ByteArray pStr, pBytes
+        WriteByteArray KO_RECV_FNC + &H21C, pBytes, UBound(pBytes) - LBound(pBytes) + 1
+        
+        pStr = "52" + "890D" + AlignDWORD(KO_RECV_FNC + &H320) + "8905" + AlignDWORD(KO_RECV_FNC + &H3B6) + "8B4E04890d" + AlignDWORD(KO_RECV_FNC + &H1F4) + "8B56088915" + AlignDWORD(KO_RECV_FNC + &H1FE) + "81F9001000007D3E5068800000006A036A006A01680000004068" + AlignDWORD(KO_RECV_FNC + &H400) + "FF15" + AlignDWORD(KO_RECV_FNC + &H32A) + "83F8FF741D506A0054FF35" + AlignDWORD(KO_RECV_FNC + &H1F4) + "ff35" + AlignDWORD(KO_RECV_FNC + &H1FE) + "50ff15" + AlignDWORD(KO_RECV_FNC + &H334) + "ff15" + AlignDWORD(KO_RECV_FNC + &H33E) + "8b0d" + AlignDWORD(KO_RECV_FNC + &H320) + "8b05" + AlignDWORD(KO_RECV_FNC + &H3B6) + "5aff25" + AlignDWORD(KO_RECV_FNC + &H208)
+        ConvHEX2ByteArray pStr, pBytes
+        WriteByteArray KO_RECV_FNC, pBytes, UBound(pBytes) - LBound(pBytes) + 1
+        
+        pStrKO_RECVFNC = AlignDWORD(KO_RECV_FNC)
+        ConvHEX2ByteArray pStrKO_RECVFNC, pBytes
+        WriteByteArray KO_RECVHK, pBytes, UBound(pBytes) - LBound(pBytes) + 1
+        
+End Sub
+
+Public Sub DispatchMailSlot() 'altta 2 tane Handle atýlmasý gereken yere direk globaldeki RecvHandle yi yazdým
 Dim MsgCount As Long, rc As Long, MessageBuffer As String, code, PacketType As String
+Dim GMNot, GMNotHex, GMNotice, HexRange As Long
 Dim BoxID2, BoxID, ItemID1, ItemID2, ItemID3, ItemID4, RecAl1, RecAl2, RecAl4, RecAl3 As Long
+Dim RecvType As Integer, targetID As Long, NameLen3 As Integer, UserName As String, ChatLen As Integer, ChatString As String
+
 MsgCount = 1
 Do While MsgCount <> 0
-rc = CheckForMessages(Handle, MsgCount)
+rc = CheckForMessages(RecvHandle, MsgCount) 'RecvHandle atýlan 1. yer
 If CBool(rc) And MsgCount > 0 Then
-    If ReadMessage(Handle, MessageBuffer, MsgCount) Then
+    If ReadMessage(RecvHandle, MessageBuffer, MsgCount) Then 'RecvHandle atýlan 2. yer
     code = MessageBuffer
     On Error Resume Next
     
     Select Case Asc(Left(MessageBuffer, 1))
-        Case Else
-         If Form1.CheckAuto.value = 1 And Mid(StringToHex(MessageBuffer), 1, 2) = "23" Then
+  
+    Case 16 ' Chat Oku
+        RecvType = Hex2Val(Mid(MessageBuffer, 2, 1))
+        targetID = Hex2Val(Mid(MessageBuffer, 4, 2))
+        NameLen3 = Hex2Val(Mid(MessageBuffer, 6, 1))
+        UserName = Mid(MessageBuffer, 7, NameLen3)
+        ChatLen = Hex2Val(Mid(MessageBuffer, 7 + NameLen3, 1))
+        ChatString = Mid(MessageBuffer, 9 + NameLen3, ChatLen)
+        Form1.List6.AddItem ChatString
+        
+
+
+If Form1.otokutuche.value = 1 And Mid(StringToHex(MessageBuffer), 1, 2) = "23" Then
            BoxID2 = Mid(StringToHex(MessageBuffer), 7, 8)
            Paket "24" & BoxID2
         End If
-           If Form1.CheckAuto.value = 1 And Mid(StringToHex(MessageBuffer), 1, 2) = "24" Then
+           If Form1.otokutuche.value = 1 And Mid(StringToHex(MessageBuffer), 1, 2) = "24" Then
                 BoxID = Mid(StringToHex(MessageBuffer), 3, 4)
                 ItemID1 = Mid(StringToHex(MessageBuffer), 13, 8)
                 ItemID2 = Mid(StringToHex(MessageBuffer), 25, 8)
@@ -1732,19 +1969,18 @@ If CBool(rc) And MsgCount > 0 Then
                 RecAl3 = Mid(StringToHex(MessageBuffer), 33, 4)
                 RecAl4 = Mid(StringToHex(MessageBuffer), 45, 4)
                 If ItemID2 > 0 Then: Paket "26" & BoxID & RecAl1 & ItemID2 & "01" & "00"
-                Bekle2 200
+                Bekle 200
                 If ItemID3 > 0 Then: Paket "26" & BoxID & RecAl1 & ItemID3 & "02" & "00"
-                Bekle2 200
+                Bekle 200
                 If ItemID4 > 0 Then: Paket "26" & BoxID & RecAl1 & ItemID4 & "03" & "00"
-                Bekle2 200
+                Bekle 200
                 If ItemID1 > 0 Then: Paket "26" & BoxID & RecAl1 & ItemID1 & "00" & "00"
           End If
-        
-        
-        
-        
-    End Select
 
+
+
+
+    End Select
     End If
 End If
 Loop
@@ -1756,15 +1992,22 @@ Call GetMailslotInfo(Handle, ByVal 0&, lNextMsgSize, MessagesLeft, ByVal 0&)
 If MessagesLeft > 0 And lNextMsgSize <> MAILSLOT_NO_MESSAGE Then
     lBytesRead = 0
     lpBuffer = String$(lNextMsgSize, Chr$(0))
-    Call ReadFile(Handle, ByVal lpBuffer, Len(lpBuffer), lBytesRead, ByVal 0&)
+    Call ReadFile(KO_HANDLE, ByVal lpBuffer, Len(lpBuffer), lBytesRead, ByVal 0&)
     If lBytesRead <> 0 Then
         MailMessage = Left(lpBuffer, lBytesRead)
         ReadMessage = True
-        Call GetMailslotInfo(Handle, ByVal 0&, lNextMsgSize, MessagesLeft, ByVal 0&)
+        Call GetMailslotInfo(KO_HANDLE, ByVal 0&, lNextMsgSize, MessagesLeft, ByVal 0&)
     End If
 End If
 End Function
 
+Private Function CheckForMessages(Handle As Long, MessageCount As Long)
+Dim lMsgCount As Long, lNextMsgSize As Long
+CheckForMessages = False
+GetMailslotInfo KO_HANDLE, ByVal 0&, lNextMsgSize, lMsgCount, ByVal 0&
+MessageCount = lMsgCount
+CheckForMessages = True
+End Function
 Public Function EstablishMailSlot(ByVal MailSlotName As String, Optional MaxMessageSize As Long = 0, Optional ReadTimeOut As Long = 50) As Long
 EstablishMailSlot = CreateMailslot(MailSlotName, MaxMessageSize, ReadTimeOut, ByVal 0&)
 End Function
@@ -1994,13 +2237,7 @@ Wend
 MobBilgi = BaseAddr
 End Function
 
-Private Function CheckForMessages(Handle As Long, MessageCount As Long)
-Dim lMsgCount As Long, lNextMsgSize As Long
-CheckForMessages = False
-GetMailslotInfo Handle, ByVal 0&, lNextMsgSize, lMsgCount, ByVal 0&
-MessageCount = lMsgCount
-CheckForMessages = True
-End Function
+
 Function HexString(ByVal EvalString As String) As String
         Dim intStrLen As Integer
         Dim intLoop As Integer
@@ -2367,27 +2604,55 @@ Next i1
 
 End Function
 
-Public Sub Runner(XKor As Integer, YKor As Integer)
-Dim FarkX As Long, FarkY As Long, dnm, dnm2
-Dim ZiplaX As Integer, ZiplaY As Integer
-FarkX = XKor - CharX
-FarkY = YKor - CharY
-If CharX = XKor And CharY = YKor Then
-Exit Sub
+Public Function Runner(crx As Single, cry As Single)
+'Sabitle
+On Error Resume Next
+Dim zipla, x, Y, uzak, a, b, d, e, i, isrtx, isrty
+Dim tx As Single, ty As Single
+Dim x1 As Single, y1 As Single
+Dim bykx, byky, kckx, kcky
+zipla = 3
+tx = ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_X)
+ty = ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_Y)
+x = Abs(crx - tx)
+Y = Abs(cry - ty)
+If tx > crx Then isrtx = -1: bykx = tx: kckx = crx Else isrtx = 1: bykx = crx: kckx = tx
+If ty > cry Then isrty = -1: byky = ty: kcky = cry Else isrty = 1: byky = cry: kcky = ty
+uzak = Int(Sqr((x ^ 2 + Y ^ 2)))
+If uzak > 9999 Then Exit Function
+If crx <= 0 Or cry <= 0 Then Exit Function
+For i = zipla To uzak Step zipla
+a = i ^ 2 * x ^ 2
+b = x ^ 2 + Y ^ 2
+d = Sqr(a / b)
+e = Sqr(i ^ 2 - d ^ 2)
+x1 = Int(tx + isrtx * d)
+y1 = Int(ty + isrty * e)
+If (kckx <= x1 And x1 <= bykx) And (kcky <= y1 And y1 <= byky) Then
+WriteFloat ReadLong(KO_PTR_CHR) + KO_OFF_X, x1
+WriteFloat ReadLong(KO_PTR_CHR) + KO_OFF_Y, y1
+WriteFloat ReadLong(KO_PTR_CHR) + KO_OFF_Z, ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_Z)
+Paket "06" _
+& Left(AlignDWORD(ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_X) * 10), 4) _
+& Left(AlignDWORD(ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_Y) * 10), 4) _
+& Left(AlignDWORD(ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_Z) * 10), 4) _
+& "2D0000" _
+& FormatHex(Hex(CInt(CharX) * 10), 4) & FormatHex(Hex(CInt(CharY) * 10), 4) & FormatHex(Hex(CInt(CharZ) * 10), 4)
 End If
-If Abs(FarkX) > Abs(FarkY) Then
-dnm = 5000
-dnm2 = Int(Int(3000 * Abs(FarkY)) / Abs(FarkX))
-End If
-If Abs(FarkY) > Abs(FarkX) Then
-dnm2 = 5000
-dnm = Int(Int(3000 * Abs(FarkX)) / Abs(FarkY))
-End If
-If FarkX < 0 Then: dnm = dnm * -1
-If FarkY < 0 Then: dnm2 = dnm2 * -1
-If Abs(FarkX) > 0 Then: WriteLong ReadLong(KO_PTR_CHR) + &HD8, ReadLong(ReadLong(KO_PTR_CHR) + &HD8) + dnm
-If Abs(FarkY) > 0 Then: WriteLong ReadLong(KO_PTR_CHR) + &HE0, ReadLong(ReadLong(KO_PTR_CHR) + &HE0) + dnm2
-End Sub
+Next
+WriteFloat ReadLong(KO_PTR_CHR) + KO_OFF_X, crx
+WriteFloat ReadLong(KO_PTR_CHR) + KO_OFF_Y, cry
+WriteFloat ReadLong(KO_PTR_CHR) + KO_OFF_Z, ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_Z)
+
+Paket "06" _
+& Left(AlignDWORD(ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_X) * 10), 4) _
+& Left(AlignDWORD(ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_Y) * 10), 4) _
+& Left(AlignDWORD(ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_Z) * 10), 4) _
+& "2D0000" _
+& FormatHex(Hex(CInt(CharX) * 10), 4) & FormatHex(Hex(CInt(CharY) * 10), 4) & FormatHex(Hex(CInt(CharZ) * 10), 4)
+Pause 0.1
+End Function
+
 
 Public Function MouseX()
 MouseX = ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_MX)

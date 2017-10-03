@@ -192,7 +192,7 @@ Public ExpZaman As Long
 Public DeadMob As String
 Public DeadMobZYap As Boolean
 Public lastID
-Public targetid As Long
+Public targetID As Long
 Public HexSözcük As String
 'start declaring autoattack log
 'Not created by me.
@@ -236,7 +236,7 @@ EXP As Long
 MAXEXP As Long
 ZONE As Long
 x As Long
-y As Long
+Y As Long
 Z As Long
 MX As Long
 MY As Long
@@ -371,7 +371,7 @@ Public Const INFINITE = &HFFFF
 Public Declare Function CloseHandle Lib "kernel32" (ByVal hObject As Long) As Long
 Public Declare Function loot Lib "DLL.dll" Alias "Loot" (ByVal Slot As String, ByVal Enable As Boolean) As Boolean
 Public Declare Sub Sleep Lib "kernel32.dll" (ByVal dwMilliseconds As Long)
-Public Declare Function SetCordinate Lib "DLL.dll" (ByVal Slot As String, ByVal x As Long, ByVal y As Long) As Boolean
+Public Declare Function SetCordinate Lib "DLL.dll" (ByVal Slot As String, ByVal x As Long, ByVal Y As Long) As Boolean
 Public Declare Function SendPacket Lib "DLL.dll" (ByVal Slot As String, ByRef lpBuffer As Any, ByVal nSize As Long) As Boolean
 Public Declare Function CharInfo Lib "DLL.dll" () As CHAR_INFORMATION
 Public Declare Function GetAsyncKeyState Lib "user32" (ByVal vKey As Long) As Integer
@@ -454,16 +454,16 @@ Function OffsetleriYükle()
 'Public Const KO_ADR_ROTA2            As Long = &H548D90
 '-------Seç Pointerlar-------
  KO_FLDB = &HE13EEC
- 'KO_ITOB = &HE0EC54
- 'KO_ITEB = &HE0EC58
- 'KO_ISEN = &H542060
+ 'KO_ITOB = &HE13D24
+ 'KO_ITEB = &HE13D2C
+ 'KO_ISEN = &H55B960
  'KO_SMMB = &HE0ED18
  'KO_STMB = &H5174B0
  KO_FNCZ = &H51ED20
  'KO_FNCX = &H51EB60
- 'KO_FNCB = &H51EC10
- 'KO_FMBS = &H4EE420
- 'KO_FPBS = &H4EF390
+ KO_FNCB = &H51EE90
+ KO_FMBS = &H4EE5B0
+ KO_FPBS = &H4EF520
  'KO_FNSB = &H4F1770
  'KO_FPOX = &H6899C0
 '-------Party Offset----'
@@ -598,9 +598,9 @@ Case "Hýz": KarakterOku = ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_SWIFT)
 Case "Name": KarakterOku = CharÝsim(s)
 End Select
 End Function
-Function GetUzaklýk(x, y)
+Function GetUzaklýk(x, Y)
 On Error Resume Next
-GetUzaklýk = Fix((((x - KarakterX()) * (x - KarakterX()) + (y - KarakterY()) * (y - KarakterY())) ^ 0.5))
+GetUzaklýk = Fix((((x - KarakterX()) * (x - KarakterX()) + (Y - KarakterY()) * (Y - KarakterY())) ^ 0.5))
 End Function
 
 Function aLLID(Sýra As Integer) As String
@@ -660,9 +660,9 @@ Function GetPlayerBase(ByVal TargetChar As Long)
 Public Sub IDTakip()
 On Error Resume Next
 Dim x As Single
-Dim y As Single
+Dim Y As Single
 x = Form1.Label17
-y = Form1.Label18
+Y = Form1.Label18
 
 If KarakterX = Mobx And KarakterY = MobY Then Exit Sub
     WriteLong ReadLong(KO_PTR_CHR) + &HF90, 1

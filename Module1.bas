@@ -5,7 +5,7 @@ Dim SkillID As String
 SkillID = Strings.Mid(AlignDWORD(ClassOku & Right(SkillNo, 3)), 1, 6)
 Paket "3103" + SkillID + "00" + KarakterID + FormatHex(Hex(UserID), 4) + "0100010000000000000000000000"
 Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000F00"
-If Form1.Check5.Value = 1 And MobUzaklýK <= 7 Then
+If Form1.Check5.value = 1 And MobUzaklýK <= 7 Then
 kUzaklýk = 7: Paket "080101" + FormatHex(Hex(UserID), 4) + "FF000000"
 End If
 End Sub
