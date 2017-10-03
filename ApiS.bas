@@ -29,7 +29,7 @@ Public Declare Function GetModuleInformation Lib "psapi.dll" (ByVal hProcess As 
 
 Public Declare Function VirtualAllocEx Lib "kernel32" (ByVal hProcess As Long, ByVal lpAddress As Long, ByVal dwSize As Long, ByVal flAllocationType As Long, ByVal flProtect As Long) As Long
 Private Declare Function GetPrivateProfileSection Lib "kernel32" Alias "GetPrivateProfileSectionA" (ByVal lpAppName As String, ByVal lpReturnedString As String, ByVal nSize As Long, ByVal lpFileName As String) As Long
-Private Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal x As Long, ByVal Y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
+Private Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal Y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
 Private Declare Function WritePrivateProfileSection Lib "kernel32" Alias "WritePrivateProfileSectionA" (ByVal lpAppName As String, ByVal lPaketing As String, ByVal lpFileName As String) As Long
 Public Declare Function GetAsyncKeyState Lib "user32" (ByVal vKey As Long) As Integer
 Public Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Long
@@ -532,13 +532,13 @@ End Function
 Function FindDInputKeyPtr() As Long
 Dim pBytes() As Byte
 Dim pSize As Long
-Dim x As Long
+Dim X As Long
 pSize = DINPUT_SizeOfImage
 ReDim pBytes(1 To pSize)
 ReadByteArray DINPUT_lpBaseOfDLL, pBytes, pSize
-For x = 1 To pSize - 10
-If pBytes(x) = &H57 And pBytes(x + 1) = &H6A And pBytes(x + 2) = &H40 And pBytes(x + 3) = &H33 And pBytes(x + 4) = &HC0 And pBytes(x + 5) = &H59 And pBytes(x + 6) = &HBF Then
-FindDInputKeyPtr = val("&H" & IIf(Len(Hex(pBytes(x + 10))) = 1, "0" & Hex(pBytes(x + 10)), Hex(pBytes(x + 10))) & IIf(Len(Hex(pBytes(x + 9))) = 1, "0" & Hex(pBytes(x + 9)), Hex(pBytes(x + 9))) & IIf(Len(Hex(pBytes(x + 8))) = 1, "0" & Hex(pBytes(x + 8)), Hex(pBytes(x + 8))) & IIf(Len(Hex(pBytes(x + 7))) = 1, "0" & Hex(pBytes(x + 7)), Hex(pBytes(x + 7))))
+For X = 1 To pSize - 10
+If pBytes(X) = &H57 And pBytes(X + 1) = &H6A And pBytes(X + 2) = &H40 And pBytes(X + 3) = &H33 And pBytes(X + 4) = &HC0 And pBytes(X + 5) = &H59 And pBytes(X + 6) = &HBF Then
+FindDInputKeyPtr = val("&H" & IIf(Len(Hex(pBytes(X + 10))) = 1, "0" & Hex(pBytes(X + 10)), Hex(pBytes(X + 10))) & IIf(Len(Hex(pBytes(X + 9))) = 1, "0" & Hex(pBytes(X + 9)), Hex(pBytes(X + 9))) & IIf(Len(Hex(pBytes(X + 8))) = 1, "0" & Hex(pBytes(X + 8)), Hex(pBytes(X + 8))) & IIf(Len(Hex(pBytes(X + 7))) = 1, "0" & Hex(pBytes(X + 7)), Hex(pBytes(X + 7))))
 Exit For
 End If
 Next
@@ -726,10 +726,10 @@ WriteByteArray codebytes, pCode, UBound(pCode) - LBound(pCode) + 1
    CloseHandle hThread
 End If
 End Sub
-Public Function YürüXY(x As Single, Y As Single) As Boolean
-    If CInt(CharX) = CInt(x) And CInt(CharY) = CInt(Y) Then YürüXY = True: Exit Function
+Public Function YürüXY(X As Single, Y As Single) As Boolean
+    If CInt(CharX) = CInt(X) And CInt(CharY) = CInt(Y) Then YürüXY = True: Exit Function
     WriteLong KO_ADR_CHR + KO_OFF_Go2, 2
-    WriteFloat KO_ADR_CHR + KO_OFF_MX, x
+    WriteFloat KO_ADR_CHR + KO_OFF_MX, X
     WriteFloat KO_ADR_CHR + KO_OFF_MY, Y
     WriteLong KO_ADR_CHR + KO_OFF_Go1, 1
     YürüXY = False: Exit Function
@@ -945,7 +945,7 @@ End If
 Next
 End Function
 Public Function HexItemID(ByVal Slot As Integer) As String
-        Dim offset, x, offset3, offset4 As Long
+        Dim offset, X, offset3, offset4 As Long
         Dim Base, Sonuc As Long
         offset = ReadLong(KO_ADR_DLG + &H1B8)
         offset = ReadLong(offset + (&H210 + (4 * Slot))) 'inventory slot
@@ -955,7 +955,7 @@ Public Function HexItemID(ByVal Slot As Integer) As String
         HexItemID = Strings.Mid(AlignDWORD(Sonuc), 1, 8)
 End Function
 Public Function LongItemID(ByVal Slot As Integer) As Long
-        Dim offset, x, offset3, offset4 As Long
+        Dim offset, X, offset3, offset4 As Long
         Dim Base, Sonuc As Long
         offset = ReadLong(KO_ADR_DLG + &H1B8)
         offset = ReadLong(offset + (&H210 + (4 * Slot))) 'inventory slot
@@ -1158,7 +1158,7 @@ End Sub
 
 
 Public Function HexBankItemID(ByVal Slot As Integer) As String
-        Dim offset, x, offset3, offset4 As Long
+        Dim offset, X, offset3, offset4 As Long
         Dim Base, Sonuc As Long
         offset = ReadLong(KO_ADR_DLG + 516)
         offset = ReadLong(offset + 296 + (4 * Slot))  'inventory slot
@@ -2607,23 +2607,23 @@ End Function
 Public Function Runner(crx As Single, cry As Single)
 'Sabitle
 On Error Resume Next
-Dim zipla, x, Y, uzak, a, b, d, e, i, isrtx, isrty
+Dim zipla, X, Y, uzak, a, b, d, e, i, isrtx, isrty
 Dim tx As Single, ty As Single
 Dim x1 As Single, y1 As Single
 Dim bykx, byky, kckx, kcky
 zipla = 3
 tx = ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_X)
 ty = ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_Y)
-x = Abs(crx - tx)
+X = Abs(crx - tx)
 Y = Abs(cry - ty)
 If tx > crx Then isrtx = -1: bykx = tx: kckx = crx Else isrtx = 1: bykx = crx: kckx = tx
 If ty > cry Then isrty = -1: byky = ty: kcky = cry Else isrty = 1: byky = cry: kcky = ty
-uzak = Int(Sqr((x ^ 2 + Y ^ 2)))
+uzak = Int(Sqr((X ^ 2 + Y ^ 2)))
 If uzak > 9999 Then Exit Function
 If crx <= 0 Or cry <= 0 Then Exit Function
 For i = zipla To uzak Step zipla
-a = i ^ 2 * x ^ 2
-b = x ^ 2 + Y ^ 2
+a = i ^ 2 * X ^ 2
+b = X ^ 2 + Y ^ 2
 d = Sqr(a / b)
 e = Sqr(i ^ 2 - d ^ 2)
 x1 = Int(tx + isrtx * d)
