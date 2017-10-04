@@ -6,15 +6,115 @@ Begin VB.Form Form1
    BackColor       =   &H80000004&
    BorderStyle     =   0  'None
    Caption         =   "ASKoxp"
-   ClientHeight    =   4875
+   ClientHeight    =   4860
    ClientLeft      =   22290
    ClientTop       =   660
-   ClientWidth     =   6915
+   ClientWidth     =   6900
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   4875
-   ScaleWidth      =   6915
+   ScaleHeight     =   4860
+   ScaleWidth      =   6900
+   Begin XtremeSuiteControls.GroupBox GroupBox6 
+      Height          =   4575
+      Left            =   120
+      TabIndex        =   179
+      Top             =   5040
+      Width           =   3975
+      _Version        =   851972
+      _ExtentX        =   7011
+      _ExtentY        =   8070
+      _StockProps     =   79
+      Caption         =   "Boss Check"
+      UseVisualStyle  =   -1  'True
+      Begin VB.TextBox txtLid 
+         Alignment       =   2  'Center
+         Height          =   285
+         Left            =   600
+         TabIndex        =   200
+         Text            =   "30000"
+         Top             =   1560
+         Width           =   735
+      End
+      Begin VB.TextBox txtFid 
+         Alignment       =   2  'Center
+         Height          =   285
+         Left            =   600
+         TabIndex        =   199
+         Text            =   "10000"
+         Top             =   1920
+         Width           =   735
+      End
+      Begin VB.TextBox HpText 
+         Alignment       =   2  'Center
+         Height          =   285
+         Left            =   600
+         TabIndex        =   181
+         Text            =   "50000"
+         Top             =   2280
+         Width           =   855
+      End
+      Begin VB.ListBox Hpler 
+         Appearance      =   0  'Flat
+         Height          =   1785
+         Left            =   600
+         TabIndex        =   180
+         Top             =   2640
+         Width           =   1575
+      End
+      Begin VB.Timer tmrFind2 
+         Enabled         =   0   'False
+         Interval        =   2000
+         Left            =   120
+         Top             =   2640
+      End
+      Begin VB.Timer ara 
+         Enabled         =   0   'False
+         Interval        =   1000
+         Left            =   120
+         Top             =   3120
+      End
+      Begin VB.Timer AlarmCal 
+         Enabled         =   0   'False
+         Interval        =   2000
+         Left            =   120
+         Top             =   240
+      End
+      Begin VB.Timer Alarm 
+         Enabled         =   0   'False
+         Interval        =   1000
+         Left            =   120
+         Top             =   720
+      End
+      Begin VB.Timer Hpleriekle 
+         Interval        =   1000
+         Left            =   120
+         Top             =   1680
+      End
+      Begin VB.Timer Alarm2 
+         Enabled         =   0   'False
+         Interval        =   1000
+         Left            =   120
+         Top             =   1200
+      End
+      Begin VB.Timer frm5c 
+         Interval        =   1000
+         Left            =   120
+         Top             =   3600
+      End
+      Begin VB.Timer tmrFind 
+         Enabled         =   0   'False
+         Interval        =   80
+         Left            =   120
+         Top             =   2160
+      End
+      Begin VB.Timer OtoSaatKayýt 
+         Enabled         =   0   'False
+         Interval        =   1000
+         Left            =   120
+         Top             =   4080
+      End
+   End
    Begin VB.CheckBox Check6 
       Appearance      =   0  'Flat
       BackColor       =   &H80000004&
@@ -33,21 +133,21 @@ Begin VB.Form Form1
       Height          =   225
       Left            =   8760
       MaskColor       =   &H00C0FFFF&
-      TabIndex        =   167
-      Top             =   3720
+      TabIndex        =   166
+      Top             =   3240
       Width           =   975
    End
    Begin VB.Timer mobazipla 
       Enabled         =   0   'False
       Interval        =   400
-      Left            =   6360
-      Top             =   4920
+      Left            =   8760
+      Top             =   2760
    End
    Begin XtremeSuiteControls.GroupBox GroupBox2 
       Height          =   4290
       Left            =   120
       TabIndex        =   1
-      Top             =   400
+      Top             =   360
       Width           =   6615
       _Version        =   851972
       _ExtentX        =   11668
@@ -158,32 +258,31 @@ Begin VB.Form Form1
          Item(6).Control(2)=   "lstMobName"
          Item(6).Control(3)=   "txtMobName"
          Item(6).Control(4)=   "MobSearch(1)"
-         Item(6).Control(5)=   "MobSearch(0)"
-         Item(6).Control(6)=   "MobSearch(2)"
-         Item(6).Control(7)=   "MobSearch(3)"
-         Item(6).Control(8)=   "MobSearch(4)"
-         Item(6).Control(9)=   "MobBox(0)"
-         Item(6).Control(10)=   "MobBox(1)"
-         Item(6).Control(11)=   "MobBox(2)"
+         Item(6).Control(5)=   "MobSearch(2)"
+         Item(6).Control(6)=   "MobSearch(3)"
+         Item(6).Control(7)=   "MobBox(0)"
+         Item(6).Control(8)=   "MobBox(1)"
+         Item(6).Control(9)=   "MobBox(2)"
+         Item(6).Control(10)=   "MobSearch(0)"
+         Item(6).Control(11)=   "MobSearchBut"
          Begin XtremeSuiteControls.CheckBox MobBox 
             Height          =   255
             Index           =   0
             Left            =   1920
-            TabIndex        =   177
+            TabIndex        =   176
             Top             =   480
             Width           =   1215
             _Version        =   851972
             _ExtentX        =   2143
             _ExtentY        =   450
             _StockProps     =   79
-            Caption         =   "CheckBox10"
+            Caption         =   "AutoSearch"
             UseVisualStyle  =   -1  'True
          End
-         Begin XtremeSuiteControls.PushButton MobSearch 
+         Begin XtremeSuiteControls.PushButton MobSearchBut 
             Height          =   495
-            Index           =   4
             Left            =   5040
-            TabIndex        =   176
+            TabIndex        =   175
             Top             =   1920
             Width           =   1455
             _Version        =   851972
@@ -197,21 +296,21 @@ Begin VB.Form Form1
             Height          =   495
             Index           =   3
             Left            =   5040
-            TabIndex        =   175
+            TabIndex        =   174
             Top             =   960
             Width           =   1455
             _Version        =   851972
             _ExtentX        =   2566
             _ExtentY        =   873
             _StockProps     =   79
-            Caption         =   "PushButton4"
+            Caption         =   "Get X, Y"
             UseVisualStyle  =   -1  'True
          End
          Begin XtremeSuiteControls.PushButton MobSearch 
             Height          =   495
             Index           =   2
             Left            =   5040
-            TabIndex        =   174
+            TabIndex        =   173
             Top             =   480
             Width           =   1455
             _Version        =   851972
@@ -226,7 +325,7 @@ Begin VB.Form Form1
             Appearance      =   0  'Flat
             Height          =   405
             Left            =   1920
-            TabIndex        =   171
+            TabIndex        =   170
             Top             =   2040
             Width           =   1455
          End
@@ -246,7 +345,7 @@ Begin VB.Form Form1
             ItemData        =   "Form1.frx":0000
             Left            =   3480
             List            =   "Form1.frx":0002
-            TabIndex        =   170
+            TabIndex        =   169
             Top             =   480
             Width           =   1455
          End
@@ -256,7 +355,7 @@ Begin VB.Form Form1
             ItemData        =   "Form1.frx":0004
             Left            =   120
             List            =   "Form1.frx":0006
-            TabIndex        =   169
+            TabIndex        =   168
             Top             =   480
             Width           =   1695
          End
@@ -297,19 +396,6 @@ Begin VB.Form Form1
             _StockProps     =   79
             Caption         =   "Settings"
             UseVisualStyle  =   -1  'True
-            Begin XtremeSuiteControls.PushButton PushButton37 
-               Height          =   375
-               Left            =   1320
-               TabIndex        =   166
-               Top             =   2520
-               Width           =   975
-               _Version        =   851972
-               _ExtentX        =   1720
-               _ExtentY        =   661
-               _StockProps     =   79
-               Caption         =   "Mob Tara"
-               UseVisualStyle  =   -1  'True
-            End
             Begin XtremeSuiteControls.PushButton PushButton35 
                Height          =   375
                Left            =   120
@@ -566,16 +652,16 @@ Begin VB.Form Form1
          Begin VB.CommandButton Command9 
             Caption         =   "Görev Check"
             Height          =   495
-            Left            =   -66040
+            Left            =   -64600
             TabIndex        =   141
-            Top             =   2040
+            Top             =   2160
             Visible         =   0   'False
             Width           =   1095
          End
          Begin VB.CommandButton Command3 
             Caption         =   "Görev VER"
             Height          =   450
-            Left            =   -67240
+            Left            =   -64600
             TabIndex        =   111
             Top             =   2640
             Visible         =   0   'False
@@ -584,9 +670,9 @@ Begin VB.Form Form1
          Begin VB.CommandButton Command1 
             Caption         =   "Görev AL"
             Height          =   495
-            Left            =   -67240
+            Left            =   -64600
             TabIndex        =   94
-            Top             =   2040
+            Top             =   1680
             Visible         =   0   'False
             Width           =   1095
          End
@@ -640,11 +726,11 @@ Begin VB.Form Form1
             FillStyle       =   0  'Solid
             ForeColor       =   &H80000008&
             Height          =   375
-            Left            =   -65440
+            Left            =   -65320
             ScaleHeight     =   345
             ScaleWidth      =   345
             TabIndex        =   3
-            Top             =   120
+            Top             =   3840
             Visible         =   0   'False
             Width           =   375
          End
@@ -1530,7 +1616,7 @@ Begin VB.Form Form1
             Height          =   375
             Left            =   -64960
             TabIndex        =   4
-            Top             =   120
+            Top             =   3840
             Visible         =   0   'False
             Width           =   1485
             _Version        =   851972
@@ -1546,9 +1632,9 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.CheckBox CheckBox1 
             Height          =   255
-            Left            =   -64960
+            Left            =   -65320
             TabIndex        =   87
-            Top             =   480
+            Top             =   3480
             Visible         =   0   'False
             Width           =   975
             _Version        =   851972
@@ -2095,7 +2181,7 @@ Begin VB.Form Form1
          Begin MSComctlLib.ListView lwMob 
             Height          =   1695
             Left            =   1920
-            TabIndex        =   168
+            TabIndex        =   167
             Top             =   2520
             Width           =   4605
             _ExtentX        =   8123
@@ -2143,7 +2229,7 @@ Begin VB.Form Form1
             Height          =   375
             Index           =   1
             Left            =   2520
-            TabIndex        =   172
+            TabIndex        =   171
             Top             =   1560
             Width           =   855
             _Version        =   851972
@@ -2157,7 +2243,7 @@ Begin VB.Form Form1
             Height          =   1695
             Index           =   0
             Left            =   120
-            TabIndex        =   173
+            TabIndex        =   172
             Top             =   2520
             Width           =   1695
             _Version        =   851972
@@ -2171,7 +2257,7 @@ Begin VB.Form Form1
             Height          =   255
             Index           =   1
             Left            =   1920
-            TabIndex        =   178
+            TabIndex        =   177
             Top             =   720
             Width           =   1335
             _Version        =   851972
@@ -2185,7 +2271,7 @@ Begin VB.Form Form1
             Height          =   255
             Index           =   2
             Left            =   1920
-            TabIndex        =   179
+            TabIndex        =   178
             Top             =   960
             Width           =   1455
             _Version        =   851972
@@ -2343,18 +2429,18 @@ Begin VB.Form Form1
             BorderStyle     =   1  'Fixed Single
             Caption         =   "ID"
             Height          =   255
-            Left            =   -64240
+            Left            =   -66880
             TabIndex        =   117
-            Top             =   3600
+            Top             =   1560
             Visible         =   0   'False
             Width           =   735
          End
          Begin XtremeSuiteControls.Label L 
             Height          =   255
             Index           =   5
-            Left            =   -64960
+            Left            =   -67600
             TabIndex        =   114
-            Top             =   3360
+            Top             =   1200
             Visible         =   0   'False
             Width           =   615
             _Version        =   851972
@@ -2370,9 +2456,9 @@ Begin VB.Form Form1
          Begin XtremeSuiteControls.Label L 
             Height          =   255
             Index           =   4
-            Left            =   -64960
+            Left            =   -67600
             TabIndex        =   116
-            Top             =   3600
+            Top             =   1560
             Visible         =   0   'False
             Width           =   615
             _Version        =   851972
@@ -2497,9 +2583,9 @@ Begin VB.Form Form1
             BorderStyle     =   1  'Fixed Single
             Caption         =   "ID"
             Height          =   255
-            Left            =   -64240
+            Left            =   -66880
             TabIndex        =   115
-            Top             =   3360
+            Top             =   1200
             Visible         =   0   'False
             Width           =   735
          End
@@ -2538,7 +2624,7 @@ Begin VB.Form Form1
             Caption         =   "1"
             ForeColor       =   &H80000011&
             Height          =   195
-            Left            =   -65560
+            Left            =   -67960
             TabIndex        =   120
             Top             =   3960
             Visible         =   0   'False
@@ -2548,7 +2634,7 @@ Begin VB.Form Form1
             Caption         =   "Seconds Usage of Bot"
             ForeColor       =   &H80000011&
             Height          =   195
-            Left            =   -65200
+            Left            =   -67600
             TabIndex        =   121
             Top             =   3960
             Visible         =   0   'False
@@ -2678,14 +2764,14 @@ Begin VB.Form Form1
    Begin VB.Timer Tml 
       Interval        =   100
       Left            =   9240
-      Top             =   2640
+      Top             =   2760
    End
-   Begin VB.Frame Frame8 
+   Begin VB.Frame outsideboxes 
       Caption         =   "Timers"
       Height          =   2655
-      Left            =   7080
+      Left            =   6960
       TabIndex        =   131
-      Top             =   0
+      Top             =   120
       Width           =   3135
       Begin VB.Timer minor 
          Enabled         =   0   'False
@@ -2847,7 +2933,7 @@ Begin VB.Form Form1
    Begin VB.Timer Timer22 
       Interval        =   1000
       Left            =   9720
-      Top             =   2640
+      Top             =   2760
    End
    Begin VB.ListBox moblist 
       Height          =   450
@@ -2955,6 +3041,7 @@ Begin VB.Form Form1
          BackColor       =   &H00C0FFFF&
          Caption         =   "MobY"
          Height          =   195
+         Index           =   0
          Left            =   120
          TabIndex        =   127
          Top             =   480
@@ -2964,6 +3051,7 @@ Begin VB.Form Form1
          BackColor       =   &H00C0FFFF&
          Caption         =   "PT Bilgi"
          Height          =   375
+         Index           =   0
          Left            =   120
          TabIndex        =   128
          Top             =   960
@@ -2974,6 +3062,7 @@ Begin VB.Form Form1
          BackColor       =   &H00C0FFFF&
          Caption         =   "Mobx"
          Height          =   195
+         Index           =   0
          Left            =   120
          TabIndex        =   124
          Top             =   240
@@ -2984,16 +3073,188 @@ Begin VB.Form Form1
          BackColor       =   &H00C0FFFF&
          Caption         =   "DusmanID"
          Height          =   195
+         Index           =   0
          Left            =   600
          TabIndex        =   125
          Top             =   240
          Width           =   750
       End
    End
+   Begin VB.Label Labelboss 
+      Alignment       =   2  'Center
+      Caption         =   "100"
+      Height          =   255
+      Index           =   16
+      Left            =   2640
+      TabIndex        =   198
+      Top             =   5040
+      Width           =   615
+   End
+   Begin VB.Label Labelboss 
+      Alignment       =   2  'Center
+      Caption         =   "100"
+      Height          =   255
+      Index           =   15
+      Left            =   3480
+      TabIndex        =   197
+      Top             =   6960
+      Width           =   615
+   End
+   Begin VB.Label Labelboss 
+      Alignment       =   2  'Center
+      Caption         =   "100"
+      Height          =   255
+      Index           =   14
+      Left            =   3480
+      TabIndex        =   196
+      Top             =   6720
+      Width           =   615
+   End
+   Begin VB.Label Labelboss 
+      Alignment       =   2  'Center
+      Caption         =   "100"
+      Height          =   255
+      Index           =   13
+      Left            =   3480
+      TabIndex        =   195
+      Top             =   6480
+      Width           =   615
+   End
+   Begin VB.Label Labelboss 
+      Alignment       =   2  'Center
+      Caption         =   "100"
+      Height          =   255
+      Index           =   12
+      Left            =   3480
+      TabIndex        =   194
+      Top             =   6240
+      Width           =   615
+   End
+   Begin VB.Label Labelboss 
+      Alignment       =   2  'Center
+      Caption         =   "100"
+      Height          =   255
+      Index           =   11
+      Left            =   3480
+      TabIndex        =   193
+      Top             =   6000
+      Width           =   615
+   End
+   Begin VB.Label Labelboss 
+      Alignment       =   2  'Center
+      Caption         =   "100"
+      Height          =   255
+      Index           =   10
+      Left            =   3480
+      TabIndex        =   192
+      Top             =   5760
+      Width           =   615
+   End
+   Begin VB.Label Labelboss 
+      Alignment       =   2  'Center
+      Caption         =   "100"
+      Height          =   255
+      Index           =   9
+      Left            =   3480
+      TabIndex        =   191
+      Top             =   5520
+      Width           =   615
+   End
+   Begin VB.Label Labelboss 
+      Alignment       =   2  'Center
+      Caption         =   "100"
+      Height          =   255
+      Index           =   3
+      Left            =   2640
+      TabIndex        =   190
+      Top             =   6120
+      Width           =   615
+   End
+   Begin VB.Label Labelboss 
+      Alignment       =   2  'Center
+      Caption         =   "100"
+      Height          =   255
+      Index           =   0
+      Left            =   2640
+      TabIndex        =   189
+      Top             =   5280
+      Width           =   615
+   End
+   Begin VB.Label Labelboss 
+      Alignment       =   2  'Center
+      Caption         =   "100"
+      Height          =   255
+      Index           =   1
+      Left            =   2640
+      TabIndex        =   188
+      Top             =   5520
+      Width           =   615
+   End
+   Begin VB.Label Labelboss 
+      Alignment       =   2  'Center
+      Caption         =   "100"
+      Height          =   255
+      Index           =   2
+      Left            =   2640
+      TabIndex        =   187
+      Top             =   5880
+      Width           =   615
+   End
+   Begin VB.Label Labelboss 
+      Alignment       =   2  'Center
+      Caption         =   "100"
+      Height          =   255
+      Index           =   4
+      Left            =   2640
+      TabIndex        =   186
+      Top             =   6360
+      Width           =   615
+   End
+   Begin VB.Label Labelboss 
+      Alignment       =   2  'Center
+      Caption         =   "100"
+      Height          =   255
+      Index           =   5
+      Left            =   2640
+      TabIndex        =   185
+      Top             =   6600
+      Width           =   615
+   End
+   Begin VB.Label Labelboss 
+      Alignment       =   2  'Center
+      Caption         =   "100"
+      Height          =   255
+      Index           =   6
+      Left            =   2640
+      TabIndex        =   184
+      Top             =   6960
+      Width           =   615
+   End
+   Begin VB.Label Labelboss 
+      Alignment       =   2  'Center
+      Caption         =   "100"
+      Height          =   255
+      Index           =   7
+      Left            =   2640
+      TabIndex        =   183
+      Top             =   7320
+      Width           =   615
+   End
+   Begin VB.Label Labelboss 
+      Alignment       =   2  'Center
+      Caption         =   "100"
+      Height          =   255
+      Index           =   8
+      Left            =   2640
+      TabIndex        =   182
+      Top             =   7680
+      Width           =   615
+   End
    Begin VB.Label Label3 
       BackColor       =   &H0080C0FF&
       Caption         =   "9"
       Height          =   255
+      Index           =   0
       Left            =   26880
       TabIndex        =   133
       Top             =   6840
@@ -3011,7 +3272,9 @@ Attribute VB_Exposed = False
 
 
 
-
+Dim iID As Long
+Dim MobBase As Long, MobID As Long
+Dim DasKafa As Integer, KelKafa As Integer
 Private Const MAX_PATH = 260
 
 Private Declare Function GetSystemDirectory Lib "kernel32" Alias _
@@ -3036,6 +3299,42 @@ Private Function GetSystemPath() As String
             GetSystemPath = ""
         End If
 End Function
+
+Private Sub ara_Timer()
+On Error Resume Next
+Dim L As Integer
+    If lstMobName.ListCount > 0 Then
+        lwMob.ListItems.Clear
+        
+        For i = 0 To lstMobName.ListCount - 1
+            For L = 0 To lstMap.ListCount - 1
+                If InStr(LCase(lstMap.List(L)), LCase(lstMobName.List(i))) > 0 Then
+                    
+                        MobID = lstMap.ItemData(L)
+                        MobBase = GetTargetBase(MobID)
+                        Paket "1D0100" & FormatHex(Hex(MobID), 4)
+                        Paket "22" & FormatHex(Hex(MobID), 4)
+                        If ReadStringAuto(MobBase + KO_OFF_NAME) <> "" Then
+                            Set lstview = lwMob.ListItems.add(, , MobID)
+                            lstview.ListSubItems.add , , ReadStringAuto(MobBase + KO_OFF_NAME)
+                            lstview.ListSubItems.add , , ReadLong(MobBase + KO_OFF_HP)
+                            lstview.ListSubItems.add , , ReadFloat(MobBase + KO_OFF_X)
+                            lstview.ListSubItems.add , , ReadFloat(MobBase + KO_OFF_Y)
+                        End If
+                
+                End If
+            Next
+        Next
+    End If
+If lwMob.ListItems(1).SubItems(3) > 0 Then: Labelboss(0).Caption = lwMob.ListItems(1).SubItems(3)
+If lwMob.ListItems(2).SubItems(3) > 0 Then: Labelboss(1).Caption = lwMob.ListItems(2).SubItems(3)
+If lwMob.ListItems(3).SubItems(3) > 0 Then: Labelboss(2).Caption = lwMob.ListItems(3).SubItems(3)
+If lwMob.ListItems(4).SubItems(3) > 0 Then: Labelboss(3).Caption = lwMob.ListItems(4).SubItems(3)
+If lwMob.ListItems(5).SubItems(3) > 0 Then: Labelboss(4).Caption = lwMob.ListItems(5).SubItems(3)
+If lwMob.ListItems(6).SubItems(3) > 0 Then: Labelboss(5).Caption = lwMob.ListItems(6).SubItems(3)
+If lwMob.ListItems(7).SubItems(3) > 0 Then: Labelboss(6).Caption = lwMob.ListItems(7).SubItems(3)
+If lwMob.ListItems(8).SubItems(3) > 0 Then: Labelboss(7).Caption = lwMob.ListItems(8).SubItems(3)
+End Sub
 
 Private Sub Check10_Click()
 If Check10.value = 1 Then
@@ -3511,6 +3810,8 @@ Combo3.ListIndex = 0
 Combo4.ListIndex = 0
 'Quests
 
+'MobSearch
+AyarlarýOkuHarita
 
 'WebBrowser1.Navigate "about:blank"
 'WebBrowser1.Navigate "http://www.agsystems.xyz"
@@ -3540,6 +3841,24 @@ Private Sub Frame4_DragDrop(Source As Control, X As Single, Y As Single)
 End Sub
 
 Private Sub Frame1_DragDrop(Index As Integer, Source As Control, X As Single, Y As Single)
+End Sub
+
+Private Sub frm5c_Timer()
+If MobBox(0).value = 1 Then
+Form1.Caption = "ASKoxp" + "-" + (CharName) + "-" + CharServer + "-" + CharZoneIndex
+'End If
+'If AlarmCal.Enabled = True Then
+' WindowState = vbshow
+End If
+End Sub
+
+Private Sub Hpleriekle_Timer()
+Hpler.Clear
+For i = 1 To lwMob.ListItems.COUNT
+If val(lwMob.ListItems(i).SubItems(2)) > val(HpText.Text) Then
+Hpler.AddItem lwMob.ListItems(i).SubItems(2)
+End If
+Next i
 End Sub
 
 Private Sub intihar_Timer()
@@ -3575,6 +3894,18 @@ DispatchMailSlot
 
 End Sub
 
+Private Sub lstMap_DblClick()
+lstMobName.AddItem lstMap.SelCount
+End Sub
+
+Private Sub lstMobName_DblClick()
+lstMobName.RemoveItem lstMobName.ListIndex
+End Sub
+
+Private Sub lwMob_DblClick()
+If CharId > "0000" And CharHP > 0 Then: Runner lwMob.SelectedItem.SubItems(3) - 10, lwMob.SelectedItem.SubItems(4)
+End Sub
+
 Private Sub mana_Timer()
 Canpottime = Canpottime - 1
 Manapottime = Manapottime - 1
@@ -3605,6 +3936,117 @@ Takipsh Mobx, MobY 'Kordinatyürü
 End If
 
 End If
+End Sub
+
+
+
+
+Private Sub MobBox_Click(MobClick As Integer)
+Select Case MobClick
+
+Case 0
+
+If MobBox(0).value = 1 Then
+ara.Enabled = True
+OtoSaatKayýt.Enabled = True
+Else
+ara.Enabled = False
+OtoSaatKayýt.Enabled = False
+End If
+
+
+End Select
+End Sub
+
+Private Sub MobSearch_Click(Tus As Integer)
+Select Case Tus
+    
+    Case 0
+    
+    iID = val(txtFid.Text)
+    MobSearch(0).Enabled = False
+    lstMap.Clear
+    tmrFind.Enabled = True
+    
+    Case 1
+
+    If txtMobName.Text <> "" Then
+        lstMobName.AddItem txtMobName.Text
+        txtMobName.Text = ""
+        txtMobName.SetFocus
+    End If
+    
+    Case 2
+    
+      lstMobName.Clear
+    
+    Case 3
+
+Labelboss(0).Caption = Labelboss(16).Caption
+Labelboss(1).Caption = Labelboss(9).Caption
+Labelboss(2).Caption = Labelboss(10).Caption
+Labelboss(3).Caption = Labelboss(11).Caption
+Labelboss(4).Caption = Labelboss(12).Caption
+Labelboss(5).Caption = Labelboss(13).Caption
+Labelboss(6).Caption = Labelboss(14).Caption
+Labelboss(7).Caption = Labelboss(15).Caption
+    
+   
+    
+        
+    End Select
+End Sub
+
+Private Sub MobSearchBut_Click()
+Dim L As Integer
+If lstMobName.ListCount > 0 Then
+        lwMob.ListItems.Clear
+        
+        For i = 0 To lstMobName.ListCount - 1
+            For L = 0 To lstMap.ListCount - 1
+                If InStr(LCase(lstMap.List(L)), LCase(lstMobName.List(i))) > 0 Then
+                    
+                        MobID = lstMap.ItemData(L)
+                        MobBase = GetTargetBase(MobID)
+                        Paket "1D0100" & FormatHex(Hex(MobID), 4)
+                        Paket "22" & FormatHex(Hex(MobID), 4)
+                        If ReadStringAuto(MobBase + KO_OFF_NAME) <> "" Then
+                            Set lstview = lwMob.ListItems.add(, , MobID)
+                            lstview.ListSubItems.add , , ReadStringAuto(MobBase + KO_OFF_NAME)
+                            lstview.ListSubItems.add , , ReadLong(MobBase + KO_OFF_HP)
+                            lstview.ListSubItems.add , , ReadFloat(MobBase + KO_OFF_X)
+                            lstview.ListSubItems.add , , ReadFloat(MobBase + KO_OFF_Y)
+                        End If
+                    
+                End If
+            Next
+        Next
+    End If
+End Sub
+
+Private Sub OtoSaatKayýt_Timer()
+On Error Resume Next
+DasKafa = DasKafa + 1
+
+For i = 1 To lwMob.ListItems.COUNT
+If lwMob.ListItems(i).SubItems(2) > HpText.Text And DasKafa = "1" Then
+If Labelboss(16).Caption + "2" < lwMob.ListItems(1).SubItems(3) Or Labelboss(16).Caption - "2" > lwMob.ListItems(1).SubItems(3) Or _
+Labelboss(9).Caption + "2" < lwMob.ListItems(2).SubItems(3) Or Labelboss(9).Caption - "2" > lwMob.ListItems(2).SubItems(3) Or _
+Labelboss(10) + "2" < lwMob.ListItems(3).SubItems(3) Or Labelboss(10).Caption - "2" > lwMob.ListItems(3).SubItems(3) Or _
+Labelboss(11) + "2" < lwMob.ListItems(4).SubItems(3) Or Labelboss(11).Caption - "2" > lwMob.ListItems(4).SubItems(3) Or _
+Labelboss(12) + "2" < lwMob.ListItems(5).SubItems(3) Or Labelboss(12).Caption - "2" > lwMob.ListItems(5).SubItems(3) Or _
+Labelboss(13) + "2" < lwMob.ListItems(6).SubItems(3) Or Labelboss(13).Caption - "2" > lwMob.ListItems(6).SubItems(3) Or _
+Labelboss(14) + "2" < lwMob.ListItems(7).SubItems(3) Or Labelboss(14).Caption - "2" > lwMob.ListItems(7).SubItems(3) Or _
+Labelboss(15) + "2" < lwMob.ListItems(8).SubItems(3) Or Labelboss(15).Caption - "2" > lwMob.ListItems(8).SubItems(3) Then
+Open App.Path & "\RadarLog.txt" For Append As #1
+    Print #1, CharServer & " - " & CharZoneIndex & " - " & lwMob.ListItems(i).SubItems(1) & " - HP : " & lwMob.ListItems(i).SubItems(2) & " - Saat > " & Left(Time, 5) & " & Tarih > " & Date
+Close #1
+End If
+End If
+If DasKafa >= "60" Then
+DasKafa = "0"
+End If
+Next
 End Sub
 
 Private Sub OTOzCheck_Click()
@@ -3886,7 +4328,7 @@ On Error Resume Next
 End Sub
 
 Private Sub PushButton37_Click()
-Form5.Show
+
 End Sub
 
 Private Sub PushButton4_Click()
@@ -4042,8 +4484,8 @@ End Sub
 
 Private Sub Timer22_Timer()
 Label15.Caption = Label15.Caption + 1
-Label6 = Mobx
-Label4 = MobY
+Label6(0) = Mobx
+Label4(0) = MobY
 Label666.Caption = CharId
 Label22.Caption = MobID
 'DispatchMailSlot RecvHandle
@@ -4270,6 +4712,75 @@ Label9.Caption = CharY 'ReadFloat(KO_ADR_CHR + KO_OFF_Y)
 ''Follow Start''
 
 ''Follow End''
+End Sub
+
+Private Sub tmrFind_Timer()
+Dim Base As Long, mID As Long, targetName As String, i As Long
+    tmrFind2.Enabled = True
+    For i = 0 To 5
+        Paket "1D0100" & FormatHex(Hex(iID + i), 4)
+        MobSearch(0).Caption = iID + i & "/" & val(txtLid.Text)
+        Pause 0.001
+    Next
+    If iID >= val(txtLid.Text) Then
+        tmrFind.Enabled = False
+        MobSearch(0).Enabled = True
+        MobSearch(0).Caption = "Searching"
+    End If
+    iID = iID + 5
+End Sub
+
+Private Sub tmrFind2_Timer()
+Dim targetName As String, tekrar As Long
+    Dim EBP As Long, FEnd As Long, ESI As Long, EAX As Long, mob_addr As Long
+    EBP = ReadLong(ReadLong(KO_FLDB) + &H34)
+    FEnd = ReadLong(ReadLong(EBP + 4) + 4)
+    ESI = ReadLong(EBP)
+    
+    While ESI <> EBP
+        mob_addr = ReadLong(ESI + &H10)
+        If mob_addr = 0 Then Exit Sub
+        tekrar = tekrar + 1
+        If tekrar > 5000 Then Exit Sub
+        
+        targetName = ReadStringAuto(mob_addr + KO_OFF_NAME)
+        
+        If targetName = "Raged Captain" Then GoTo nextmob
+        
+        If lstMap.ListCount > 0 Then
+            For i = 0 To lstMap.ListCount - 1
+                If lstMap.ItemData(i) = ReadLong(mob_addr + KO_OFF_ID) Then
+                    GoTo nextmob
+                End If
+            Next
+        End If
+        
+        lstMap.AddItem targetName
+        lstMap.ItemData(lstMap.NewIndex) = ReadLong(mob_addr + KO_OFF_ID)
+        
+nextmob:
+        EAX = ReadLong(ESI + 8)
+        If ReadLong(ESI + 8) <> FEnd Then
+            While ReadLong(EAX) <> FEnd
+                tekrar = tekrar + 1
+                If tekrar > 5000 Then Exit Sub
+                EAX = ReadLong(EAX)
+            Wend
+            ESI = EAX
+        Else
+            EAX = ReadLong(ESI + 4)
+            While ESI = ReadLong(EAX + 8)
+                tekrar = tekrar + 1
+                If tekrar > 5000 Then Exit Sub
+                ESI = EAX
+                EAX = ReadLong(EAX + 4)
+            Wend
+            If ReadLong(ESI + 8) <> EAX Then
+                ESI = EAX
+            End If
+        End If
+    Wend
+    tmrFind2.Enabled = False
 End Sub
 
 Private Sub wartimer_Timer()
