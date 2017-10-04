@@ -29,7 +29,7 @@ Public Declare Function GetModuleInformation Lib "psapi.dll" (ByVal hProcess As 
 
 Public Declare Function VirtualAllocEx Lib "kernel32" (ByVal hProcess As Long, ByVal lpAddress As Long, ByVal dwSize As Long, ByVal flAllocationType As Long, ByVal flProtect As Long) As Long
 Private Declare Function GetPrivateProfileSection Lib "kernel32" Alias "GetPrivateProfileSectionA" (ByVal lpAppName As String, ByVal lpReturnedString As String, ByVal nSize As Long, ByVal lpFileName As String) As Long
-Private Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
+Private Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal Y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
 Private Declare Function WritePrivateProfileSection Lib "kernel32" Alias "WritePrivateProfileSectionA" (ByVal lpAppName As String, ByVal lPaketing As String, ByVal lpFileName As String) As Long
 Public Declare Function GetAsyncKeyState Lib "user32" (ByVal vKey As Long) As Integer
 Public Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Long
@@ -767,41 +767,41 @@ End Function
 Function sabitleme()
 WriteLong ReadLong(KO_PTR_CHR) + KO_OFF_SWIFT, 16256 '16508 denencek
 End Function
-Public Function YürüXY(X As Single, y As Single) As Boolean
-    If CInt(CharX) = CInt(X) And CInt(CharY) = CInt(y) Then YürüXY = True: Exit Function
+Public Function YürüXY(X As Single, Y As Single) As Boolean
+    If CInt(CharX) = CInt(X) And CInt(CharY) = CInt(Y) Then YürüXY = True: Exit Function
     WriteLong KO_ADR_CHR + KO_OFF_Go2, 2
     WriteFloat KO_ADR_CHR + KO_OFF_MX, X
-    WriteFloat KO_ADR_CHR + KO_OFF_MY, y
+    WriteFloat KO_ADR_CHR + KO_OFF_MY, Y
     WriteLong KO_ADR_CHR + KO_OFF_Go1, 1
     YürüXY = False: Exit Function
 End Function
-Public Function getDistance3(X As Single, y As Single) As Long
+Public Function getDistance3(X As Single, Y As Single) As Long
 Dim step1 As Long
 Dim step2 As Long
 step1 = (CharX - X) ^ 2
-step2 = (CharY - y) ^ 2
+step2 = (CharY - Y) ^ 2
 getDistance3 = Math.Round((step1 + step2) ^ (1 / 2), 0)
 End Function
-Public Function calcCoor(X As Single, y As Single, Dist)
+Public Function calcCoor(X As Single, Y As Single, Dist)
 Dim x1 As Single, y1 As Single
 Dim m As Single
 x1 = CharX - X
-y1 = CharY - y
-m = (getDistance3(X, y) - Dist) / getDistance3(X, y)
+y1 = CharY - Y
+m = (getDistance3(X, Y) - Dist) / getDistance3(X, Y)
 calcX = CharX - (x1 * m)
 calcY = CharY - (y1 * m)
 End Function
-Function Takipsh(X As Single, y As Single)
+Function Takipsh(X As Single, Y As Single)
 Dim x1 As Single, y1 As Single, z1 As Single, step_size
 Dim Dist As Long
 step_size = 6
 x1 = X
-y1 = y
+y1 = Y
 'z1 = Z
-If X > 0 And y > 0 Then
-If X <> CharX Or y <> CharY Then
-    If getDistance3(X, y) > Dist And Dist <> 0 Then
-        calcCoor X, y, Dist
+If X > 0 And Y > 0 Then
+If X <> CharX Or Y <> CharY Then
+    If getDistance3(X, Y) > Dist And Dist <> 0 Then
+        calcCoor X, Y, Dist
         x1 = calcX
         y1 = calcY
     End If
@@ -996,7 +996,15 @@ GetMBID = ReadLong(pPtr + KO_OFF_MOB)
 GetMobID = AlignDWORD(GetMBID)
 MobID = Strings.mID(GetMobID, 1, 4)
 End Function
-
+Function MobID2()
+Dim pPtr As Long
+Dim GetMobID As String
+Dim GetMBID As Long
+pPtr = ReadLong(KO_PTR_CHR)
+GetMBID = ReadLong(pPtr + KO_OFF_MOB)
+GetMobID = AlignDWORD(GetMBID)
+MobID2 = Strings.mID(GetMobID, 1, 4)
+End Function
 
 Function MobLID()
 MobLID = ReadLong(KO_ADR_CHR + KO_OFF_MOB)
@@ -1011,10 +1019,10 @@ End Function
 
 Function InventoryIDAra(ItemID As String) As Long
 InventoryOku
-Dim i As Integer, a As Long
+Dim i As Integer, A As Long
 For i = 15 To 42
-a = InStr(1, Right(ItemIntID(i), 1), ItemID, vbTextCompare)
-If a <> 0 Then
+A = InStr(1, Right(ItemIntID(i), 1), ItemID, vbTextCompare)
+If A <> 0 Then
 InventoryIDAra = i
 Exit Function
 Else
@@ -1025,10 +1033,10 @@ End Function
 
 
 Function BankaBoþAra(ItemID As String) As Long
-Dim i As Integer, a As Long
+Dim i As Integer, A As Long
 For i = 0 To 190
-a = BankItemID(i)
-If a <> 0 Then
+A = BankItemID(i)
+If A <> 0 Then
 BankaBoþAra = i
 Exit Function
 Else
@@ -1200,9 +1208,9 @@ End Function
 
 
 Function BankItemName(ByVal Slot As Integer) As String
-        Dim a, b, c, L, Adr As Long
-        a = ReadLong(KO_ADR_DLG + 516)
-        b = ReadLong(a + 296 + (4 * Slot))
+        Dim A, b, c, L, Adr As Long
+        A = ReadLong(KO_ADR_DLG + 516)
+        b = ReadLong(A + 296 + (4 * Slot))
         c = ReadLong(b + &H68)
         L = ReadLong(c + &H1C)
         If L > 15 Then
@@ -1216,9 +1224,9 @@ Function BankItemName(ByVal Slot As Integer) As String
          End If
 End Function
 Function BankItemID(ByVal Slot As Integer) As Long
-        Dim a, b, c As Long
-        a = ReadLong(KO_ADR_DLG + 516)
-        b = ReadLong(a + 296 + (4 * Slot))
+        Dim A, b, c As Long
+        A = ReadLong(KO_ADR_DLG + 516)
+        b = ReadLong(A + 296 + (4 * Slot))
         c = ReadLong(b + &H68)
         If c <> 0 Then
         BankItemID = c
@@ -1884,9 +1892,9 @@ recvHook MailSlotName, KO_RCVHKB, KO_RECVHK
 End Sub
 Public Function FindHook2(MailSlotName As String)
 Dim hooks As Long
-Dim a, b, c, d As Integer
+Dim A, b, c, d As Integer
 Randomize
-a = CInt(Rnd * 9)
+A = CInt(Rnd * 9)
 Randomize
 b = CInt(Rnd * 9)
 Randomize
@@ -1895,7 +1903,7 @@ Randomize
 d = CInt(Rnd * 9)
 Randomize
 
-MSName = "\\.\mailslot\RossMax" & Right(App.ThreadID, 2) & "_" & a & b & c & d & CInt(Rnd * 9999)
+MSName = "\\.\mailslot\RossMax" & Right(App.ThreadID, 2) & "_" & A & b & c & d & CInt(Rnd * 9999)
 Debug.Print MSName
 MSHandle = EstablishMailSlot(MSName)
 
@@ -1983,7 +1991,7 @@ Dim RecvType As Integer, targetID As Long, NameLen3 As Integer, UserName As Stri
 MsgCount = 1
 Do While MsgCount <> 0
 rc = CheckForMessages(RecvHandle, MsgCount) 'RecvHandle atýlan 1. yer
-If CBool(rc) And MsgCount > 0 Then
+If CBool(rc) And MsgCount = 0 Then
     If ReadMessage(RecvHandle, MessageBuffer, MsgCount) Then 'RecvHandle atýlan 2. yer
     code = MessageBuffer
     On Error Resume Next
@@ -2035,7 +2043,7 @@ End Sub
 Private Function ReadMessage(Handle As Long, MailMessage As String, MessagesLeft As Long)
 Dim lBytesRead As Long, lNextMsgSize As Long, lpBuffer As String
 ReadMessage = False
-Call GetMailslotInfo(Handle, ByVal 0&, lNextMsgSize, MessagesLeft, ByVal 0&)
+Call GetMailslotInfo(KO_HANDLE, ByVal 0&, lNextMsgSize, MessagesLeft, ByVal 0&)
 If MessagesLeft > 0 And lNextMsgSize <> MAILSLOT_NO_MESSAGE Then
     lBytesRead = 0
     lpBuffer = String$(lNextMsgSize, Chr$(0))
@@ -2654,7 +2662,7 @@ End Function
 Public Function Runner(crx As Single, cry As Single)
 'Sabitle
 On Error Resume Next
-Dim zipla, X, y, uzak, a, b, d, e, i, isrtx, isrty
+Dim zipla, X, Y, uzak, A, b, d, e, i, isrtx, isrty
 Dim tx As Single, ty As Single
 Dim x1 As Single, y1 As Single
 Dim bykx, byky, kckx, kcky
@@ -2662,16 +2670,16 @@ zipla = 3.5
 tx = ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_X)
 ty = ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_Y)
 X = Abs(crx - tx)
-y = Abs(cry - ty)
+Y = Abs(cry - ty)
 If tx > crx Then isrtx = -1: bykx = tx: kckx = crx Else isrtx = 1: bykx = crx: kckx = tx
 If ty > cry Then isrty = -1: byky = ty: kcky = cry Else isrty = 1: byky = cry: kcky = ty
-uzak = Int(Sqr((X ^ 2 + y ^ 2)))
+uzak = Int(Sqr((X ^ 2 + Y ^ 2)))
 If uzak > 9999 Then Exit Function
 If crx <= 0 Or cry <= 0 Then Exit Function
 For i = zipla To uzak Step zipla
-a = i ^ 2 * X ^ 2
-b = X ^ 2 + y ^ 2
-d = Sqr(a / b)
+A = i ^ 2 * X ^ 2
+b = X ^ 2 + Y ^ 2
+d = Sqr(A / b)
 e = Sqr(i ^ 2 - d ^ 2)
 x1 = Int(tx + isrtx * d)
 y1 = Int(ty + isrty * e)
