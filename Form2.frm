@@ -5,15 +5,14 @@ Begin VB.Form Form2
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Login"
    ClientHeight    =   1335
-   ClientLeft      =   45
-   ClientTop       =   390
+   ClientLeft      =   25860
+   ClientTop       =   3675
    ClientWidth     =   3120
    LinkTopic       =   "Form2"
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   1335
    ScaleWidth      =   3120
-   StartUpPosition =   3  'Windows Default
    Begin VB.Frame Frame1 
       Caption         =   "Login"
       Height          =   1335
@@ -240,7 +239,7 @@ Begin VB.Form Form2
       NoFolders       =   0   'False
       Transparent     =   0   'False
       ViewID          =   "{0057D0E0-3573-11CF-AE69-08002B2E1262}"
-      Location        =   "http:///"
+      Location        =   ""
    End
    Begin VB.Label Label8 
       Caption         =   "http://askoxp.xyz/"
@@ -313,19 +312,19 @@ End Function
 
 
 Private Sub a_DocumentComplete(ByVal pDisp As Object, URL As Variant)
-If a.LocationURL = Label8.Caption & "key_on.php" Then MsgBox "Key Activated" & vbCrLf & "Toplam Gün : " & a.Document.getelementbyid("kgun").Value, vbOKOnly, "Reg."
+If a.LocationURL = Label8.Caption & "key_on.php" Then MsgBox "Key Activated" & vbCrLf & "Toplam Gün : " & a.Document.getelementbyid("kgun").value, vbOKOnly, "Reg."
 If a.LocationURL = Label8.Caption & "key_off.php" Then MsgBox "Key install failed!", vbOKOnly, "Reg.": Command5.Enabled = True
 If a.LocationURL = Label8.Caption & "uye_var.php" Then MsgBox "Username or password has been used by another user.", vbOKOnly, "Reg."
 If a.LocationURL = Label8.Caption & "uye_ok.php" Then MsgBox "New registration succeed.", vbOKOnly, "Reg.": Command4.Enabled = False
 If a.LocationURL = Label8.Caption & "uye_off.php" Then MsgBox "New registration failed.", vbOKOnly, "Reg."
 If a.LocationURL = Label8.Caption & "uye_yok.php" Then MsgBox "Can`t find the user.", vbOKOnly, "Reg."
 If a.LocationURL = Label8.Caption & "uye_paneli.php" Then
-If a.Document.getelementbyid("kgun").Value > 0 Then
-MsgBox "Ready to go!" & vbCrLf & "Remaining days : " & a.Document.getelementbyid("kgun").Value, vbOKOnly, "Reg."
+If a.Document.getelementbyid("kgun").value > 0 Then
+MsgBox "Ready to go!" & vbCrLf & "Remaining days : " & a.Document.getelementbyid("kgun").value, vbOKOnly, "Reg."
 Form1.Show
 Unload Me
 Else
-MsgBox "Login failed." & vbCrLf & "Remaining Days : " & a.Document.getelementbyid("kgun").Value, vbOKOnly, "Reg."
+MsgBox "Login failed." & vbCrLf & "Remaining Days : " & a.Document.getelementbyid("kgun").value, vbOKOnly, "Reg."
 End If
 End If
 End Sub

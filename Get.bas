@@ -200,7 +200,7 @@ ESI = ReadLong(EBP)
 While ESI <> EBP
 Base_Addr = ReadLong(ESI + &H10)
 If Base_Addr = 0 Then Exit Function
-If ReadLong(Base_Addr + &H6A8) = 0 And ReadByte(Base_Addr + &H2A0) <> 10 Then
+If ReadLong(Base_Addr + &H6A8) = 0 And ByteOku(Base_Addr + &H2A0) <> 10 Then
     CrrDist = GetDistance(CharX, CharY, ReadFloat(Base_Addr + KO_OFF_X), ReadFloat(Base_Addr + KO_OFF_Y))
         If CrrDist < LDist Then
             LID = ReadLong(Base_Addr + KO_OFF_ID1)
@@ -226,9 +226,9 @@ EAX = ReadLong(ESI + 8)
     End If
 Dim Name As String
 If ReadLong(LBase + KO_OFF_NAMELEN) >= 15 Then
-Name = YazýOku(ReadLong(LBase + KO_OFF_NAME), False, ReadLong(LBase + KO_OFF_NAMELEN)) 'BUDA TAMAM
+Name = ReadString(ReadLong(LBase + KO_OFF_NAME), False, ReadLong(LBase + KO_OFF_NAMELEN)) 'BUDA TAMAM
 Else
-Name = YazýOku(LBase + KO_OFF_NAME, False, ReadLong(LBase + KO_OFF_NAMELEN))
+Name = ReadString(LBase + KO_OFF_NAME, False, ReadLong(LBase + KO_OFF_NAMELEN))
 End If
 If LongOku(Base_Addr + &H6A8) = 0 Then
 If ListeAra(Name, lsts) = False Then MobListe.List2.AddItem Name

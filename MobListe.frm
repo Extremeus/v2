@@ -3,8 +3,8 @@ Begin VB.Form MobListe
    BorderStyle     =   1  'Fixed Single
    Caption         =   "Mob List"
    ClientHeight    =   4695
-   ClientLeft      =   45
-   ClientTop       =   375
+   ClientLeft      =   32265
+   ClientTop       =   1050
    ClientWidth     =   4695
    BeginProperty Font 
       Name            =   "Tahoma"
@@ -20,9 +20,8 @@ Begin VB.Form MobListe
    MaxButton       =   0   'False
    ScaleHeight     =   4695
    ScaleWidth      =   4695
-   StartUpPosition =   3  'Windows Default
    Begin VB.Frame Frame2 
-      Caption         =   "   Saldýrý Yapýlacak Irk"
+      Caption         =   "   Race Attack List"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -125,7 +124,7 @@ Begin VB.Form MobListe
       End
    End
    Begin VB.Frame Frame1 
-      Caption         =   "Saldýrý Yapýlacak Yaratýk"
+      Caption         =   "Mob Attack List"
       BeginProperty Font 
          Name            =   "Tahoma"
          Size            =   8.25
@@ -238,7 +237,7 @@ Attribute VB_Exposed = False
 
 Private Sub Form_Load()
 On Error Resume Next
-FormÜstte Me, 1
+
 End Sub
 Private Sub Form_Unload(Cancel As Integer)
 Cancel = True
@@ -249,17 +248,17 @@ Private Sub List1_DblClick()
 List1.RemoveItem List1.ListIndex
 End Sub
 Private Sub TextEkle_Click()
-If KO(1).ListeAra(MobEkleText.Text, List1) = False Then
+If ListeAra(MobEkleText.Text, List1) = False Then
 List1.AddItem MobEkleText.Text
 End If
 End Sub
 Private Sub SeciliMobuEkle_Click()
-If KO(1).ListeAra(KO(1).OkuIDSName(KO(1).MobTID), List1) = False Then
-List1.AddItem KO(1).OkuIDSName(KO(1).MobTID)
+If ListeAra(OkuIDSName(MobTID), List1) = False Then
+List1.AddItem OkuIDSName(MobTID)
 End If
 End Sub
 Private Sub EtrafTaraYaratýkCmd_Click()
-KO(1).GetAllMob List1
+ GetAllMob List1
 End Sub
 Private Sub EtrafiTaraListTemizle_Click()
 List1.Clear
@@ -269,17 +268,17 @@ Private Sub List2_DblClick()
 List2.RemoveItem List2.ListIndex
 End Sub
 Private Sub TextPlayerEkleCmd_Click()
-If KO(1).ListeAra(PlayerEkleTxt.Text, List2) = False Then
+If ListeAra(PlayerEkleTxt.Text, List2) = False Then
 List2.AddItem PlayerEkleTxt.Text
 End If
 End Sub
 Private Sub SeciliPlayerEkleCmd_Click()
-If KO(1).ListeAra(KO(1).OkuIDSName(KO(1).MobTID), List2) = False Then
-List2.AddItem KO(1).OkuIDSName(KO(1).MobTID)
+If ListeAra(OkuIDSName(MobTID), List2) = False Then
+List2.AddItem OkuIDSName(MobTID)
 End If
 End Sub
 Private Sub EtrafTaraIrkCmd_Click()
-KO(1).GetAllPLayer List2
+ GetAllPLayer List2
 End Sub
 Private Sub PlayerListTemizleCmd_Click()
 List2.Clear

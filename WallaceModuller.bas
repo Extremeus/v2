@@ -236,7 +236,7 @@ GOLD As Long
 EXP As Long
 MAXEXP As Long
 ZONE As Long
-x As Long
+X As Long
 Y As Long
 Z As Long
 MX As Long
@@ -364,7 +364,7 @@ Public Const INFINITE = &HFFFF
 Public Declare Function CloseHandle Lib "kernel32" (ByVal hObject As Long) As Long
 Public Declare Function loot Lib "DLL.dll" Alias "Loot" (ByVal Slot As String, ByVal Enable As Boolean) As Boolean
 Public Declare Sub Sleep Lib "kernel32.dll" (ByVal dwMilliseconds As Long)
-Public Declare Function SetCordinate Lib "DLL.dll" (ByVal Slot As String, ByVal x As Long, ByVal Y As Long) As Boolean
+Public Declare Function SetCordinate Lib "DLL.dll" (ByVal Slot As String, ByVal X As Long, ByVal Y As Long) As Boolean
 Public Declare Function SendPacket Lib "DLL.dll" (ByVal Slot As String, ByRef lpBuffer As Any, ByVal nSize As Long) As Boolean
 Public Declare Function CharInfo Lib "DLL.dll" () As CHAR_INFORMATION
 Public Declare Function GetAsyncKeyState Lib "user32" (ByVal vKey As Long) As Integer
@@ -480,7 +480,7 @@ PartyValue = &H36C + 4
  KO_OFF_NATION = &H6A8
  KO_OFF_NT = &H6A8
  KO_OFF_MOB = &H644
- KO_OFF_MOBMAX = &H640
+ KO_OFF_MOBMAX = &H648
  KO_OFF_ID = &H680
  KO_OFF_WH = &H6C0
  KO_OFF_LOOT = &H93C
@@ -522,7 +522,7 @@ PartyValue = &H36C + 4
 End Function
 Function MobUzaklýK() As Long
 On Error Resume Next
-If mobid = "FFFF" Then MobUzaklýK = 255: Exit Function
+If MobID = "FFFF" Then MobUzaklýK = 255: Exit Function
 MobUzaklýK = Sqr((Mobx - CharX) ^ 2 + (MobY - CharY) ^ 2)
 End Function
 Function AutoMobZ() 'Z (Enemy)
@@ -577,7 +577,7 @@ Case "X": KarakterOku = KarakterX
 Case "Y": KarakterOku = KarakterY
 Case "Z": KarakterOku = KarakterZ
 Case "Level": KarakterOku = ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_LVL)
-Case "ID": KarakterOku = Strings.Mid(AlignDWORD(ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_ID)), 1, 4)
+Case "ID": KarakterOku = Strings.mID(AlignDWORD(ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_ID)), 1, 4)
 Case "Hp": KarakterOku = ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_HP)
 Case "Mp": KarakterOku = ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_MP)
 Case "MaxHP": KarakterOku = ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_MAXHP)
@@ -593,29 +593,29 @@ Case "Hýz": KarakterOku = ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_SWIFT)
 Case "Name": KarakterOku = CharÝsim(s)
 End Select
 End Function
-Function GetUzaklýk(x, Y)
+Function GetUzaklýk(X, Y)
 On Error Resume Next
-GetUzaklýk = Fix((((x - KarakterX()) * (x - KarakterX()) + (Y - KarakterY()) * (Y - KarakterY())) ^ 0.5))
+GetUzaklýk = Fix((((X - KarakterX()) * (X - KarakterX()) + (Y - KarakterY()) * (Y - KarakterY())) ^ 0.5))
 End Function
 
 Function aLLID(Sýra As Integer) As String
 Select Case Sýra
 Case 0
-aLLID = Strings.Mid(AlignDWORD(LongOku(LongOku(LongOku(LongOku(LongOku(KO_OFF_PARTY) + PartyOffset) + PartyValue) + 0) + PartyID) + 0), 1, 4)
+aLLID = Strings.mID(AlignDWORD(LongOku(LongOku(LongOku(LongOku(LongOku(KO_OFF_PARTY) + PartyOffset) + PartyValue) + 0) + PartyID) + 0), 1, 4)
 Case 1
-aLLID = Strings.Mid(AlignDWORD(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(KO_OFF_PARTY) + PartyOffset) + PartyValue) + 0)) + PartyID) + 0), 1, 4)
+aLLID = Strings.mID(AlignDWORD(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(KO_OFF_PARTY) + PartyOffset) + PartyValue) + 0)) + PartyID) + 0), 1, 4)
 Case 2
-aLLID = Strings.Mid(AlignDWORD(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(KO_OFF_PARTY) + PartyOffset) + PartyValue) + 0))) + PartyID) + 0), 1, 4)
+aLLID = Strings.mID(AlignDWORD(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(KO_OFF_PARTY) + PartyOffset) + PartyValue) + 0))) + PartyID) + 0), 1, 4)
 Case 3
-aLLID = Strings.Mid(AlignDWORD(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(KO_OFF_PARTY) + PartyOffset) + PartyValue) + 0)))) + PartyID) + 0), 1, 4)
+aLLID = Strings.mID(AlignDWORD(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(KO_OFF_PARTY) + PartyOffset) + PartyValue) + 0)))) + PartyID) + 0), 1, 4)
 Case 4
-aLLID = Strings.Mid(AlignDWORD(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(KO_OFF_PARTY) + PartyOffset) + PartyValue) + 0))))) + PartyID) + 0), 1, 4)
+aLLID = Strings.mID(AlignDWORD(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(KO_OFF_PARTY) + PartyOffset) + PartyValue) + 0))))) + PartyID) + 0), 1, 4)
 Case 5
-aLLID = Strings.Mid(AlignDWORD(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(KO_OFF_PARTY) + PartyOffset) + PartyValue) + 0)))))) + PartyID) + 0), 1, 4)
+aLLID = Strings.mID(AlignDWORD(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(KO_OFF_PARTY) + PartyOffset) + PartyValue) + 0)))))) + PartyID) + 0), 1, 4)
 Case 6
-aLLID = Strings.Mid(AlignDWORD(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(KO_OFF_PARTY) + PartyOffset) + PartyValue) + 0))))))) + PartyID) + 0), 1, 4)
+aLLID = Strings.mID(AlignDWORD(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(KO_OFF_PARTY) + PartyOffset) + PartyValue) + 0))))))) + PartyID) + 0), 1, 4)
 Case 7
-aLLID = Strings.Mid(AlignDWORD(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(KO_OFF_PARTY) + PartyOffset) + PartyValue) + 0)))))))) + PartyID) + 0), 1, 4)
+aLLID = Strings.mID(AlignDWORD(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(LongOku(KO_OFF_PARTY) + PartyOffset) + PartyValue) + 0)))))))) + PartyID) + 0), 1, 4)
 End Select
 End Function
 Function aLLNick(Sýra As Integer) As String
@@ -652,11 +652,19 @@ Function GetPlayerBase(ByVal TargetChar As Long)
         Wend
      GetPlayerBase = BaseAddr
     End Function
+Function KordinatYürü2(X As Single, Y As Single)
+If X <> CharX And Y <> CharY And X > 0 And Y > 0 Then
+WriteLong ReadLong(KO_PTR_CHR) + &HF90, 1
+WriteFloat ReadLong(KO_PTR_CHR) + &HF9C, X
+WriteFloat ReadLong(KO_PTR_CHR) + &HFA4, Y
+WriteLong ReadLong(KO_PTR_CHR) + &H3F0, 2
+End If
+End Function
 Public Sub IDTakip()
 On Error Resume Next
-Dim x As Single
+Dim X As Single
 Dim Y As Single
-x = Form1.Label17
+X = Form1.Label17
 Y = Form1.Label18
 
 If KarakterX = Mobx And KarakterY = MobY Then Exit Sub
