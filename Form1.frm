@@ -6,15 +6,23 @@ Begin VB.Form Form1
    BackColor       =   &H80000004&
    BorderStyle     =   0  'None
    Caption         =   "ASKoxp"
-   ClientHeight    =   6060
+   ClientHeight    =   4890
    ClientLeft      =   22290
    ClientTop       =   660
-   ClientWidth     =   8760
+   ClientWidth     =   6900
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   6060
-   ScaleWidth      =   8760
+   ScaleHeight     =   4890
+   ScaleWidth      =   6900
+   Begin VB.ComboBox Combo4 
+      Height          =   315
+      Left            =   10200
+      TabIndex        =   202
+      Text            =   "Combo2"
+      Top             =   4320
+      Width           =   1695
+   End
    Begin VB.Timer mobakos 
       Enabled         =   0   'False
       Interval        =   100
@@ -3408,17 +3416,7 @@ Timer20.Enabled = False
 End If
 End Sub
 
-Private Sub Check3_Click()
-If Check3.value = 1 Then
-Check3.Caption = "Bitir"
-pazartut.Enabled = True
-tut
-Else
-Check3.Caption = "Baþla"
-pazartut.Enabled = False
-End If
 
-End Sub
 
 Private Sub Check4_Click()
 If Check4.value = "1" Then
@@ -3623,18 +3621,6 @@ End Sub
 
 
 
-
-
-Private Sub Command19_Click()
-ItemleriAl
-End Sub
-
-
-
-Private Sub Command20_Click()
-ReadInn
-End Sub
-
 Private Sub Command21_Click()
 Paket "3103" & AlignDWORD("500093") & KarakterID & KarakterID & "00000000000000000000000000"
 End Sub
@@ -3742,10 +3728,7 @@ Private Sub Command5_Click()
 List5.Clear
 End Sub
 
-Private Sub Command6_Click()
-kayitet
 
-End Sub
 
 
 Private Sub Command7_Click()
@@ -4114,12 +4097,7 @@ End If
 'End If
 End Sub
 
-Private Sub pazartut_Timer()
-If Text22 = "1" Then
-Text22 = "0"
-tut
-End If
-End Sub
+
 
 Private Sub potion_Timer()
 On Error Resume Next
@@ -4378,13 +4356,7 @@ On Error Resume Next
     'InjectPatch KO_BYPASS_ADR3, "EB23"
 End Sub
 
-Private Sub PushButton37_Click()
 
-End Sub
-
-Private Sub PushButton4_Click()
-ItemleriAl
-End Sub
 
 
 
@@ -4684,33 +4656,6 @@ End Sub
 
 
 
-
-
-
-Public Function kayitet()
-On Error Resume Next
-X$ = 0
-Dim qw As Integer
-Kill App.Path & "pazartut.ini"
-For qw = 0 To List5.ListCount
-Call WriteINI("MTRX", X$, List5.List(X$), App.Path & "pazartut.ini")
-X$ = X$ + 1
-Next
-End Function
-
-Public Function tut()
-Dim X As Integer
-For X = 0 To List5.ListCount - 1
-Paket "6802"
-Paket "6805" + List5.List(X)
-Bekle (1.5)
-If X = List5.ListCount - 1 Then Text22 = "1"
-Next
-End Function
-
-
-
-
 Private Sub Timer6_Timer()
 
 If CharClass = "Priest" Then 'priest
@@ -4848,5 +4793,4 @@ End Sub
 
 Private Sub zaman_Timer()
     Süre = Süre - 1
-    Label3.Caption = Label3.Caption - 1
 End Sub
