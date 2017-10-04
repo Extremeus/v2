@@ -29,7 +29,7 @@ Public Declare Function GetModuleInformation Lib "psapi.dll" (ByVal hProcess As 
 
 Public Declare Function VirtualAllocEx Lib "kernel32" (ByVal hProcess As Long, ByVal lpAddress As Long, ByVal dwSize As Long, ByVal flAllocationType As Long, ByVal flProtect As Long) As Long
 Private Declare Function GetPrivateProfileSection Lib "kernel32" Alias "GetPrivateProfileSectionA" (ByVal lpAppName As String, ByVal lpReturnedString As String, ByVal nSize As Long, ByVal lpFileName As String) As Long
-Private Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal Y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
+Private Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
 Private Declare Function WritePrivateProfileSection Lib "kernel32" Alias "WritePrivateProfileSectionA" (ByVal lpAppName As String, ByVal lPaketing As String, ByVal lpFileName As String) As Long
 Public Declare Function GetAsyncKeyState Lib "user32" (ByVal vKey As Long) As Integer
 Public Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Long
@@ -220,7 +220,9 @@ Public KO_PID As Long
 Public packetbytes As Long
 Public codebytes As Long
 Public zMobX As Long
-Public zMobName As String, zMobID As Long, zMobY As Long, zMobZ As Long, zMobHp As Long, zMobDistance As Long
+Public zMobY As Long
+Public zMobZ As Long
+Public zMobName As String, zMobID As Long, zMobHp As Long, zMobDistance As Long
 Public zkMobName As String, zkMobID As Long, zkMobX As Long, zkMobY As Long, zkMobZ As Long, zkMobHp As Long, zkMobDistance As Long
 Public ItemLevel As Long
 Public BankadakiItemler(191) As String
@@ -765,41 +767,41 @@ End Function
 Function sabitleme()
 WriteLong ReadLong(KO_PTR_CHR) + KO_OFF_SWIFT, 16256 '16508 denencek
 End Function
-Public Function YürüXY(X As Single, Y As Single) As Boolean
-    If CInt(CharX) = CInt(X) And CInt(CharY) = CInt(Y) Then YürüXY = True: Exit Function
+Public Function YürüXY(X As Single, y As Single) As Boolean
+    If CInt(CharX) = CInt(X) And CInt(CharY) = CInt(y) Then YürüXY = True: Exit Function
     WriteLong KO_ADR_CHR + KO_OFF_Go2, 2
     WriteFloat KO_ADR_CHR + KO_OFF_MX, X
-    WriteFloat KO_ADR_CHR + KO_OFF_MY, Y
+    WriteFloat KO_ADR_CHR + KO_OFF_MY, y
     WriteLong KO_ADR_CHR + KO_OFF_Go1, 1
     YürüXY = False: Exit Function
 End Function
-Public Function getDistance3(X As Single, Y As Single) As Long
+Public Function getDistance3(X As Single, y As Single) As Long
 Dim step1 As Long
 Dim step2 As Long
 step1 = (CharX - X) ^ 2
-step2 = (CharY - Y) ^ 2
+step2 = (CharY - y) ^ 2
 getDistance3 = Math.Round((step1 + step2) ^ (1 / 2), 0)
 End Function
-Public Function calcCoor(X As Single, Y As Single, Dist)
+Public Function calcCoor(X As Single, y As Single, Dist)
 Dim x1 As Single, y1 As Single
 Dim m As Single
 x1 = CharX - X
-y1 = CharY - Y
-m = (getDistance3(X, Y) - Dist) / getDistance3(X, Y)
+y1 = CharY - y
+m = (getDistance3(X, y) - Dist) / getDistance3(X, y)
 calcX = CharX - (x1 * m)
 calcY = CharY - (y1 * m)
 End Function
-Function Takipsh(X As Single, Y As Single)
+Function Takipsh(X As Single, y As Single)
 Dim x1 As Single, y1 As Single, z1 As Single, step_size
 Dim Dist As Long
 step_size = 6
 x1 = X
-y1 = Y
+y1 = y
 'z1 = Z
-If X > 0 And Y > 0 Then
-If X <> CharX Or Y <> CharY Then
-    If getDistance3(X, Y) > Dist And Dist <> 0 Then
-        calcCoor X, Y, Dist
+If X > 0 And y > 0 Then
+If X <> CharX Or y <> CharY Then
+    If getDistance3(X, y) > Dist And Dist <> 0 Then
+        calcCoor X, y, Dist
         x1 = calcX
         y1 = calcY
     End If
@@ -981,6 +983,9 @@ CharMP = ReadLong(KO_ADR_CHR + KO_OFF_MP)
 End Function
 Function CharMaxHP()
 CharMaxHP = ReadLong(KO_ADR_CHR + KO_OFF_MAXHP)
+End Function
+Function MobID3()
+MobID = Strings.mID(AlignDWORD(ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_MOB)), 1, 4)
 End Function
 Function MobID()
 Dim pPtr As Long
@@ -2649,7 +2654,7 @@ End Function
 Public Function Runner(crx As Single, cry As Single)
 'Sabitle
 On Error Resume Next
-Dim zipla, X, Y, uzak, a, b, d, e, i, isrtx, isrty
+Dim zipla, X, y, uzak, a, b, d, e, i, isrtx, isrty
 Dim tx As Single, ty As Single
 Dim x1 As Single, y1 As Single
 Dim bykx, byky, kckx, kcky
@@ -2657,15 +2662,15 @@ zipla = 3.5
 tx = ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_X)
 ty = ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_Y)
 X = Abs(crx - tx)
-Y = Abs(cry - ty)
+y = Abs(cry - ty)
 If tx > crx Then isrtx = -1: bykx = tx: kckx = crx Else isrtx = 1: bykx = crx: kckx = tx
 If ty > cry Then isrty = -1: byky = ty: kcky = cry Else isrty = 1: byky = cry: kcky = ty
-uzak = Int(Sqr((X ^ 2 + Y ^ 2)))
+uzak = Int(Sqr((X ^ 2 + y ^ 2)))
 If uzak > 9999 Then Exit Function
 If crx <= 0 Or cry <= 0 Then Exit Function
 For i = zipla To uzak Step zipla
 a = i ^ 2 * X ^ 2
-b = X ^ 2 + Y ^ 2
+b = X ^ 2 + y ^ 2
 d = Sqr(a / b)
 e = Sqr(i ^ 2 - d ^ 2)
 x1 = Int(tx + isrtx * d)
