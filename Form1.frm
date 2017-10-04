@@ -3895,7 +3895,8 @@ DispatchMailSlot
 End Sub
 
 Private Sub lstMap_DblClick()
-lstMobName.AddItem lstMap.SelCount
+lstMobName.AddItem lstMap.Text
+
 End Sub
 
 Private Sub lstMobName_DblClick()
@@ -3998,7 +3999,7 @@ Labelboss(7).Caption = Labelboss(15).Caption
 End Sub
 
 Private Sub MobSearchBut_Click()
-Dim L As Integer
+Dim L As Long
 If lstMobName.ListCount > 0 Then
         lwMob.ListItems.Clear
         
@@ -4720,7 +4721,7 @@ Dim Base As Long, mID As Long, targetName As String, i As Long
     For i = 0 To 5
         Paket "1D0100" & FormatHex(Hex(iID + i), 4)
         MobSearch(0).Caption = iID + i & "/" & val(txtLid.Text)
-        Pause 0.001
+        'Pause 0.001
     Next
     If iID >= val(txtLid.Text) Then
         tmrFind.Enabled = False

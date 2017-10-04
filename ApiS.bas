@@ -29,7 +29,7 @@ Public Declare Function GetModuleInformation Lib "psapi.dll" (ByVal hProcess As 
 
 Public Declare Function VirtualAllocEx Lib "kernel32" (ByVal hProcess As Long, ByVal lpAddress As Long, ByVal dwSize As Long, ByVal flAllocationType As Long, ByVal flProtect As Long) As Long
 Private Declare Function GetPrivateProfileSection Lib "kernel32" Alias "GetPrivateProfileSectionA" (ByVal lpAppName As String, ByVal lpReturnedString As String, ByVal nSize As Long, ByVal lpFileName As String) As Long
-Private Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal x As Long, ByVal Y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
+Private Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal Y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
 Private Declare Function WritePrivateProfileSection Lib "kernel32" Alias "WritePrivateProfileSectionA" (ByVal lpAppName As String, ByVal lPaketing As String, ByVal lpFileName As String) As Long
 Public Declare Function GetAsyncKeyState Lib "user32" (ByVal vKey As Long) As Integer
 Public Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Long
@@ -127,6 +127,16 @@ BoxOpened As Boolean
 OpenTime As Long
 End Type
 
+Public Type THREADENTRY32
+   dwSize As Long
+   cntUsage As Long
+   th32ThreadID As Long
+   th32OwnerProcessID As Long
+   tpBasePri As Long
+   tpDeltaPri As Long
+   dwFlags As Long
+End Type
+
 Private Type MODULEENTRY32
   dwSize As Long
   th32ModuleID As Long
@@ -221,6 +231,7 @@ Public UseAutoLoot
 Public BonusFilter As Long
 Public MSName
 Public MSHandle
+Public ByteMob_Base As Long
 Public UseSitAutoAttack
 Public UseWallHack
 Public UseLupineEyes
@@ -275,6 +286,7 @@ Public KO_OFF_SWIFT As Long
 Public KO_OFF_CLASS As Long
 Public KO_OFF_ID As Long
 Public KO_OFF_MOB As Long
+Public KO_OFF_MOBMAX As Long
 Public KO_OFF_HP As Long
 Public KO_OFF_MAXHP As Long
 Public KO_OFF_MP As Long
@@ -494,12 +506,12 @@ End Function
 
 
 Public Function HookDI8() As Boolean
-Dim ret As Long
+Dim Ret As Long
 Dim lmodinfo As MODULEINFO
 DINPUT_Handle = 0
 DINPUT_Handle = FindModuleHandle("dinput8.dll")
-ret = GetModuleInformation(KO_HANDLE, DINPUT_Handle, lmodinfo, Len(lmodinfo))
-If ret <> 0 Then
+Ret = GetModuleInformation(KO_HANDLE, DINPUT_Handle, lmodinfo, Len(lmodinfo))
+If Ret <> 0 Then
 With lmodinfo
 DINPUT_EntryPoint = .EntryPoint
 DINPUT_lpBaseOfDLL = .lpBaseOfDLL
@@ -538,13 +550,13 @@ End Function
 Function FindDInputKeyPtr() As Long
 Dim pBytes() As Byte
 Dim pSize As Long
-Dim x As Long
+Dim X As Long
 pSize = DINPUT_SizeOfImage
 ReDim pBytes(1 To pSize)
 ReadByteArray DINPUT_lpBaseOfDLL, pBytes, pSize
-For x = 1 To pSize - 10
-If pBytes(x) = &H57 And pBytes(x + 1) = &H6A And pBytes(x + 2) = &H40 And pBytes(x + 3) = &H33 And pBytes(x + 4) = &HC0 And pBytes(x + 5) = &H59 And pBytes(x + 6) = &HBF Then
-FindDInputKeyPtr = val("&H" & IIf(Len(Hex(pBytes(x + 10))) = 1, "0" & Hex(pBytes(x + 10)), Hex(pBytes(x + 10))) & IIf(Len(Hex(pBytes(x + 9))) = 1, "0" & Hex(pBytes(x + 9)), Hex(pBytes(x + 9))) & IIf(Len(Hex(pBytes(x + 8))) = 1, "0" & Hex(pBytes(x + 8)), Hex(pBytes(x + 8))) & IIf(Len(Hex(pBytes(x + 7))) = 1, "0" & Hex(pBytes(x + 7)), Hex(pBytes(x + 7))))
+For X = 1 To pSize - 10
+If pBytes(X) = &H57 And pBytes(X + 1) = &H6A And pBytes(X + 2) = &H40 And pBytes(X + 3) = &H33 And pBytes(X + 4) = &HC0 And pBytes(X + 5) = &H59 And pBytes(X + 6) = &HBF Then
+FindDInputKeyPtr = val("&H" & IIf(Len(Hex(pBytes(X + 10))) = 1, "0" & Hex(pBytes(X + 10)), Hex(pBytes(X + 10))) & IIf(Len(Hex(pBytes(X + 9))) = 1, "0" & Hex(pBytes(X + 9)), Hex(pBytes(X + 9))) & IIf(Len(Hex(pBytes(X + 8))) = 1, "0" & Hex(pBytes(X + 8)), Hex(pBytes(X + 8))) & IIf(Len(Hex(pBytes(X + 7))) = 1, "0" & Hex(pBytes(X + 7)), Hex(pBytes(X + 7))))
 Exit For
 End If
 Next
@@ -603,7 +615,7 @@ ReDim pByte(1 To Len(pStr) / 2)
 j = LBound(pByte) - 1
 For i = 1 To Len(pStr) Step 2
     j = j + 1
-    pByte(j) = CByte("&H" & Mid(pStr, i, 2))
+    pByte(j) = CByte("&H" & mID(pStr, i, 2))
 Next
 End Function
 Public Sub YukarýdaTut(TheForm As Form, SetOnTop As Boolean)
@@ -666,6 +678,21 @@ End Function
 Function MobZ() As Long
 MobZ = ReadFloat(ReadLong(ReadLong(KO_PTR_DLG) + &H408) + &H80)
 End Function
+Function MobTID()
+MobTID = ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_MOB)
+End Function
+
+Function MobTargetID()
+MobTargetID = ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_MOB)
+End Function
+
+Public Function MobName()
+MobName = ReadString(ReadLong(ReadLong(ReadLong(ReadLong(KO_PTR_DLG) + &H1BC) + &HD4) + &H150), False, 25)
+End Function
+
+Public Function MobHp() As Long
+MobHp = ReadLong(ReadLong(ReadLong(ReadLong(KO_PTR_DLG) + &H1BC) + &HC4) + &HEC)
+End Function
 Public Function Hex2Byte(Paket As String, pByte() As Byte)
 On Error Resume Next
 Dim i As Long
@@ -675,7 +702,7 @@ ReDim pByte(1 To Len(Paket) / 2)
 j = LBound(pByte) - 1
 For i = 1 To Len(Paket) Step 2
     j = j + 1
-    pByte(j) = CByte("&H" & Mid(Paket, i, 2))
+    pByte(j) = CByte("&H" & mID(Paket, i, 2))
 Next
 End Function
 Public Sub Paket(Paket As String)
@@ -711,62 +738,66 @@ If packetbytes <> 0 Then
 End If
 End Function
 Function ExecuteRemoteCode(pCode() As Byte, Optional WaitExecution As Boolean = False) As Long
-Dim hThread As Long, ret As Long
+Dim hThread As Long, Ret As Long
 WriteByteArray codebytes, pCode, UBound(pCode) - LBound(pCode) + 1
   If codebytes <> 0 Then
    hThread = CreateRemoteThread(ByVal KO_HANDLE, 0, 0, ByVal codebytes, 0, 0, 0)
    If hThread Then
-      ret = WaitForSingleObject(hThread, INFINITE)
+      Ret = WaitForSingleObject(hThread, INFINITE)
    End If
    CloseHandle hThread
 End If
 End Function
-Sub AsmKodCalistir(pCode() As Byte)
-Dim hThread As Long, ret As Long
+
+
+Function AsmKodCalistir(pCode() As Byte)
+Dim hThread As Long, Ret As Long
 WriteByteArray codebytes, pCode, UBound(pCode) - LBound(pCode) + 1
   If codebytes <> 0 Then
    hThread = CreateRemoteThread(ByVal KO_HANDLE, 0, 0, ByVal codebytes, 0, 0, 0)
    If hThread Then
-      ret = WaitForSingleObject(hThread, INFINITE)
+      Ret = WaitForSingleObject(hThread, INFINITE)
    End If
    CloseHandle hThread
 End If
-End Sub
-Public Function YürüXY(x As Single, Y As Single) As Boolean
-    If CInt(CharX) = CInt(x) And CInt(CharY) = CInt(Y) Then YürüXY = True: Exit Function
+End Function
+
+
+Public Function YürüXY(X As Single, Y As Single) As Boolean
+    If CInt(CharX) = CInt(X) And CInt(CharY) = CInt(Y) Then YürüXY = True: Exit Function
     WriteLong KO_ADR_CHR + KO_OFF_Go2, 2
-    WriteFloat KO_ADR_CHR + KO_OFF_MX, x
+    WriteFloat KO_ADR_CHR + KO_OFF_MX, X
     WriteFloat KO_ADR_CHR + KO_OFF_MY, Y
     WriteLong KO_ADR_CHR + KO_OFF_Go1, 1
     YürüXY = False: Exit Function
 End Function
-Public Function getDistance3(x As Single, Y As Single) As Long
+Public Function getDistance3(X As Single, Y As Single) As Long
 Dim step1 As Long
 Dim step2 As Long
-step1 = (CharX - x) ^ 2
+step1 = (CharX - X) ^ 2
 step2 = (CharY - Y) ^ 2
 getDistance3 = Math.Round((step1 + step2) ^ (1 / 2), 0)
 End Function
-Public Function calcCoor(x As Single, Y As Single, Dist)
+Public Function calcCoor(X As Single, Y As Single, Dist)
 Dim x1 As Single, y1 As Single
 Dim m As Single
-x1 = CharX - x
+x1 = CharX - X
 y1 = CharY - Y
-m = (getDistance3(x, Y) - Dist) / getDistance3(x, Y)
+m = (getDistance3(X, Y) - Dist) / getDistance3(X, Y)
 calcX = CharX - (x1 * m)
 calcY = CharY - (y1 * m)
 End Function
-Function Takipsh(x As Single, Y As Single)
+Function Takipsh(X As Single, Y As Single)
 Dim x1 As Single, y1 As Single, z1 As Single, step_size
 Dim Dist As Long
 step_size = 6
-x1 = x
+x1 = X
 y1 = Y
 'z1 = Z
-If x > 0 And Y > 0 Then
-If x <> CharX Or Y <> CharY Then
-    If getDistance3(x, Y) > Dist And Dist <> 0 Then
-        calcCoor x, Y, Dist
+If X > 0 And Y > 0 Then
+If X <> CharX Or Y <> CharY Then
+    If getDistance3(X, Y) > Dist And Dist <> 0 Then
+        calcCoor X, Y, Dist
         x1 = calcX
         y1 = calcY
     End If
@@ -834,7 +865,7 @@ Dim TmpHex As String
 Dim i As Long
 TmpStr = ""
 For i = Len(pStrHex) To 1 Step -1
-    TmpHex = Hex(Asc(Mid(pStrHex, i, 1)))
+    TmpHex = Hex(Asc(mID(pStrHex, i, 1)))
     If Len(TmpHex) = 1 Then TmpHex = "0" & TmpHex
     TmpStr = TmpStr & TmpHex
 Next
@@ -882,17 +913,17 @@ Select Case Len(Hex(Dec))
     Case 2
     AlignDWORD = Strings.Left(DTH & "000000", Length)
     Case 3
-    AlignDWORD = Strings.Left(Strings.Mid(DTH, 2, 2) & "0" & Strings.Left(DTH, 1) & "0000", Length)
+    AlignDWORD = Strings.Left(Strings.mID(DTH, 2, 2) & "0" & Strings.Left(DTH, 1) & "0000", Length)
     Case 4
-    AlignDWORD = Strings.Left(Strings.Mid(DTH, 3, 2) & Strings.Left(DTH, 2) & "0000", Length)
+    AlignDWORD = Strings.Left(Strings.mID(DTH, 3, 2) & Strings.Left(DTH, 2) & "0000", Length)
     Case 5
-    AlignDWORD = Strings.Left(Strings.Mid(DTH, 4, 2) & Strings.Mid(DTH, 2, 2) & "0" & Strings.Left(DTH, 1), Length) & "00"
+    AlignDWORD = Strings.Left(Strings.mID(DTH, 4, 2) & Strings.mID(DTH, 2, 2) & "0" & Strings.Left(DTH, 1), Length) & "00"
     Case 6
-    AlignDWORD = Strings.Left(Strings.Mid(DTH, 5, 2) & Strings.Mid(DTH, 3, 2) & Strings.Left(DTH, 2) & "00", Length)
+    AlignDWORD = Strings.Left(Strings.mID(DTH, 5, 2) & Strings.mID(DTH, 3, 2) & Strings.Left(DTH, 2) & "00", Length)
     Case 7
-    AlignDWORD = Strings.Left(Strings.Mid(DTH, 6, 2) & Strings.Mid(DTH, 4, 2) & Strings.Mid(DTH, 2, 2) & "0" & Strings.Left(DTH, 1), Length)
+    AlignDWORD = Strings.Left(Strings.mID(DTH, 6, 2) & Strings.mID(DTH, 4, 2) & Strings.mID(DTH, 2, 2) & "0" & Strings.Left(DTH, 1), Length)
     Case 8
-    AlignDWORD = Strings.Left(Strings.Mid(DTH, 7, 2) & Strings.Mid(DTH, 5, 2) & Strings.Mid(DTH, 3, 2) & Strings.Left(DTH, 2), Length)
+    AlignDWORD = Strings.Left(Strings.mID(DTH, 7, 2) & Strings.mID(DTH, 5, 2) & Strings.mID(DTH, 3, 2) & Strings.Left(DTH, 2), Length)
 End Select
 End Function
 Function CharName()
@@ -956,7 +987,7 @@ Dim GetMBID As Long
 pPtr = ReadLong(KO_PTR_CHR)
 GetMBID = ReadLong(pPtr + KO_OFF_MOB)
 GetMobID = AlignDWORD(GetMBID)
-MobID = Strings.Mid(GetMobID, 1, 4)
+MobID = Strings.mID(GetMobID, 1, 4)
 End Function
 
 
@@ -999,17 +1030,17 @@ End If
 Next
 End Function
 Public Function HexItemID(ByVal Slot As Integer) As String
-        Dim offset, x, offset3, offset4 As Long
+        Dim offset, X, offset3, offset4 As Long
         Dim Base, Sonuc As Long
         offset = ReadLong(KO_ADR_DLG + &H1B8)
         offset = ReadLong(offset + (&H210 + (4 * Slot))) 'inventory slot
           'item id adress
         
         Sonuc = ReadLong(ReadLong(offset + &H68)) + ReadLong(ReadLong(offset + &H6C))
-        HexItemID = Strings.Mid(AlignDWORD(Sonuc), 1, 8)
+        HexItemID = Strings.mID(AlignDWORD(Sonuc), 1, 8)
 End Function
 Public Function LongItemID(ByVal Slot As Integer) As Long
-        Dim offset, x, offset3, offset4 As Long
+        Dim offset, X, offset3, offset4 As Long
         Dim Base, Sonuc As Long
         offset = ReadLong(KO_ADR_DLG + &H1B8)
         offset = ReadLong(offset + (&H210 + (4 * Slot))) 'inventory slot
@@ -1048,9 +1079,42 @@ Else
 SCKontrol = True
 End If
 End Function
+
+Function GetBase(BaseMobID As Long) As Long
+Dim xCode() As Byte, xStr As String
+If ByteMob_Base = 0 Then
+ByteMob_Base = VirtualAllocEx(KO_HANDLE, 0, 1024, MEM_COMMIT, PAGE_READWRITE)
+End If
+If ByteMob_Base <> 0 Then
+If BaseMobID > 9999 Then
+xStr = "608B0D" & AlignDWORD(KO_FLDB) & "6A01" & "68" & AlignDWORD(BaseMobID) & "BF" & AlignDWORD(KO_FMBS) & "FFD7" & "A3" & AlignDWORD(ByteMob_Base) & "61C3"
+Else
+xStr = "608B0D" & AlignDWORD(KO_FLDB) & "6A01" & "68" & AlignDWORD(BaseMobID) & "BF" & AlignDWORD(KO_FPBS) & "FFD7" & "A3" & AlignDWORD(ByteMob_Base) & "61C3"
+End If
+Hex2Byte xStr, xCode
+ExecuteRemoteCode xCode, True
+GetBase = ReadLong(ByteMob_Base)
+End If
+End Function
+
+
+Function OkuIDSName(OkuNameID As Long)
+If ReadLong(GetBase(OkuNameID) + KO_OFF_NAMEC) >= 15 Then
+OkuIDSName = ReadString(ReadLong(GetBase(OkuNameID) + KO_OFF_NAME), False, ReadLong(GetBase(OkuNameID) + KO_OFF_NAMEC))
+Else
+OkuIDSName = ReadString(GetBase(OkuNameID) + KO_OFF_NAME, False, ReadLong(GetBase(OkuNameID) + KO_OFF_NAMEC))
+End If
+End Function
+
+Public Function ListeAra(Aranan As String, Liste) As Boolean
+Dim i As Long
+For i = 0 To Liste.ListCount
+If Liste.List(i) = Aranan Then ListeAra = True: Exit For Else: ListeAra = False
+Next: End Function
+
 Public Function AraText(Kelime, Cümle) As Boolean
 Dim i As Long, Aranan As String
-For i = 1 To Len(Cümle): Aranan = Mid(Cümle, i, Len(Kelime))
+For i = 1 To Len(Cümle): Aranan = mID(Cümle, i, Len(Kelime))
 If Aranan = Kelime Then AraText = True: Exit For Else: AraText = False
 Next
 End Function
@@ -1198,19 +1262,19 @@ Function ItemleriAl()
 End Function
 
 Function BankItemName(ByVal Slot As Integer) As String
-        Dim a, b, c, L, adr As Long
+        Dim a, b, c, L, Adr As Long
         a = ReadLong(KO_ADR_DLG + 516)
         b = ReadLong(a + 296 + (4 * Slot))
         c = ReadLong(b + &H68)
         L = ReadLong(c + &H1C)
         If L > 15 Then
-          adr = ReadLong(c + &HC)
+          Adr = ReadLong(c + &HC)
           Else
-          adr = c + &HC
+          Adr = c + &HC
           End If
           BankItemName = ""
           If L > 0 Then
-              BankItemName = ReadString(adr, L)
+              BankItemName = ReadString(Adr, L)
          End If
 End Function
 Function BankItemID(ByVal Slot As Integer) As Long
@@ -1240,13 +1304,13 @@ End Sub
 
 
 Public Function HexBankItemID(ByVal Slot As Integer) As String
-        Dim offset, x, offset3, offset4 As Long
+        Dim offset, X, offset3, offset4 As Long
         Dim Base, Sonuc As Long
         offset = ReadLong(KO_ADR_DLG + 516)
         offset = ReadLong(offset + 296 + (4 * Slot))  'inventory slot
         
         Sonuc = ReadLong(ReadLong(offset + &H68)) + ReadLong(ReadLong(offset + &H6C))
-        HexBankItemID = Strings.Mid(AlignDWORD(Sonuc), 1, 8)
+        HexBankItemID = Strings.mID(AlignDWORD(Sonuc), 1, 8)
     End Function
 Function BuySC()
     Dim AlinacakSCSayisi As Long
@@ -1270,7 +1334,7 @@ Function BuySC()
             scrollext = "13"
         End If
         If AlinacakSCSayisi > 0 Or ScrollID <> "" Then
-            Paket "2101" & "30E00300" & NpcIDFinder("Charon") & "01" & ScrollID & "1B" & Strings.Mid(AlignDWORD(AlinacakSCSayisi), 1, 7) & scrollext
+            Paket "2101" & "30E00300" & NpcIDFinder("Charon") & "01" & ScrollID & "1B" & Strings.mID(AlignDWORD(AlinacakSCSayisi), 1, 7) & scrollext
             Paket "6A02"
         End If
 End Function
@@ -1285,25 +1349,25 @@ newHex = Left(newHex, 2)
 Case 4
 newHex = Right(newHex, 2) & Left(newHex, 2)
 Case 6
-newHex = Right(newHex, 2) & Mid(newHex, 3, 2) & Left(newHex, 2)
+newHex = Right(newHex, 2) & mID(newHex, 3, 2) & Left(newHex, 2)
 Case 8
-newHex = Right(newHex, 2) & Mid(newHex, 5, 2) & Mid(newHex, 3, 2) & Left(newHex, 2)
+newHex = Right(newHex, 2) & mID(newHex, 5, 2) & mID(newHex, 3, 2) & Left(newHex, 2)
 Case Else
 End Select
 FormatHex = newHex
 End Function
 
 Function KarakterID()
-KarakterID = Strings.Mid(AlignDWORD(LongOku(LongOku(KO_PTR_CHR) + KO_OFF_ID)), 1, 4)
+KarakterID = Strings.mID(AlignDWORD(LongOku(LongOku(KO_PTR_CHR) + KO_OFF_ID)), 1, 4)
 End Function
 
 Function DüþmanId()
-DüþmanId = Strings.Mid(AlignDWORD(LongOku(LongOku(KO_PTR_CHR) + KO_OFF_MOB)), 1, 4)
+DüþmanId = Strings.mID(AlignDWORD(LongOku(LongOku(KO_PTR_CHR) + KO_OFF_MOB)), 1, 4)
 End Function
 Public Sub WarriorAtak(UserID As Long, SkillNo As Long)
 On Error Resume Next
 Dim SkillID As String
-SkillID = Strings.Mid(AlignDWORD(ClassOku & Right(SkillNo, 3)), 1, 6)
+SkillID = Strings.mID(AlignDWORD(ClassOku & Right(SkillNo, 3)), 1, 6)
 Paket "3103" + SkillID + "00" + CharId + DüþmanId + "0100010000000000000000000000"
 If Form1.warcheck.value = 1 And MobUzaklýK <= 7 Then
 kUzaklýk = 7: Paket "080101" + DüþmanId + "FF000000"
@@ -1339,7 +1403,7 @@ End Function
 Public Sub StrokeAtak(UserID As Long)
 On Error Resume Next
 Dim SkillID As String
-SkillID = Strings.Mid(AlignDWORD(ClassOku & "001"), 1, 6)
+SkillID = Strings.mID(AlignDWORD(ClassOku & "001"), 1, 6)
 Paket "3103" + SkillID + "00" + CharId + DüþmanId + "0100010000000000000000000000"
 If Form1.warcheck.value = 1 And MobUzaklýK <= 7 Then
 kUzaklýk = 7: Paket "080101" + DüþmanId + "FF000000"
@@ -1422,7 +1486,7 @@ If Form1.WarList.Text = "Hellblade" Then
 SkillSeç = "580"
 End If
 
-SkillID = Strings.Mid(AlignDWORD(ClassOku & SkillSeç), 1, 6)
+SkillID = Strings.mID(AlignDWORD(ClassOku & SkillSeç), 1, 6)
 
 If SkillSeç = "001" Then
 Paket "3103" + SkillID + "00" + CharId + DüþmanId + "0100010000000000000000000000"
@@ -1603,9 +1667,9 @@ If Form1.PriList.Text = "Harsh" Then
 SkillSeç = "641"
 End If
 
-SkillID = Strings.Mid(AlignDWORD(SýnýfBul & SkillSeç), 1, 6)
-SkillID2 = Strings.Mid(AlignDWORD("211" & "620"), 1, 6)
-SkillID3 = Strings.Mid(AlignDWORD("211" & "520"), 1, 6)
+SkillID = Strings.mID(AlignDWORD(SýnýfBul & SkillSeç), 1, 6)
+SkillID2 = Strings.mID(AlignDWORD("211" & "620"), 1, 6)
+SkillID3 = Strings.mID(AlignDWORD("211" & "520"), 1, 6)
 
 If SkillSeç = "641" Then
 Paket "3103" + SkillID + "00" + KarakterID + DüþmanId + "030003" 'Harsh
@@ -1649,10 +1713,10 @@ End Function
 Function AsasSkill(UserID As Long, SkillNo As Long)
 On Error Resume Next
 If SkillNo = "1610" Or SkillNo = "1650" Then 'Yüzde ise
-Paket "3101" + Strings.Mid(AlignDWORD(ClassOku & Right(SkillNo, 3)), 1, 6) + "00" + CharId + FormatHex(Hex(UserID), 4) + FormatHex(Hex(zMobID), 4) + "0000000000000000000000001000"
-Paket "3103" + Strings.Mid(AlignDWORD(ClassOku & Right(SkillNo, 3)), 1, 6) + "00" + CharId + FormatHex(Hex(UserID), 4) + FormatHex(Hex(zMobID), 4) + "000000000000000000000000"
+Paket "3101" + Strings.mID(AlignDWORD(ClassOku & Right(SkillNo, 3)), 1, 6) + "00" + CharId + FormatHex(Hex(UserID), 4) + FormatHex(Hex(zMobID), 4) + "0000000000000000000000001000"
+Paket "3103" + Strings.mID(AlignDWORD(ClassOku & Right(SkillNo, 3)), 1, 6) + "00" + CharId + FormatHex(Hex(UserID), 4) + FormatHex(Hex(zMobID), 4) + "000000000000000000000000"
 Else
-Paket "3103" + Strings.Mid(AlignDWORD(ClassOku & Right(SkillNo, 3)), 1, 6) + "00" + CharId + FormatHex(Hex(UserID), 4) + FormatHex(Hex(zMobID), 4) + "0100010000000000000000000000"
+Paket "3103" + Strings.mID(AlignDWORD(ClassOku & Right(SkillNo, 3)), 1, 6) + "00" + CharId + FormatHex(Hex(UserID), 4) + FormatHex(Hex(zMobID), 4) + "0100010000000000000000000000"
 If Form1.Check4.value = 1 And MobUzaklýK <= 7 Then
 kUzaklýk = 7: Paket "080101" + FormatHex(Hex(UserID), 4) + FormatHex(Hex(zMobID), 4) + "FF000000"
 End If
@@ -1730,7 +1794,7 @@ If Form1.List3.Text = "Power Shot" Then
 SkillSeç = "585"
 End If
 
-SkillID = Strings.Mid(AlignDWORD(SýnýfBul & SkillSeç), 1, 6)
+SkillID = Strings.mID(AlignDWORD(SýnýfBul & SkillSeç), 1, 6)
 'Paket "3101" & SkillID & "00" & CharID & MobID & "0000000000000000000000000D00"
 'Paket "3102" & SkillID & "00" & CharID & MobID & "000000000000010000000000"
 'Paket "3103" & SkillID & "00" & CharID & MobID & "0000000000000100000000000000"
@@ -1827,19 +1891,19 @@ End Function
 Public Function sekizliok()
 If MobID = "FFFF" Then
 Else
-Paket "3101" & Strings.Mid(AlignDWORD(CharClass & "515"), 1, 6) & "00" & KarakterID & MobID & "00000000000000000000000000000D00"
-Paket "3102" & Strings.Mid(AlignDWORD(CharClass & "515"), 1, 6) & "00" & KarakterID & MobID & "00000D020600B7019BFF0000F0000F00"
-Paket "3103" & Strings.Mid(AlignDWORD(CharClass & "515"), 1, 6) & "00" & KarakterID & MobID & "00000000000000000400000000000000"
-Paket "3103" & Strings.Mid(AlignDWORD(CharClass & "515"), 1, 6) & "00" & KarakterID & MobID & "00000000000000000400000000000000"
-Paket "3103" & Strings.Mid(AlignDWORD(CharClass & "515"), 1, 6) & "00" & KarakterID & MobID & "00000000000000000500000000000000"
+Paket "3101" & Strings.mID(AlignDWORD(CharClass & "515"), 1, 6) & "00" & KarakterID & MobID & "00000000000000000000000000000D00"
+Paket "3102" & Strings.mID(AlignDWORD(CharClass & "515"), 1, 6) & "00" & KarakterID & MobID & "00000D020600B7019BFF0000F0000F00"
+Paket "3103" & Strings.mID(AlignDWORD(CharClass & "515"), 1, 6) & "00" & KarakterID & MobID & "00000000000000000400000000000000"
+Paket "3103" & Strings.mID(AlignDWORD(CharClass & "515"), 1, 6) & "00" & KarakterID & MobID & "00000000000000000400000000000000"
+Paket "3103" & Strings.mID(AlignDWORD(CharClass & "515"), 1, 6) & "00" & KarakterID & MobID & "00000000000000000500000000000000"
 Bekle (50)
-Paket "3101" & Strings.Mid(AlignDWORD(CharClass & "555"), 1, 6) & "00" & KarakterID & MobID & "00000000000000000000000000000F00"
-Paket "3102" & Strings.Mid(AlignDWORD(CharClass & "555"), 1, 6) & "00" & KarakterID & MobID & "00000D020600B7019BFF0000F0000F00"
-Paket "3103" & Strings.Mid(AlignDWORD(CharClass & "555"), 1, 6) & "00" & KarakterID & MobID & "00000000000000001500000000000000"
-Paket "3103" & Strings.Mid(AlignDWORD(CharClass & "555"), 1, 6) & "00" & KarakterID & MobID & "00000000000000001500000000000000"
-Paket "3103" & Strings.Mid(AlignDWORD(CharClass & "555"), 1, 6) & "00" & KarakterID & MobID & "00000000000000001600000000000000"
-Paket "3103" & Strings.Mid(AlignDWORD(CharClass & "555"), 1, 6) & "00" & KarakterID & MobID & "00000000000000001700000000000000"
-Paket "3103" & Strings.Mid(AlignDWORD(CharClass & "555"), 1, 6) & "00" & KarakterID & MobID & "00000000000000001800000000000000"
+Paket "3101" & Strings.mID(AlignDWORD(CharClass & "555"), 1, 6) & "00" & KarakterID & MobID & "00000000000000000000000000000F00"
+Paket "3102" & Strings.mID(AlignDWORD(CharClass & "555"), 1, 6) & "00" & KarakterID & MobID & "00000D020600B7019BFF0000F0000F00"
+Paket "3103" & Strings.mID(AlignDWORD(CharClass & "555"), 1, 6) & "00" & KarakterID & MobID & "00000000000000001500000000000000"
+Paket "3103" & Strings.mID(AlignDWORD(CharClass & "555"), 1, 6) & "00" & KarakterID & MobID & "00000000000000001500000000000000"
+Paket "3103" & Strings.mID(AlignDWORD(CharClass & "555"), 1, 6) & "00" & KarakterID & MobID & "00000000000000001600000000000000"
+Paket "3103" & Strings.mID(AlignDWORD(CharClass & "555"), 1, 6) & "00" & KarakterID & MobID & "00000000000000001700000000000000"
+Paket "3103" & Strings.mID(AlignDWORD(CharClass & "555"), 1, 6) & "00" & KarakterID & MobID & "00000000000000001800000000000000"
 End If
 End Function
 
@@ -1859,7 +1923,7 @@ End Function
 Public Function StringToHex(ByVal StrToHex As String) As String
 Dim strTemp As String, strReturn As String, i As Long
 For i = 1 To Len(StrToHex)
-    strTemp = Hex$(Asc(Mid$(StrToHex, i, 1)))
+    strTemp = Hex$(Asc(mID$(StrToHex, i, 1)))
     If Len(strTemp) = 1 Then strTemp = "0" & strTemp
     strReturn = strReturn & strTemp
 Next i
@@ -2026,30 +2090,30 @@ If CBool(rc) And MsgCount > 0 Then
     Select Case Asc(Left(MessageBuffer, 1))
   
     Case 16 ' Chat Oku
-        RecvType = Hex2Val(Mid(MessageBuffer, 2, 1))
-        targetID = Hex2Val(Mid(MessageBuffer, 4, 2))
-        NameLen3 = Hex2Val(Mid(MessageBuffer, 6, 1))
-        UserName = Mid(MessageBuffer, 7, NameLen3)
-        ChatLen = Hex2Val(Mid(MessageBuffer, 7 + NameLen3, 1))
-        ChatString = Mid(MessageBuffer, 9 + NameLen3, ChatLen)
+        RecvType = Hex2Val(mID(MessageBuffer, 2, 1))
+        targetID = Hex2Val(mID(MessageBuffer, 4, 2))
+        NameLen3 = Hex2Val(mID(MessageBuffer, 6, 1))
+        UserName = mID(MessageBuffer, 7, NameLen3)
+        ChatLen = Hex2Val(mID(MessageBuffer, 7 + NameLen3, 1))
+        ChatString = mID(MessageBuffer, 9 + NameLen3, ChatLen)
         Form1.List6.AddItem ChatString
         
 
 
-If Form1.otokutuche.value = 1 And Mid(StringToHex(MessageBuffer), 1, 2) = "23" Then
-           BoxID2 = Mid(StringToHex(MessageBuffer), 7, 8)
+If Form1.otokutuche.value = 1 And mID(StringToHex(MessageBuffer), 1, 2) = "23" Then
+           BoxID2 = mID(StringToHex(MessageBuffer), 7, 8)
            Paket "24" & BoxID2
         End If
-           If Form1.otokutuche.value = 1 And Mid(StringToHex(MessageBuffer), 1, 2) = "24" Then
-                BoxID = Mid(StringToHex(MessageBuffer), 3, 4)
-                ItemID1 = Mid(StringToHex(MessageBuffer), 13, 8)
-                ItemID2 = Mid(StringToHex(MessageBuffer), 25, 8)
-                ItemID3 = Mid(StringToHex(MessageBuffer), 37, 8)
-                ItemID4 = Mid(StringToHex(MessageBuffer), 49, 8)
-                RecAl1 = Mid(StringToHex(MessageBuffer), 7, 4)
-                RecAl2 = Mid(StringToHex(MessageBuffer), 21, 4)
-                RecAl3 = Mid(StringToHex(MessageBuffer), 33, 4)
-                RecAl4 = Mid(StringToHex(MessageBuffer), 45, 4)
+           If Form1.otokutuche.value = 1 And mID(StringToHex(MessageBuffer), 1, 2) = "24" Then
+                BoxID = mID(StringToHex(MessageBuffer), 3, 4)
+                ItemID1 = mID(StringToHex(MessageBuffer), 13, 8)
+                ItemID2 = mID(StringToHex(MessageBuffer), 25, 8)
+                ItemID3 = mID(StringToHex(MessageBuffer), 37, 8)
+                ItemID4 = mID(StringToHex(MessageBuffer), 49, 8)
+                RecAl1 = mID(StringToHex(MessageBuffer), 7, 4)
+                RecAl2 = mID(StringToHex(MessageBuffer), 21, 4)
+                RecAl3 = mID(StringToHex(MessageBuffer), 33, 4)
+                RecAl4 = mID(StringToHex(MessageBuffer), 45, 4)
                 If ItemID2 > 0 Then: Paket "26" & BoxID & RecAl1 & ItemID2 & "01" & "00"
                 Bekle 200
                 If ItemID3 > 0 Then: Paket "26" & BoxID & RecAl1 & ItemID3 & "02" & "00"
@@ -2250,7 +2314,7 @@ If .Text = "90" Then
 SkillSeç = "016"
 End If
 End With
-SkillID = Strings.Mid(AlignDWORD(490 & SkillSeç), 1, 6)
+SkillID = Strings.mID(AlignDWORD(490 & SkillSeç), 1, 6)
 Paket "3103" + SkillID + "00" + KarakterID + KarakterID + "0000000000000000000000000000"
 End Sub
 Public Sub CanPot()
@@ -2273,7 +2337,7 @@ If .Text = "45" Then
 SkillSeç = "010"
 End If
 End With
-SkillID = Strings.Mid(AlignDWORD(490 & SkillSeç), 1, 6)
+SkillID = Strings.mID(AlignDWORD(490 & SkillSeç), 1, 6)
 Paket "3103" + SkillID + "00" + KarakterID + KarakterID + "0000000000000000000000000000"
 End Sub
 Function KarakterHP()
@@ -2289,11 +2353,11 @@ Function KarakterMaxMP()
 KarakterMaxMP = LongOku(LongOku(KO_PTR_CHR) + KO_OFF_MAXMP)
 End Function
 Public Sub Minör()
-Paket "3103" + Strings.Mid(AlignDWORD(SýnýfBul & "705"), 1, 6) + "00" + KarakterID + KarakterID + "0000000000000000000000000000"
+Paket "3103" + Strings.mID(AlignDWORD(SýnýfBul & "705"), 1, 6) + "00" + KarakterID + KarakterID + "0000000000000000000000000000"
 End Sub
 
 Function CharId()
-CharId = Strings.Mid(AlignDWORD(ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_ID)), 1, 4)
+CharId = Strings.mID(AlignDWORD(ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_ID)), 1, 4)
 End Function
 
 
@@ -2328,7 +2392,7 @@ Function HexString(ByVal EvalString As String) As String
         EvalString = Trim(EvalString)
         intStrLen = Len(EvalString)
         For intLoop = 1 To intStrLen
-            strHex = strHex & Hex(Asc(Mid(EvalString, intLoop, 1)))
+            strHex = strHex & Hex(Asc(mID(EvalString, intLoop, 1)))
         Next
         HexString = strHex
         HexSözcük = strHex
@@ -2689,23 +2753,23 @@ End Function
 Public Function Runner(crx As Single, cry As Single)
 'Sabitle
 On Error Resume Next
-Dim zipla, x, Y, uzak, a, b, d, e, i, isrtx, isrty
+Dim zipla, X, Y, uzak, a, b, d, e, i, isrtx, isrty
 Dim tx As Single, ty As Single
 Dim x1 As Single, y1 As Single
 Dim bykx, byky, kckx, kcky
-zipla = 3
+zipla = 5
 tx = ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_X)
 ty = ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_Y)
-x = Abs(crx - tx)
+X = Abs(crx - tx)
 Y = Abs(cry - ty)
 If tx > crx Then isrtx = -1: bykx = tx: kckx = crx Else isrtx = 1: bykx = crx: kckx = tx
 If ty > cry Then isrty = -1: byky = ty: kcky = cry Else isrty = 1: byky = cry: kcky = ty
-uzak = Int(Sqr((x ^ 2 + Y ^ 2)))
+uzak = Int(Sqr((X ^ 2 + Y ^ 2)))
 If uzak > 9999 Then Exit Function
 If crx <= 0 Or cry <= 0 Then Exit Function
 For i = zipla To uzak Step zipla
-a = i ^ 2 * x ^ 2
-b = x ^ 2 + Y ^ 2
+a = i ^ 2 * X ^ 2
+b = X ^ 2 + Y ^ 2
 d = Sqr(a / b)
 e = Sqr(i ^ 2 - d ^ 2)
 x1 = Int(tx + isrtx * d)
