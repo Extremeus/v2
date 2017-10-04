@@ -29,7 +29,7 @@ Public Declare Function GetModuleInformation Lib "psapi.dll" (ByVal hProcess As 
 
 Public Declare Function VirtualAllocEx Lib "kernel32" (ByVal hProcess As Long, ByVal lpAddress As Long, ByVal dwSize As Long, ByVal flAllocationType As Long, ByVal flProtect As Long) As Long
 Private Declare Function GetPrivateProfileSection Lib "kernel32" Alias "GetPrivateProfileSectionA" (ByVal lpAppName As String, ByVal lpReturnedString As String, ByVal nSize As Long, ByVal lpFileName As String) As Long
-Private Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal X As Long, ByVal Y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
+Private Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal x As Long, ByVal Y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
 Private Declare Function WritePrivateProfileSection Lib "kernel32" Alias "WritePrivateProfileSectionA" (ByVal lpAppName As String, ByVal lPaketing As String, ByVal lpFileName As String) As Long
 Public Declare Function GetAsyncKeyState Lib "user32" (ByVal vKey As Long) As Integer
 Public Declare Function FindWindow Lib "user32" Alias "FindWindowA" (ByVal lpClassName As String, ByVal lpWindowName As String) As Long
@@ -191,6 +191,11 @@ End Enum
 '--------------------------------------------------------------------------------------------------------------------------
 '--------------------------------------------------------------------------------------------------------------------------
 'Variables
+Public calcX As Single
+Public calcY As Single
+Public KO_FNC_ISEN As Long
+Public mobtime As Long
+Public FuncPtr As Long
 Public Const lngNull = 0
 Public LootBox(1 To 20) As LootBoxStruct
 Public Items() As ItemStruct
@@ -204,7 +209,8 @@ Public KO_ADR_DLG As Long
 Public KO_PID As Long
 Public packetbytes As Long
 Public codebytes As Long
-Public zMobName As String, zMobID As Long, zMobX As Long, zMobY As Long, zMobZ As Long, zMobHp As Long, zMobDistance As Long
+Public zMobX As Long
+Public zMobName As String, zMobID As Long, zMobY As Long, zMobZ As Long, zMobHp As Long, zMobDistance As Long
 Public zkMobName As String, zkMobID As Long, zkMobX As Long, zkMobY As Long, zkMobZ As Long, zkMobHp As Long, zkMobDistance As Long
 Public ItemLevel As Long
 Public BankadakiItemler(191) As String
@@ -532,13 +538,13 @@ End Function
 Function FindDInputKeyPtr() As Long
 Dim pBytes() As Byte
 Dim pSize As Long
-Dim X As Long
+Dim x As Long
 pSize = DINPUT_SizeOfImage
 ReDim pBytes(1 To pSize)
 ReadByteArray DINPUT_lpBaseOfDLL, pBytes, pSize
-For X = 1 To pSize - 10
-If pBytes(X) = &H57 And pBytes(X + 1) = &H6A And pBytes(X + 2) = &H40 And pBytes(X + 3) = &H33 And pBytes(X + 4) = &HC0 And pBytes(X + 5) = &H59 And pBytes(X + 6) = &HBF Then
-FindDInputKeyPtr = val("&H" & IIf(Len(Hex(pBytes(X + 10))) = 1, "0" & Hex(pBytes(X + 10)), Hex(pBytes(X + 10))) & IIf(Len(Hex(pBytes(X + 9))) = 1, "0" & Hex(pBytes(X + 9)), Hex(pBytes(X + 9))) & IIf(Len(Hex(pBytes(X + 8))) = 1, "0" & Hex(pBytes(X + 8)), Hex(pBytes(X + 8))) & IIf(Len(Hex(pBytes(X + 7))) = 1, "0" & Hex(pBytes(X + 7)), Hex(pBytes(X + 7))))
+For x = 1 To pSize - 10
+If pBytes(x) = &H57 And pBytes(x + 1) = &H6A And pBytes(x + 2) = &H40 And pBytes(x + 3) = &H33 And pBytes(x + 4) = &HC0 And pBytes(x + 5) = &H59 And pBytes(x + 6) = &HBF Then
+FindDInputKeyPtr = val("&H" & IIf(Len(Hex(pBytes(x + 10))) = 1, "0" & Hex(pBytes(x + 10)), Hex(pBytes(x + 10))) & IIf(Len(Hex(pBytes(x + 9))) = 1, "0" & Hex(pBytes(x + 9)), Hex(pBytes(x + 9))) & IIf(Len(Hex(pBytes(x + 8))) = 1, "0" & Hex(pBytes(x + 8)), Hex(pBytes(x + 8))) & IIf(Len(Hex(pBytes(x + 7))) = 1, "0" & Hex(pBytes(x + 7)), Hex(pBytes(x + 7))))
 Exit For
 End If
 Next
@@ -726,14 +732,62 @@ WriteByteArray codebytes, pCode, UBound(pCode) - LBound(pCode) + 1
    CloseHandle hThread
 End If
 End Sub
-Public Function YürüXY(X As Single, Y As Single) As Boolean
-    If CInt(CharX) = CInt(X) And CInt(CharY) = CInt(Y) Then YürüXY = True: Exit Function
+Public Function YürüXY(x As Single, Y As Single) As Boolean
+    If CInt(CharX) = CInt(x) And CInt(CharY) = CInt(Y) Then YürüXY = True: Exit Function
     WriteLong KO_ADR_CHR + KO_OFF_Go2, 2
-    WriteFloat KO_ADR_CHR + KO_OFF_MX, X
+    WriteFloat KO_ADR_CHR + KO_OFF_MX, x
     WriteFloat KO_ADR_CHR + KO_OFF_MY, Y
     WriteLong KO_ADR_CHR + KO_OFF_Go1, 1
     YürüXY = False: Exit Function
 End Function
+Public Function getDistance3(x As Single, Y As Single) As Long
+Dim step1 As Long
+Dim step2 As Long
+step1 = (CharX - x) ^ 2
+step2 = (CharY - Y) ^ 2
+getDistance3 = Math.Round((step1 + step2) ^ (1 / 2), 0)
+End Function
+Public Function calcCoor(x As Single, Y As Single, Dist)
+Dim x1 As Single, y1 As Single
+Dim m As Single
+x1 = CharX - x
+y1 = CharY - Y
+m = (getDistance3(x, Y) - Dist) / getDistance3(x, Y)
+calcX = CharX - (x1 * m)
+calcY = CharY - (y1 * m)
+End Function
+Function Takipsh(x As Single, Y As Single)
+Dim x1 As Single, y1 As Single, z1 As Single, step_size
+Dim Dist As Long
+step_size = 6
+x1 = x
+y1 = Y
+'z1 = Z
+If x > 0 And Y > 0 Then
+If x <> CharX Or Y <> CharY Then
+    If getDistance3(x, Y) > Dist And Dist <> 0 Then
+        calcCoor x, Y, Dist
+        x1 = calcX
+        y1 = calcY
+    End If
+    
+    If getDistance3(x1, y1) > step_size Then
+        calcCoor x1, y1, getDistance3(x1, y1) - step_size
+        x1 = calcX
+        y1 = calcY
+    End If
+    
+'GoCoordinate CLng(x1), CLng(y1)
+WriteFloat ReadLong(KO_PTR_CHR) + KO_OFF_X, x1
+WriteFloat ReadLong(KO_PTR_CHR) + KO_OFF_Y, y1
+WriteFloat ReadLong(KO_PTR_CHR) + KO_OFF_Z, CharZ
+Paket "06" & FormatHex(Hex(CInt(CharX) * 10), 4) & FormatHex(Hex(CInt(CharY) * 10), 4) & FormatHex(Hex(CInt(CharZ) * 10), 4) & "2D0003" _
+& FormatHex(Hex(CInt(CharX) * 10), 4) & FormatHex(Hex(CInt(CharY) * 10), 4) & FormatHex(Hex(CInt(CharZ) * 10), 4)
+End If
+End If
+End Function
+
+
 Public Function SpeedHack(XKor As Integer, YKor As Integer) As Boolean
 If CInt(CharX) = XKor And CInt(CharY) = YKor Then SpeedHack = True: Exit Function
 'SeksClub
@@ -945,7 +999,7 @@ End If
 Next
 End Function
 Public Function HexItemID(ByVal Slot As Integer) As String
-        Dim offset, X, offset3, offset4 As Long
+        Dim offset, x, offset3, offset4 As Long
         Dim Base, Sonuc As Long
         offset = ReadLong(KO_ADR_DLG + &H1B8)
         offset = ReadLong(offset + (&H210 + (4 * Slot))) 'inventory slot
@@ -955,7 +1009,7 @@ Public Function HexItemID(ByVal Slot As Integer) As String
         HexItemID = Strings.Mid(AlignDWORD(Sonuc), 1, 8)
 End Function
 Public Function LongItemID(ByVal Slot As Integer) As Long
-        Dim offset, X, offset3, offset4 As Long
+        Dim offset, x, offset3, offset4 As Long
         Dim Base, Sonuc As Long
         offset = ReadLong(KO_ADR_DLG + &H1B8)
         offset = ReadLong(offset + (&H210 + (4 * Slot))) 'inventory slot
@@ -1000,50 +1054,78 @@ For i = 1 To Len(Cümle): Aranan = Mid(Cümle, i, Len(Kelime))
 If Aranan = Kelime Then AraText = True: Exit For Else: AraText = False
 Next
 End Function
+Function GetTargetable(Base As Long) As Boolean
+    Dim pCode() As Byte, pStr As String
 
-Function NpcIDFinder(FindName As String) As String
-Dim EBP As Long, ESI As Long, EAX As Long, FEnd As Long
-Dim base_addr As Long
+    If FuncPtr <> 0 Then
+        pStr = "608B0D" & AlignDWORD(KO_PTR_CHR) & _
+            "68" & AlignDWORD(Base) & _
+            "B8" & AlignDWORD(KO_FNC_ISEN) & _
+            "FFD0A2" & AlignDWORD(FuncPtr) & _
+            "61C3"
+        Hex2Byte pStr, pCode
+        
+       ' ExecuteRemoteCode pCode, True
+        GetTargetable = True 'ReadByte(FuncPtr)
+    End If
+End Function
+Function GetZMob()
+On Error Resume Next
+Dim lastDist As Long, currDist As Long, lastID As Long, lastBase As Long, LastMoBID As Long, tekrar As Long
+Dim EBP As Long, FEnd As Long, ESI As Long, EAX As Long, mob_addr As Long
+lastDist = 100
 zMobName = ""
+zMobID = 0
 zMobX = 0
 zMobY = 0
 zMobZ = 0
-zMobID = 0
-Paket "1D"
-EBP = ReadLong(ReadLong(ReadLong(KO_FLDB) + &H34 + &H1D))
+zMobDistance = 0
+EBP = ReadLong(ReadLong(KO_FLDB) + &H34)
 FEnd = ReadLong(ReadLong(EBP + 4) + 4)
 ESI = ReadLong(EBP)
 While ESI <> EBP
-base_addr = ReadLong(ESI + &H10)
+mob_addr = ReadLong(ESI + &H10)
+If mob_addr = 0 Then Exit Function
+tekrar = tekrar + 1
+If tekrar > 1000 Then Exit Function
+ If ReadLong(mob_addr + KO_OFF_NT) = 0 And ByteOku(mob_addr + &H2A4) = 0 And GetTargetable(mob_addr) = True Then
+    currDist = NewKordinatUzaklýk(ReadFloat(mob_addr + KO_OFF_X), ReadFloat(mob_addr + KO_OFF_Y))
+        If currDist < lastDist Then
+        lastID = ReadLong(mob_addr + KO_OFF_ID)
+        lastBase = mob_addr
+        lastDist = currDist
+        End If
+    End If
 EAX = ReadLong(ESI + 8)
-If ReadLong(ESI + 8) <> FEnd Then
-While ReadLong(EAX) <> FEnd
-EAX = ReadLong(EAX)
+    If ReadLong(ESI + 8) <> FEnd Then
+        While ReadLong(EAX) <> FEnd
+        tekrar = tekrar + 1
+        If tekrar > 1000 Then Exit Function
+        EAX = ReadLong(EAX)
+        Wend
+    ESI = EAX
+    Else
+    EAX = ReadLong(ESI + 4)
+        While ESI = ReadLong(EAX + 8)
+        tekrar = tekrar + 1
+        If tekrar > 1000 Then Exit Function
+        ESI = EAX
+        EAX = ReadLong(EAX + 4)
+        Wend
+        If ReadLong(ESI + 8) <> EAX Then
+        ESI = EAX
+        End If
+    End If
 Wend
-ESI = EAX
-Else
-EAX = ReadLong(ESI + 4)
-While ESI = ReadLong(EAX + 8)
-ESI = EAX
-EAX = ReadLong(EAX + 4)
-Wend
-If ReadLong(ESI + 8) <> EAX Then
-ESI = EAX
-End If
-End If
-If ReadLong(base_addr + &H698) > 15 Then
-zMobName = ReadString(ReadLong(base_addr + &H688), ReadLong(base_addr + &H698))
-Else
-zMobName = ReadString(base_addr + &H688, ReadLong(base_addr + &H698))
-End If
-
-If AraText(FindName, zMobName) = True Then
-NpcIDFinder = AlignDWORD(ReadLong(base_addr + KO_OFF_ID), 4)
-zMobZ = ReadFloat(base_addr + KO_OFF_Z)
-zMobID = AlignDWORD(ReadLong(base_addr + KO_OFF_ID), 4)
-End If
-Wend
+zMobName = ReadString(ReadLong(lastBase + KO_OFF_NAME), ReadLong(lastBase + KO_OFF_NAME + 4))
+zMobID = lastID
+zMobX = ReadFloat(lastBase + KO_OFF_X)
+zMobY = ReadFloat(lastBase + KO_OFF_Y)
+zMobZ = ReadFloat(lastBase + KO_OFF_Z)
+zMobDistance = lastDist
 End Function
+
+
 
 Function ItemleriAl()
     Select Case Form1.Combo4.ListIndex
@@ -1158,7 +1240,7 @@ End Sub
 
 
 Public Function HexBankItemID(ByVal Slot As Integer) As String
-        Dim offset, X, offset3, offset4 As Long
+        Dim offset, x, offset3, offset4 As Long
         Dim Base, Sonuc As Long
         offset = ReadLong(KO_ADR_DLG + 516)
         offset = ReadLong(offset + 296 + (4 * Slot))  'inventory slot
@@ -2607,23 +2689,23 @@ End Function
 Public Function Runner(crx As Single, cry As Single)
 'Sabitle
 On Error Resume Next
-Dim zipla, X, Y, uzak, a, b, d, e, i, isrtx, isrty
+Dim zipla, x, Y, uzak, a, b, d, e, i, isrtx, isrty
 Dim tx As Single, ty As Single
 Dim x1 As Single, y1 As Single
 Dim bykx, byky, kckx, kcky
 zipla = 3
 tx = ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_X)
 ty = ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_Y)
-X = Abs(crx - tx)
+x = Abs(crx - tx)
 Y = Abs(cry - ty)
 If tx > crx Then isrtx = -1: bykx = tx: kckx = crx Else isrtx = 1: bykx = crx: kckx = tx
 If ty > cry Then isrty = -1: byky = ty: kcky = cry Else isrty = 1: byky = cry: kcky = ty
-uzak = Int(Sqr((X ^ 2 + Y ^ 2)))
+uzak = Int(Sqr((x ^ 2 + Y ^ 2)))
 If uzak > 9999 Then Exit Function
 If crx <= 0 Or cry <= 0 Then Exit Function
 For i = zipla To uzak Step zipla
-a = i ^ 2 * X ^ 2
-b = X ^ 2 + Y ^ 2
+a = i ^ 2 * x ^ 2
+b = x ^ 2 + Y ^ 2
 d = Sqr(a / b)
 e = Sqr(i ^ 2 - d ^ 2)
 x1 = Int(tx + isrtx * d)

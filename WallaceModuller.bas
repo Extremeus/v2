@@ -1,4 +1,5 @@
 Attribute VB_Name = "KoxpModular"
+Public KO_OFF_NT As Long
 'Pot and Mana
 Public Canpottime As Long
 Public Manapottime As Long
@@ -315,15 +316,7 @@ Public Type PROCESS
    ExeFile As String
 End Type
 
-Public Type THREADENTRY32
-   dwSize As Long
-   cntUsage As Long
-   th32ThreadID As Long
-   th32OwnerProcessID As Long
-   tpBasePri As Long
-   tpDeltaPri As Long
-   dwFlags As Long
-End Type
+
 Public Const TH32CS_SNAPPROCESS As Long = 2&
 Public Declare Function OpenProcess Lib "kernel32" (ByVal dwDesiredAccess As Long, ByVal bInheritHandle As Long, ByVal dwProcessId As Long) As Long
 Public Const PROCESS_CREATE_THREAD = &H2
@@ -385,7 +378,7 @@ Public Declare Function CreateP Lib "DLL.dll" (ByVal Direct As String, ByVal DLL
 
 Public Type PARTY_INFORMATION
 COUNT As Long
-M(8) As PARTY_VAULE
+m(8) As PARTY_VAULE
 End Type
 
 
@@ -456,7 +449,7 @@ Function OffsetleriYükle()
  KO_FLDB = &HE13EEC
  'KO_ITOB = &HE13D24
  'KO_ITEB = &HE13D2C
- 'KO_ISEN = &H55B960
+ KO_FNC_ISEN = &H55B960
  'KO_SMMB = &HE0ED18
  'KO_STMB = &H5174B0
  KO_FNCZ = &H51ED20
@@ -485,7 +478,9 @@ PartyValue = &H36C + 4
  KO_OFF_NAMEC = &H698
  KO_OFF_CLASS = &H6B0
  KO_OFF_NATION = &H6A8
+ KO_OFF_NT = &H6A8
  KO_OFF_MOB = &H644
+ KO_OFF_MOBMAX = &H640
  KO_OFF_ID = &H680
  KO_OFF_WH = &H6C0
  KO_OFF_LOOT = &H93C
@@ -527,7 +522,7 @@ PartyValue = &H36C + 4
 End Function
 Function MobUzaklýK() As Long
 On Error Resume Next
-If MobID = "FFFF" Then MobUzaklýK = 255: Exit Function
+If mobid = "FFFF" Then MobUzaklýK = 255: Exit Function
 MobUzaklýK = Sqr((Mobx - CharX) ^ 2 + (MobY - CharY) ^ 2)
 End Function
 Function AutoMobZ() 'Z (Enemy)
