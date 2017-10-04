@@ -6,15 +6,15 @@ Begin VB.Form Form1
    BackColor       =   &H80000004&
    BorderStyle     =   0  'None
    Caption         =   "ASKoxp"
-   ClientHeight    =   4860
+   ClientHeight    =   4890
    ClientLeft      =   22290
    ClientTop       =   660
-   ClientWidth     =   6900
+   ClientWidth     =   6960
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   4860
-   ScaleWidth      =   6900
+   ScaleHeight     =   4890
+   ScaleWidth      =   6960
    Begin XtremeSuiteControls.GroupBox GroupBox6 
       Height          =   4575
       Left            =   120
@@ -174,7 +174,7 @@ Begin VB.Form Form1
          PaintManager.BoldSelected=   -1  'True
          PaintManager.HotTracking=   -1  'True
          ItemCount       =   7
-         SelectedItem    =   6
+         SelectedItem    =   1
          Item(0).Caption =   "Status"
          Item(0).ControlCount=   38
          Item(0).Control(0)=   "pHP"
@@ -268,9 +268,10 @@ Begin VB.Form Form1
          Begin XtremeSuiteControls.CheckBox MobBox 
             Height          =   255
             Index           =   0
-            Left            =   1920
+            Left            =   -68080
             TabIndex        =   176
             Top             =   480
+            Visible         =   0   'False
             Width           =   1215
             _Version        =   851972
             _ExtentX        =   2143
@@ -281,9 +282,10 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.PushButton MobSearchBut 
             Height          =   495
-            Left            =   5040
+            Left            =   -64960
             TabIndex        =   175
             Top             =   1920
+            Visible         =   0   'False
             Width           =   1455
             _Version        =   851972
             _ExtentX        =   2566
@@ -295,9 +297,10 @@ Begin VB.Form Form1
          Begin XtremeSuiteControls.PushButton MobSearch 
             Height          =   495
             Index           =   3
-            Left            =   5040
+            Left            =   -64960
             TabIndex        =   174
             Top             =   960
+            Visible         =   0   'False
             Width           =   1455
             _Version        =   851972
             _ExtentX        =   2566
@@ -309,9 +312,10 @@ Begin VB.Form Form1
          Begin XtremeSuiteControls.PushButton MobSearch 
             Height          =   495
             Index           =   2
-            Left            =   5040
+            Left            =   -64960
             TabIndex        =   173
             Top             =   480
+            Visible         =   0   'False
             Width           =   1455
             _Version        =   851972
             _ExtentX        =   2566
@@ -324,9 +328,10 @@ Begin VB.Form Form1
             Alignment       =   2  'Center
             Appearance      =   0  'Flat
             Height          =   405
-            Left            =   1920
+            Left            =   -68080
             TabIndex        =   170
             Top             =   2040
+            Visible         =   0   'False
             Width           =   1455
          End
          Begin VB.ListBox lstMobName 
@@ -343,20 +348,22 @@ Begin VB.Form Form1
             ForeColor       =   &H80000007&
             Height          =   1980
             ItemData        =   "Form1.frx":0000
-            Left            =   3480
+            Left            =   -66520
             List            =   "Form1.frx":0002
             TabIndex        =   169
             Top             =   480
+            Visible         =   0   'False
             Width           =   1455
          End
          Begin VB.ListBox lstMap 
             Appearance      =   0  'Flat
             Height          =   1980
             ItemData        =   "Form1.frx":0004
-            Left            =   120
+            Left            =   -69880
             List            =   "Form1.frx":0006
             TabIndex        =   168
             Top             =   480
+            Visible         =   0   'False
             Width           =   1695
          End
          Begin VB.CheckBox warcheck 
@@ -374,21 +381,19 @@ Begin VB.Form Form1
             EndProperty
             ForeColor       =   &H80000008&
             Height          =   315
-            Left            =   -65080
+            Left            =   4920
             MaskColor       =   &H00C0FFFF&
             Style           =   1  'Graphical
             TabIndex        =   161
             Top             =   3000
             UseMaskColor    =   -1  'True
-            Visible         =   0   'False
             Width           =   615
          End
          Begin XtremeSuiteControls.GroupBox GroupBox3 
             Height          =   3000
-            Left            =   -69880
+            Left            =   120
             TabIndex        =   153
             Top             =   360
-            Visible         =   0   'False
             Width           =   3255
             _Version        =   851972
             _ExtentX        =   5741
@@ -682,11 +687,10 @@ Begin VB.Form Form1
             Caption         =   "Auto Z"
             ForeColor       =   &H80000008&
             Height          =   315
-            Left            =   -64360
+            Left            =   5640
             Style           =   1  'Graphical
             TabIndex        =   112
             Top             =   3000
-            Visible         =   0   'False
             Width           =   855
          End
          Begin VB.CheckBox Check5 
@@ -706,13 +710,12 @@ Begin VB.Form Form1
             EndProperty
             ForeColor       =   &H80000008&
             Height          =   750
-            Left            =   -69880
+            Left            =   120
             MaskColor       =   &H8000000D&
             Picture         =   "Form1.frx":3403
             Style           =   1  'Graphical
             TabIndex        =   113
             Top             =   3360
-            Visible         =   0   'False
             Width           =   6375
          End
          Begin VB.Timer Timer6 
@@ -739,12 +742,11 @@ Begin VB.Form Form1
             BackColor       =   &H80000000&
             Height          =   1830
             ItemData        =   "Form1.frx":4245
-            Left            =   -66520
+            Left            =   3480
             List            =   "Form1.frx":4258
             Style           =   1  'Checkbox
             TabIndex        =   71
             Top             =   360
-            Visible         =   0   'False
             Width           =   1335
          End
          Begin VB.ListBox PriList 
@@ -752,11 +754,10 @@ Begin VB.Form Form1
             BackColor       =   &H80000003&
             Height          =   2565
             ItemData        =   "Form1.frx":429B
-            Left            =   -65080
+            Left            =   4920
             List            =   "Form1.frx":42F9
             TabIndex        =   70
             Top             =   360
-            Visible         =   0   'False
             Width           =   1575
          End
          Begin VB.ListBox WarList 
@@ -764,12 +765,11 @@ Begin VB.Form Form1
             BackColor       =   &H80000003&
             Height          =   2565
             ItemData        =   "Form1.frx":437D
-            Left            =   -65080
+            Left            =   4920
             List            =   "Form1.frx":43FF
             MultiSelect     =   1  'Simple
             TabIndex        =   68
             Top             =   360
-            Visible         =   0   'False
             Width           =   1575
          End
          Begin VB.ListBox asaslist 
@@ -777,11 +777,10 @@ Begin VB.Form Form1
             BackColor       =   &H80000003&
             Height          =   2565
             ItemData        =   "Form1.frx":44D0
-            Left            =   -65080
+            Left            =   4920
             List            =   "Form1.frx":4534
             TabIndex        =   73
             Top             =   360
-            Visible         =   0   'False
             Width           =   1575
          End
          Begin VB.ListBox List3 
@@ -798,12 +797,11 @@ Begin VB.Form Form1
             EndProperty
             Height          =   2550
             ItemData        =   "Form1.frx":45D3
-            Left            =   -65080
+            Left            =   4920
             List            =   "Form1.frx":45FB
             MultiSelect     =   1  'Simple
             TabIndex        =   69
             Top             =   360
-            Visible         =   0   'False
             Width           =   1455
          End
          Begin XtremeSuiteControls.TabControl TabControl1 
@@ -2111,10 +2109,9 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.CheckBox pritimer 
             Height          =   255
-            Left            =   -66520
+            Left            =   3480
             TabIndex        =   72
             Top             =   2160
-            Visible         =   0   'False
             Width           =   855
             _Version        =   851972
             _ExtentX        =   1508
@@ -2125,10 +2122,9 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.FlatEdit FlatEdit3 
             Height          =   375
-            Left            =   -65920
+            Left            =   4080
             TabIndex        =   108
             Top             =   2880
-            Visible         =   0   'False
             Width           =   735
             _Version        =   851972
             _ExtentX        =   1296
@@ -2142,10 +2138,9 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.FlatEdit FlatEdit1 
             Height          =   375
-            Left            =   -65920
+            Left            =   4080
             TabIndex        =   105
             Top             =   2520
-            Visible         =   0   'False
             Width           =   735
             _Version        =   851972
             _ExtentX        =   1296
@@ -2180,9 +2175,10 @@ Begin VB.Form Form1
          End
          Begin MSComctlLib.ListView lwMob 
             Height          =   1695
-            Left            =   1920
+            Left            =   -68080
             TabIndex        =   167
             Top             =   2520
+            Visible         =   0   'False
             Width           =   4605
             _ExtentX        =   8123
             _ExtentY        =   2990
@@ -2228,9 +2224,10 @@ Begin VB.Form Form1
          Begin XtremeSuiteControls.PushButton MobSearch 
             Height          =   375
             Index           =   1
-            Left            =   2520
+            Left            =   -67480
             TabIndex        =   171
             Top             =   1560
+            Visible         =   0   'False
             Width           =   855
             _Version        =   851972
             _ExtentX        =   1508
@@ -2242,9 +2239,10 @@ Begin VB.Form Form1
          Begin XtremeSuiteControls.PushButton MobSearch 
             Height          =   1695
             Index           =   0
-            Left            =   120
+            Left            =   -69880
             TabIndex        =   172
             Top             =   2520
+            Visible         =   0   'False
             Width           =   1695
             _Version        =   851972
             _ExtentX        =   2990
@@ -2256,9 +2254,10 @@ Begin VB.Form Form1
          Begin XtremeSuiteControls.CheckBox MobBox 
             Height          =   255
             Index           =   1
-            Left            =   1920
+            Left            =   -68080
             TabIndex        =   177
             Top             =   720
+            Visible         =   0   'False
             Width           =   1335
             _Version        =   851972
             _ExtentX        =   2355
@@ -2270,9 +2269,10 @@ Begin VB.Form Form1
          Begin XtremeSuiteControls.CheckBox MobBox 
             Height          =   255
             Index           =   2
-            Left            =   1920
+            Left            =   -68080
             TabIndex        =   178
             Top             =   960
+            Visible         =   0   'False
             Width           =   1455
             _Version        =   851972
             _ExtentX        =   2566
@@ -2283,10 +2283,9 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.Label Label24 
             Height          =   255
-            Left            =   -66520
+            Left            =   3480
             TabIndex        =   163
             Top             =   2540
-            Visible         =   0   'False
             Width           =   615
             _Version        =   851972
             _ExtentX        =   1085
@@ -2296,10 +2295,9 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.Label Far 
             Height          =   255
-            Left            =   -66520
+            Left            =   3480
             TabIndex        =   162
             Top             =   2910
-            Visible         =   0   'False
             Width           =   615
             _Version        =   851972
             _ExtentX        =   1085
@@ -4061,7 +4059,11 @@ End Sub
 
 Private Sub OtoZtmr_Timer()
 'If Check8.value = 1 Then
+If MobHpOku = 0 Then
+AutoMobZ
+End If
 If Form1.CheckBox9.value = 1 Then
+
 If MobHpOku = 0 Then
 AutoMobZ
 End If
