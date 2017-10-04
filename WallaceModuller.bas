@@ -209,7 +209,6 @@ MP As Long
 MAXMP As Long
 End Type
 
-
 Public Const MAXINV_ARRAY = 41
 
 Public Type INV_VAULE
@@ -360,7 +359,6 @@ Public Declare Function GetModuleHandle Lib "kernel32" Alias "GetModuleHandleA" 
 Public Declare Function GetProcAddress Lib "kernel32" (ByVal hModule As Long, ByVal lpProcName As String) As Long
 Public Declare Function WaitForSingleObject Lib "kernel32" (ByVal hHandle As Long, ByVal dwMilliseconds As Long) As Long
 Public Const INFINITE = &HFFFF
-
 Public Declare Function CloseHandle Lib "kernel32" (ByVal hObject As Long) As Long
 Public Declare Function loot Lib "DLL.dll" Alias "Loot" (ByVal Slot As String, ByVal Enable As Boolean) As Boolean
 Public Declare Sub Sleep Lib "kernel32.dll" (ByVal dwMilliseconds As Long)
@@ -372,7 +370,7 @@ Public Declare Function GetTickCount Lib "kernel32" () As Long
 Public Declare Function WallHack Lib "DLL.dll" (ByVal Slot As String, ByVal val As Long) As Long
 Public Declare Function GetInfo Lib "DLL.dll" (ByVal InfoType As Long) As Long
 Public Declare Function CreateP Lib "DLL.dll" (ByVal Direct As String, ByVal DLL As String) As Boolean
-
+Public Pinfo As PARTY_INFORMATION
 
 
 
@@ -383,22 +381,11 @@ End Type
 
 
 
-
-Public Pinfo As PARTY_INFORMATION
-'Oto Kutu
-
-
-
-
 Function OffsetleriYükle()
-
-
-
-    UseAutoLoot = 0
-    OpenNextBox = True
-    LastBoxID = 0
-    UseAutoSell = 0
-
+    'UseAutoLoot = 0
+    'OpenNextBox = True
+    'LastBoxID = 0
+    'UseAutoSell = 0
  KO_PTR_CHR = &HE13EF0
  KO_PTR_DLG = &HDFAEA8
  KO_PTR_PKT = &HDFAE74
