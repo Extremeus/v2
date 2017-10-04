@@ -6,15 +6,21 @@ Begin VB.Form Form1
    BackColor       =   &H80000004&
    BorderStyle     =   0  'None
    Caption         =   "ASKoxp"
-   ClientHeight    =   4890
+   ClientHeight    =   6060
    ClientLeft      =   22290
    ClientTop       =   660
-   ClientWidth     =   6960
+   ClientWidth     =   8760
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   4890
-   ScaleWidth      =   6960
+   ScaleHeight     =   6060
+   ScaleWidth      =   8760
+   Begin VB.Timer mobakos 
+      Enabled         =   0   'False
+      Interval        =   100
+      Left            =   8760
+      Top             =   3240
+   End
    Begin XtremeSuiteControls.GroupBox GroupBox6 
       Height          =   4575
       Left            =   120
@@ -131,10 +137,10 @@ Begin VB.Form Form1
       EndProperty
       ForeColor       =   &H80000008&
       Height          =   225
-      Left            =   8760
+      Left            =   8880
       MaskColor       =   &H00C0FFFF&
       TabIndex        =   166
-      Top             =   3240
+      Top             =   4320
       Width           =   975
    End
    Begin VB.Timer mobazipla 
@@ -217,7 +223,7 @@ Begin VB.Form Form1
          Item(0).Control(37)=   "L(11)"
          Item(1).Caption =   "Attack"
          Item(1).Tooltip =   "Attack Options"
-         Item(1).ControlCount=   14
+         Item(1).ControlCount=   15
          Item(1).Control(0)=   "List3"
          Item(1).Control(1)=   "asaslist"
          Item(1).Control(2)=   "WarList"
@@ -232,6 +238,7 @@ Begin VB.Form Form1
          Item(1).Control(11)=   "GroupBox3"
          Item(1).Control(12)=   "Far"
          Item(1).Control(13)=   "Label24"
+         Item(1).Control(14)=   "PushButton3"
          Item(2).Caption =   "Others"
          Item(2).ControlCount=   1
          Item(2).Control(0)=   "TabControl1"
@@ -265,6 +272,19 @@ Begin VB.Form Form1
          Item(6).Control(9)=   "MobBox(2)"
          Item(6).Control(10)=   "MobSearch(0)"
          Item(6).Control(11)=   "MobSearchBut"
+         Begin XtremeSuiteControls.PushButton PushButton3 
+            Height          =   375
+            Left            =   4080
+            TabIndex        =   201
+            Top             =   2400
+            Width           =   735
+            _Version        =   851972
+            _ExtentX        =   1296
+            _ExtentY        =   661
+            _StockProps     =   79
+            Caption         =   "Get L"
+            UseVisualStyle  =   -1  'True
+         End
          Begin XtremeSuiteControls.CheckBox MobBox 
             Height          =   255
             Index           =   0
@@ -478,17 +498,17 @@ Begin VB.Form Form1
                EndProperty
                Appearance      =   5
             End
-            Begin XtremeSuiteControls.CheckBox CheckBox7 
+            Begin XtremeSuiteControls.CheckBox MobFollow 
                Height          =   255
                Left            =   120
                TabIndex        =   159
                Top             =   1200
-               Width           =   975
+               Width           =   1215
                _Version        =   851972
-               _ExtentX        =   1720
+               _ExtentX        =   2143
                _ExtentY        =   450
                _StockProps     =   79
-               Caption         =   "Loot v1"
+               Caption         =   "Mob Follow"
                BeginProperty Font {0BE35203-8F91-11CE-9DE3-00AA004BB851} 
                   Name            =   "Tahoma"
                   Size            =   8.25
@@ -498,7 +518,7 @@ Begin VB.Form Form1
                   Italic          =   0   'False
                   Strikethrough   =   0   'False
                EndProperty
-               Appearance      =   4
+               Appearance      =   2
             End
             Begin XtremeSuiteControls.CheckBox CheckAuto 
                Height          =   255
@@ -740,7 +760,7 @@ Begin VB.Form Form1
          Begin VB.ListBox PriZaman 
             Appearance      =   0  'Flat
             BackColor       =   &H80000000&
-            Height          =   1830
+            Height          =   1155
             ItemData        =   "Form1.frx":4245
             Left            =   3480
             List            =   "Form1.frx":4258
@@ -2111,7 +2131,7 @@ Begin VB.Form Form1
             Height          =   255
             Left            =   3480
             TabIndex        =   72
-            Top             =   2160
+            Top             =   1560
             Width           =   855
             _Version        =   851972
             _ExtentX        =   1508
@@ -2121,14 +2141,14 @@ Begin VB.Form Form1
             Appearance      =   2
          End
          Begin XtremeSuiteControls.FlatEdit FlatEdit3 
-            Height          =   375
+            Height          =   255
             Left            =   4080
             TabIndex        =   108
-            Top             =   2880
+            Top             =   2160
             Width           =   735
             _Version        =   851972
             _ExtentX        =   1296
-            _ExtentY        =   661
+            _ExtentY        =   450
             _StockProps     =   77
             BackColor       =   -2147483643
             Text            =   "50"
@@ -2137,14 +2157,14 @@ Begin VB.Form Form1
             UseVisualStyle  =   0   'False
          End
          Begin XtremeSuiteControls.FlatEdit FlatEdit1 
-            Height          =   375
+            Height          =   255
             Left            =   4080
             TabIndex        =   105
-            Top             =   2520
+            Top             =   1920
             Width           =   735
             _Version        =   851972
             _ExtentX        =   1296
-            _ExtentY        =   661
+            _ExtentY        =   450
             _StockProps     =   77
             BackColor       =   -2147483643
             Text            =   "1250"
@@ -2285,7 +2305,7 @@ Begin VB.Form Form1
             Height          =   255
             Left            =   3480
             TabIndex        =   163
-            Top             =   2540
+            Top             =   1920
             Width           =   615
             _Version        =   851972
             _ExtentX        =   1085
@@ -2297,7 +2317,7 @@ Begin VB.Form Form1
             Height          =   255
             Left            =   3480
             TabIndex        =   162
-            Top             =   2910
+            Top             =   2160
             Width           =   615
             _Version        =   851972
             _ExtentX        =   1085
@@ -2732,20 +2752,22 @@ Begin VB.Form Form1
       _ExtentX        =   12091
       _ExtentY        =   8493
    End
-   Begin VB.TextBox Text24 
+   Begin VB.TextBox X 
       Height          =   285
-      Left            =   11880
+      Index           =   0
+      Left            =   4800
       TabIndex        =   136
-      Text            =   "Text24"
-      Top             =   2640
+      Text            =   "Y"
+      Top             =   5640
       Width           =   735
    End
-   Begin VB.TextBox Text9 
+   Begin VB.TextBox X 
       Height          =   285
-      Left            =   11880
+      Index           =   1
+      Left            =   4800
       TabIndex        =   134
-      Text            =   "Text9"
-      Top             =   2280
+      Text            =   "X"
+      Top             =   5280
       Width           =   735
    End
    Begin VB.Timer pritimes 
@@ -3794,14 +3816,8 @@ End Sub
 Private Sub Form_Load()
 On Error Resume Next
 YukarýdaTut Me, True
-X$ = 0
-Dim qw As Integer
-For qw = 0 To 20
-If ReadINI("MTRX", X$, App.Path & "\pazartut.ini") <> "" Then
-List5.AddItem ReadINI("MTRX", X$, App.Path & "\pazartut.ini")
-X$ = X$ + 1
-End If
-Next
+
+
 Combo1.ListIndex = 0
 Combo2.ListIndex = 0
 Combo3.ListIndex = 0
@@ -3850,7 +3866,7 @@ Form1.Caption = "ASKoxp" + "-" + (CharName) + "-" + CharServer + "-" + CharZoneI
 End If
 End Sub
 
-Private Sub Hpleriekle_Timer()
+Private Sub HpleriEkle_Timer()
 Hpler.Clear
 For i = 1 To lwMob.ListItems.COUNT
 If val(lwMob.ListItems(i).SubItems(2)) > val(HpText.Text) Then
@@ -3921,7 +3937,7 @@ End Sub
 
 
 
-Private Sub mobazipla_Timer()
+Private Sub MobaZipla_Timer()
 On Error Resume Next
 
 mobazipla.Interval = 500
@@ -3932,6 +3948,21 @@ If KordinatArasýFark(zMobX, zMobY, KarakterX, KarakterY) <= Form1.FlatEdit3.Text
 Takipsh Mobx, MobY 'Kordinatyürü
 ElseIf KordinatArasýFark(SlotX, SlotY, CharX, CharY) >= Form1.FlatEdit3.Text Then
 Takipsh Mobx, MobY 'Kordinatyürü
+End If
+
+End If
+End Sub
+
+Private Sub mobakos_Timer()
+On Error Resume Next
+
+If Check5.value = 1 And MobFollow.value = 1 Then
+
+If KordinatArasýFark(zMobX, zMobY, CharX, CharY) > 200 Then Exit Sub
+If KordinatArasýFark(zMobX, zMobY, Form1.X(1).Text, Form1.X(0).Text) <= Form1.FlatEdit3.Text Then
+KordinatYürü2 Mobx, MobY 'Kordinatyürü
+ElseIf KordinatArasýFark(SlotX, SlotY, Form1.X(1).Text, Form1.X(0).Text) >= Form1.FlatEdit3.Text Then
+KordinatYürü2 Form1.X(1).Text, Form1.X(0).Text 'Kordinatyürü
 End If
 
 End If
@@ -3955,6 +3986,18 @@ End If
 
 
 End Select
+End Sub
+
+Private Sub MobFollow_Click()
+GetZMob
+zMobX = Mobx
+zMobY = MobY
+zMobZ = MobZ
+If MobFollow.value = 1 Then
+mobakos.Enabled = True
+Else
+mobakos.Enabled = False
+End If
 End Sub
 
 Private Sub MobSearch_Click(Tus As Integer)
@@ -4277,6 +4320,11 @@ End Sub
 
 
 
+Private Sub PushButton3_Click()
+X(1).Text = CharX
+X(0).Text = CharY
+End Sub
+
 Private Sub PushButton30_Click()
 Paket "680406"
 Paket "6803" + D831CA17 + "0100" + Strings.mID(AlignDWORD(Text13.Text), 1, 8) + "0000"
@@ -4428,6 +4476,14 @@ Private Sub SpeedHack_Timer()
 If GetAsyncKeyState(vbKeyG) Then
 Runner MouseX, MouseY
 End If
+End Sub
+
+Private Sub Text24_Change()
+
+End Sub
+
+Private Sub Text9_Change()
+
 End Sub
 
 Private Sub Timer1_Timer()
