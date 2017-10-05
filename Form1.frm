@@ -196,6 +196,7 @@ Begin VB.Form Form1
          PaintManager.BoldSelected=   -1  'True
          PaintManager.HotTracking=   -1  'True
          ItemCount       =   7
+         SelectedItem    =   3
          Item(0).Caption =   "Status"
          Item(0).ControlCount=   39
          Item(0).Control(0)=   "pHP"
@@ -696,25 +697,28 @@ Begin VB.Form Form1
          Begin VB.CommandButton Command9 
             Caption         =   "Görev Check"
             Height          =   495
-            Left            =   5400
+            Left            =   -64600
             TabIndex        =   120
             Top             =   2160
+            Visible         =   0   'False
             Width           =   1095
          End
          Begin VB.CommandButton Command3 
             Caption         =   "Görev VER"
             Height          =   450
-            Left            =   5400
+            Left            =   -64600
             TabIndex        =   129
             Top             =   2640
+            Visible         =   0   'False
             Width           =   1110
          End
          Begin VB.CommandButton Command1 
             Caption         =   "Görev AL"
             Height          =   495
-            Left            =   5400
+            Left            =   -64600
             TabIndex        =   113
             Top             =   1680
+            Visible         =   0   'False
             Width           =   1095
          End
          Begin VB.CheckBox OTOzCheck 
@@ -767,11 +771,12 @@ Begin VB.Form Form1
             FillStyle       =   0  'Solid
             ForeColor       =   &H80000008&
             Height          =   375
-            Left            =   4680
+            Left            =   -65320
             ScaleHeight     =   345
             ScaleWidth      =   345
             TabIndex        =   159
             Top             =   3840
+            Visible         =   0   'False
             Width           =   375
          End
          Begin VB.ListBox PriZaman 
@@ -1281,30 +1286,30 @@ Begin VB.Form Form1
                End
             End
             Begin XtremeSuiteControls.GroupBox GroupBox4 
-               Height          =   1455
+               Height          =   1335
                Left            =   2760
                TabIndex        =   29
                Top             =   120
                Width           =   1215
                _Version        =   851972
                _ExtentX        =   2143
-               _ExtentY        =   2566
+               _ExtentY        =   2355
                _StockProps     =   79
                Caption         =   "Transformation"
                UseVisualStyle  =   -1  'True
                Begin VB.ComboBox Combo5 
                   Height          =   315
                   ItemData        =   "Form1.frx":4805
-                  Left            =   240
+                  Left            =   120
                   List            =   "Form1.frx":4842
                   TabIndex        =   30
                   Text            =   "Combo5"
                   Top             =   360
-                  Width           =   855
+                  Width           =   975
                End
                Begin XtremeSuiteControls.CheckBox Check8 
                   Height          =   255
-                  Left            =   240
+                  Left            =   120
                   TabIndex        =   31
                   Top             =   720
                   Width           =   855
@@ -1318,7 +1323,7 @@ Begin VB.Form Form1
                Begin VB.Label LblTsSüre 
                   Caption         =   "Time"
                   Height          =   255
-                  Left            =   240
+                  Left            =   120
                   TabIndex        =   32
                   Top             =   960
                   Width           =   375
@@ -1622,9 +1627,10 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.ProgressBar pHP 
             Height          =   255
-            Left            =   720
+            Left            =   -69280
             TabIndex        =   87
             Top             =   840
+            Visible         =   0   'False
             Width           =   1455
             _Version        =   851972
             _ExtentX        =   2566
@@ -1642,9 +1648,10 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.ProgressBar pMP 
             Height          =   255
-            Left            =   720
+            Left            =   -69280
             TabIndex        =   93
             Top             =   1200
+            Visible         =   0   'False
             Width           =   1455
             _Version        =   851972
             _ExtentX        =   2566
@@ -1662,9 +1669,10 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.PushButton PushButton36 
             Height          =   375
-            Left            =   5040
+            Left            =   -64960
             TabIndex        =   160
             Top             =   3840
+            Visible         =   0   'False
             Width           =   1485
             _Version        =   851972
             _ExtentX        =   2619
@@ -1679,9 +1687,10 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.CheckBox CheckBox1 
             Height          =   255
-            Left            =   4680
+            Left            =   -65320
             TabIndex        =   150
             Top             =   3480
+            Visible         =   0   'False
             Width           =   975
             _Version        =   851972
             _ExtentX        =   1720
@@ -1701,10 +1710,9 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.GroupBox GroupBox1 
             Height          =   3855
-            Left            =   -69880
+            Left            =   120
             TabIndex        =   58
             Top             =   360
-            Visible         =   0   'False
             Width           =   3735
             _Version        =   851972
             _ExtentX        =   6588
@@ -2136,9 +2144,10 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.ProgressBar ProgressBar1 
             Height          =   255
-            Left            =   720
+            Left            =   -69280
             TabIndex        =   98
             Top             =   1560
+            Visible         =   0   'False
             Width           =   1455
             _Version        =   851972
             _ExtentX        =   2566
@@ -2204,9 +2213,10 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.ProgressBar ProgressBar2 
             Height          =   255
-            Left            =   3120
+            Left            =   -66880
             TabIndex        =   90
             Top             =   840
+            Visible         =   0   'False
             Width           =   1455
             _Version        =   851972
             _ExtentX        =   2566
@@ -2333,9 +2343,10 @@ Begin VB.Form Form1
          Begin VB.Label Label8 
             Caption         =   "Label8"
             Height          =   375
-            Left            =   2760
+            Left            =   -67240
             TabIndex        =   204
             Top             =   2160
+            Visible         =   0   'False
             Width           =   1095
          End
          Begin XtremeSuiteControls.Label Label24 
@@ -2367,9 +2378,10 @@ Begin VB.Form Form1
          Begin XtremeSuiteControls.Label L 
             Height          =   255
             Index           =   11
-            Left            =   2400
+            Left            =   -67600
             TabIndex        =   88
             Top             =   840
+            Visible         =   0   'False
             Width           =   615
             _Version        =   851972
             _ExtentX        =   1085
@@ -2406,17 +2418,19 @@ Begin VB.Form Form1
             Caption         =   "Y"
             ForeColor       =   &H000080FF&
             Height          =   195
-            Left            =   720
+            Left            =   -69280
             TabIndex        =   149
             Top             =   3360
+            Visible         =   0   'False
             Width           =   105
          End
          Begin XtremeSuiteControls.Label L 
             Height          =   255
             Index           =   10
-            Left            =   120
+            Left            =   -69880
             TabIndex        =   147
             Top             =   3360
+            Visible         =   0   'False
             Width           =   495
             _Version        =   851972
             _ExtentX        =   873
@@ -2463,9 +2477,10 @@ Begin VB.Form Form1
          Begin XtremeSuiteControls.Label L 
             Height          =   195
             Index           =   6
-            Left            =   120
+            Left            =   -69880
             TabIndex        =   79
             Top             =   480
+            Visible         =   0   'False
             Width           =   510
             _Version        =   851972
             _ExtentX        =   900
@@ -2482,17 +2497,19 @@ Begin VB.Form Form1
             BorderStyle     =   1  'Fixed Single
             Caption         =   "ID"
             Height          =   255
-            Left            =   3120
+            Left            =   -66880
             TabIndex        =   101
             Top             =   1560
+            Visible         =   0   'False
             Width           =   735
          End
          Begin XtremeSuiteControls.Label L 
             Height          =   255
             Index           =   5
-            Left            =   2400
+            Left            =   -67600
             TabIndex        =   94
             Top             =   1200
+            Visible         =   0   'False
             Width           =   615
             _Version        =   851972
             _ExtentX        =   1085
@@ -2507,9 +2524,10 @@ Begin VB.Form Form1
          Begin XtremeSuiteControls.Label L 
             Height          =   255
             Index           =   4
-            Left            =   2400
+            Left            =   -67600
             TabIndex        =   99
             Top             =   1560
+            Visible         =   0   'False
             Width           =   615
             _Version        =   851972
             _ExtentX        =   1085
@@ -2527,9 +2545,10 @@ Begin VB.Form Form1
             Caption         =   "X"
             ForeColor       =   &H000080FF&
             Height          =   195
-            Left            =   720
+            Left            =   -69280
             TabIndex        =   131
             Top             =   3000
+            Visible         =   0   'False
             Width           =   105
          End
          Begin VB.Label Label21 
@@ -2538,9 +2557,10 @@ Begin VB.Form Form1
             Caption         =   "CLASS"
             ForeColor       =   &H000080FF&
             Height          =   195
-            Left            =   720
+            Left            =   -69280
             TabIndex        =   128
             Top             =   2640
+            Visible         =   0   'False
             Width           =   510
          End
          Begin VB.Label Label19 
@@ -2549,17 +2569,19 @@ Begin VB.Form Form1
             Caption         =   "ivi"
             ForeColor       =   &H000080FF&
             Height          =   195
-            Left            =   720
+            Left            =   -69280
             TabIndex        =   119
             Top             =   2280
+            Visible         =   0   'False
             Width           =   150
          End
          Begin XtremeSuiteControls.Label L 
             Height          =   255
             Index           =   3
-            Left            =   120
+            Left            =   -69880
             TabIndex        =   130
             Top             =   3000
+            Visible         =   0   'False
             Width           =   495
             _Version        =   851972
             _ExtentX        =   873
@@ -2574,9 +2596,10 @@ Begin VB.Form Form1
          Begin XtremeSuiteControls.Label L 
             Height          =   255
             Index           =   2
-            Left            =   120
+            Left            =   -69880
             TabIndex        =   127
             Top             =   2640
+            Visible         =   0   'False
             Width           =   495
             _Version        =   851972
             _ExtentX        =   873
@@ -2591,9 +2614,10 @@ Begin VB.Form Form1
          Begin XtremeSuiteControls.Label L 
             Height          =   255
             Index           =   1
-            Left            =   120
+            Left            =   -69880
             TabIndex        =   97
             Top             =   1560
+            Visible         =   0   'False
             Width           =   495
             _Version        =   851972
             _ExtentX        =   873
@@ -2608,9 +2632,10 @@ Begin VB.Form Form1
          Begin XtremeSuiteControls.Label L 
             Height          =   255
             Index           =   0
-            Left            =   120
+            Left            =   -69880
             TabIndex        =   118
             Top             =   2280
+            Visible         =   0   'False
             Width           =   495
             _Version        =   851972
             _ExtentX        =   873
@@ -2626,9 +2651,10 @@ Begin VB.Form Form1
             BorderStyle     =   1  'Fixed Single
             Caption         =   "ID"
             Height          =   255
-            Left            =   3120
+            Left            =   -66880
             TabIndex        =   95
             Top             =   1200
+            Visible         =   0   'False
             Width           =   735
          End
          Begin VB.Label Label1 
@@ -2636,9 +2662,10 @@ Begin VB.Form Form1
             ForeColor       =   &H80000011&
             Height          =   195
             Index           =   3
-            Left            =   120
+            Left            =   -69880
             TabIndex        =   155
             Top             =   3960
+            Visible         =   0   'False
             Width           =   975
          End
          Begin VB.Label Label2 
@@ -2655,27 +2682,30 @@ Begin VB.Form Form1
             ForeColor       =   &H8000000A&
             Height          =   195
             Index           =   3
-            Left            =   1080
+            Left            =   -68920
             TabIndex        =   156
             Top             =   3960
+            Visible         =   0   'False
             Width           =   615
          End
          Begin VB.Label Label15 
             Caption         =   "1"
             ForeColor       =   &H80000011&
             Height          =   195
-            Left            =   2040
+            Left            =   -67960
             TabIndex        =   157
             Top             =   3960
+            Visible         =   0   'False
             Width           =   375
          End
          Begin VB.Label Label16 
             Caption         =   "Seconds Usage of Bot"
             ForeColor       =   &H80000011&
             Height          =   195
-            Left            =   2400
+            Left            =   -67600
             TabIndex        =   158
             Top             =   3960
+            Visible         =   0   'False
             Width           =   1695
          End
          Begin VB.Label lPara 
@@ -2684,17 +2714,19 @@ Begin VB.Form Form1
             Caption         =   "Coins"
             ForeColor       =   &H000080FF&
             Height          =   195
-            Left            =   720
+            Left            =   -69280
             TabIndex        =   110
             Top             =   1920
+            Visible         =   0   'False
             Width           =   390
          End
          Begin XtremeSuiteControls.Label L 
             Height          =   255
             Index           =   7
-            Left            =   120
+            Left            =   -69880
             TabIndex        =   86
             Top             =   840
+            Visible         =   0   'False
             Width           =   495
             _Version        =   851972
             _ExtentX        =   873
@@ -2709,9 +2741,10 @@ Begin VB.Form Form1
          Begin XtremeSuiteControls.Label L 
             Height          =   255
             Index           =   8
-            Left            =   0
+            Left            =   -70000
             TabIndex        =   92
             Top             =   1200
+            Visible         =   0   'False
             Width           =   615
             _Version        =   851972
             _ExtentX        =   1085
@@ -2726,9 +2759,10 @@ Begin VB.Form Form1
          Begin XtremeSuiteControls.Label L 
             Height          =   255
             Index           =   9
-            Left            =   0
+            Left            =   -70000
             TabIndex        =   103
             Top             =   1920
+            Visible         =   0   'False
             Width           =   615
             _Version        =   851972
             _ExtentX        =   1085
@@ -2742,9 +2776,10 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.Label lName 
             Height          =   195
-            Left            =   720
+            Left            =   -69280
             TabIndex        =   80
             Top             =   480
+            Visible         =   0   'False
             Width           =   480
             _Version        =   851972
             _ExtentX        =   847
