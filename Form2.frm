@@ -2,40 +2,60 @@ VERSION 5.00
 Object = "{EAB22AC0-30C1-11CF-A7EB-0000C05BAE0B}#1.1#0"; "ieframe.dll"
 Begin VB.Form Form2 
    BackColor       =   &H0080C0FF&
-   BorderStyle     =   1  'Fixed Single
+   BorderStyle     =   0  'None
    Caption         =   "Login"
-   ClientHeight    =   1335
-   ClientLeft      =   25860
-   ClientTop       =   3675
-   ClientWidth     =   3120
+   ClientHeight    =   2610
+   ClientLeft      =   15915
+   ClientTop       =   6375
+   ClientWidth     =   5430
    LinkTopic       =   "Form2"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   1335
-   ScaleWidth      =   3120
+   ScaleHeight     =   2610
+   ScaleWidth      =   5430
+   ShowInTaskbar   =   0   'False
+   Begin VB.TextBox Text2 
+      Appearance      =   0  'Flat
+      BackColor       =   &H02211E1D&
+      BorderStyle     =   0  'None
+      ForeColor       =   &H80000006&
+      Height          =   315
+      IMEMode         =   3  'DISABLE
+      Left            =   700
+      PasswordChar    =   "*"
+      TabIndex        =   25
+      Text            =   "Password"
+      Top             =   1370
+      Width           =   2415
+   End
+   Begin VB.TextBox Text1 
+      Appearance      =   0  'Flat
+      BackColor       =   &H02211E1D&
+      BorderStyle     =   0  'None
+      BeginProperty Font 
+         Name            =   "Segoe UI"
+         Size            =   9.75
+         Charset         =   0
+         Weight          =   400
+         Underline       =   0   'False
+         Italic          =   0   'False
+         Strikethrough   =   0   'False
+      EndProperty
+      ForeColor       =   &H80000006&
+      Height          =   320
+      Left            =   720
+      TabIndex        =   24
+      Text            =   "Username"
+      Top             =   770
+      Width           =   2295
+   End
    Begin VB.Frame Frame1 
       Caption         =   "Login"
       Height          =   1335
-      Left            =   0
+      Left            =   840
       TabIndex        =   16
-      Top             =   0
+      Top             =   4800
       Width           =   3135
-      Begin VB.TextBox Text1 
-         Height          =   315
-         Left            =   720
-         TabIndex        =   21
-         Top             =   240
-         Width           =   2295
-      End
-      Begin VB.TextBox Text2 
-         Height          =   315
-         IMEMode         =   3  'DISABLE
-         Left            =   720
-         PasswordChar    =   "*"
-         TabIndex        =   20
-         Top             =   600
-         Width           =   2295
-      End
       Begin VB.CommandButton Command1 
          Caption         =   "Login >"
          Height          =   315
@@ -66,7 +86,7 @@ Begin VB.Form Form2
          Caption         =   "ID :"
          Height          =   255
          Left            =   0
-         TabIndex        =   23
+         TabIndex        =   21
          Top             =   255
          Width           =   615
       End
@@ -76,7 +96,7 @@ Begin VB.Form Form2
          Caption         =   "Pass :"
          Height          =   255
          Left            =   0
-         TabIndex        =   22
+         TabIndex        =   20
          Top             =   615
          Width           =   615
       End
@@ -84,9 +104,9 @@ Begin VB.Form Form2
    Begin VB.Frame Frame2 
       Caption         =   "Register"
       Height          =   1455
-      Left            =   0
+      Left            =   4080
       TabIndex        =   7
-      Top             =   4560
+      Top             =   6120
       Width           =   3135
       Begin VB.TextBox Text3 
          Height          =   315
@@ -161,9 +181,9 @@ Begin VB.Form Form2
    Begin VB.Frame Frame3 
       Caption         =   "Key"
       Height          =   1095
-      Left            =   0
+      Left            =   960
       TabIndex        =   0
-      Top             =   3480
+      Top             =   6240
       Width           =   3135
       Begin VB.CommandButton Command5 
          Caption         =   "Ekle >"
@@ -218,9 +238,9 @@ Begin VB.Form Form2
    End
    Begin SHDocVwCtl.WebBrowser a 
       Height          =   5895
-      Left            =   3360
-      TabIndex        =   24
-      Top             =   0
+      Left            =   7920
+      TabIndex        =   22
+      Top             =   120
       Width           =   6255
       ExtentX         =   11033
       ExtentY         =   10398
@@ -241,12 +261,25 @@ Begin VB.Form Form2
       ViewID          =   "{0057D0E0-3573-11CF-AE69-08002B2E1262}"
       Location        =   "http:///"
    End
+   Begin VB.Image Image2 
+      Height          =   855
+      Left            =   4440
+      Top             =   720
+      Width           =   855
+   End
+   Begin VB.Image Image1 
+      Height          =   5100
+      Left            =   -2520
+      Picture         =   "Form2.frx":0000
+      Top             =   -1320
+      Width           =   10170
+   End
    Begin VB.Label Label8 
-      Caption         =   "http://askoxp.xyz/"
+      Caption         =   "http://askoxp.xyz/License/"
       Height          =   375
-      Left            =   0
-      TabIndex        =   25
-      Top             =   1440
+      Left            =   7920
+      TabIndex        =   23
+      Top             =   6120
       Width           =   3375
    End
 End
@@ -329,4 +362,12 @@ End If
 End If
 End Sub
 
+
+Private Sub Image1_Click()
+Image1.Picture = LoadPicture("13b.jpg")
+End Sub
+
+Private Sub Image2_Click()
+If Text1.Text <> "" And Text2.Text <> "" Then a.Navigate Label8.Caption & "giris_kontrol.php?kadi=" & Text1.Text & "&pass=" & Text2.Text
+End Sub
 
