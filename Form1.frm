@@ -196,7 +196,7 @@ Begin VB.Form Form1
          PaintManager.BoldSelected=   -1  'True
          PaintManager.HotTracking=   -1  'True
          ItemCount       =   7
-         SelectedItem    =   1
+         SelectedItem    =   3
          Item(0).Caption =   "Status"
          Item(0).ControlCount=   31
          Item(0).Control(0)=   "pHP"
@@ -294,9 +294,10 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.PushButton PushButton3 
             Height          =   375
-            Left            =   3960
+            Left            =   -66040
             TabIndex        =   118
             Top             =   1800
+            Visible         =   0   'False
             Width           =   975
             _Version        =   851972
             _ExtentX        =   1720
@@ -410,19 +411,21 @@ Begin VB.Form Form1
             EndProperty
             ForeColor       =   &H80000008&
             Height          =   435
-            Left            =   3960
+            Left            =   -66040
             MaskColor       =   &H00C0FFFF&
             Style           =   1  'Graphical
             TabIndex        =   133
             Top             =   2760
             UseMaskColor    =   -1  'True
+            Visible         =   0   'False
             Width           =   975
          End
          Begin XtremeSuiteControls.GroupBox GroupBox3 
             Height          =   2760
-            Left            =   120
+            Left            =   -69880
             TabIndex        =   71
             Top             =   360
+            Visible         =   0   'False
             Width           =   2175
             _Version        =   851972
             _ExtentX        =   3836
@@ -689,10 +692,11 @@ Begin VB.Form Form1
             Caption         =   "Auto Z"
             ForeColor       =   &H80000008&
             Height          =   435
-            Left            =   3960
+            Left            =   -66040
             Style           =   1  'Graphical
             TabIndex        =   134
             Top             =   2280
+            Visible         =   0   'False
             Width           =   975
          End
          Begin VB.CheckBox Check5 
@@ -712,12 +716,13 @@ Begin VB.Form Form1
             EndProperty
             ForeColor       =   &H80000008&
             Height          =   1095
-            Left            =   120
+            Left            =   -69880
             MaskColor       =   &H8000000D&
             Picture         =   "Form1.frx":3474
             Style           =   1  'Graphical
             TabIndex        =   137
             Top             =   3240
+            Visible         =   0   'False
             Width           =   6495
          End
          Begin VB.Timer Timer6 
@@ -744,11 +749,12 @@ Begin VB.Form Form1
             BackColor       =   &H80000000&
             Height          =   1155
             ItemData        =   "Form1.frx":42B6
-            Left            =   2400
+            Left            =   -67600
             List            =   "Form1.frx":42C9
             Style           =   1  'Checkbox
             TabIndex        =   81
             Top             =   360
+            Visible         =   0   'False
             Width           =   1455
          End
          Begin VB.ListBox PriList 
@@ -756,10 +762,11 @@ Begin VB.Form Form1
             BackColor       =   &H80000003&
             Height          =   2760
             ItemData        =   "Form1.frx":430C
-            Left            =   5040
+            Left            =   -64960
             List            =   "Form1.frx":436A
             TabIndex        =   122
             Top             =   360
+            Visible         =   0   'False
             Width           =   1575
          End
          Begin VB.ListBox WarList 
@@ -767,11 +774,12 @@ Begin VB.Form Form1
             BackColor       =   &H80000003&
             Height          =   2760
             ItemData        =   "Form1.frx":43EE
-            Left            =   5040
+            Left            =   -64960
             List            =   "Form1.frx":4470
             MultiSelect     =   1  'Simple
             TabIndex        =   119
             Top             =   360
+            Visible         =   0   'False
             Width           =   1575
          End
          Begin VB.ListBox asaslist 
@@ -779,10 +787,11 @@ Begin VB.Form Form1
             BackColor       =   &H80000003&
             Height          =   2760
             ItemData        =   "Form1.frx":4541
-            Left            =   5040
+            Left            =   -64960
             List            =   "Form1.frx":45A5
             TabIndex        =   121
             Top             =   360
+            Visible         =   0   'False
             Width           =   1575
          End
          Begin VB.ListBox List3 
@@ -799,11 +808,12 @@ Begin VB.Form Form1
             EndProperty
             Height          =   2760
             ItemData        =   "Form1.frx":4644
-            Left            =   2400
-            List            =   "Form1.frx":466C
+            Left            =   -67600
+            List            =   "Form1.frx":467B
             MultiSelect     =   1  'Simple
             TabIndex        =   120
             Top             =   360
+            Visible         =   0   'False
             Width           =   1475
          End
          Begin XtremeSuiteControls.TabControl TabControl1 
@@ -1074,9 +1084,9 @@ Begin VB.Form Form1
             Begin VB.ComboBox Combo1 
                BackColor       =   &H80000004&
                Height          =   315
-               ItemData        =   "Form1.frx":470F
+               ItemData        =   "Form1.frx":475B
                Left            =   -67720
-               List            =   "Form1.frx":471F
+               List            =   "Form1.frx":476B
                Style           =   2  'Dropdown List
                TabIndex        =   19
                Top             =   120
@@ -1177,11 +1187,11 @@ Begin VB.Form Form1
                      Strikethrough   =   0   'False
                   EndProperty
                   Height          =   315
-                  ItemData        =   "Form1.frx":4760
+                  ItemData        =   "Form1.frx":47AC
                   Left            =   120
-                  List            =   "Form1.frx":477F
+                  List            =   "Form1.frx":47CB
                   TabIndex        =   34
-                  Text            =   $"Form1.frx":47F7
+                  Text            =   $"Form1.frx":4843
                   Top             =   240
                   Width           =   1455
                End
@@ -1254,9 +1264,9 @@ Begin VB.Form Form1
                UseVisualStyle  =   -1  'True
                Begin VB.ComboBox Combo5 
                   Height          =   315
-                  ItemData        =   "Form1.frx":4805
+                  ItemData        =   "Form1.frx":4851
                   Left            =   120
-                  List            =   "Form1.frx":4842
+                  List            =   "Form1.frx":488E
                   TabIndex        =   30
                   Text            =   "Combo5"
                   Top             =   360
@@ -1554,9 +1564,9 @@ Begin VB.Form Form1
             End
             Begin VB.ComboBox ComboUmut 
                Height          =   315
-               ItemData        =   "Form1.frx":4920
+               ItemData        =   "Form1.frx":496C
                Left            =   120
-               List            =   "Form1.frx":4936
+               List            =   "Form1.frx":4982
                TabIndex        =   54
                Text            =   "Normal"
                Top             =   360
@@ -1637,7 +1647,7 @@ Begin VB.Form Form1
             BackColor       =   -2147483637
             TextAlignment   =   0
             Appearance      =   4
-            Picture         =   "Form1.frx":4966
+            Picture         =   "Form1.frx":49B2
             ImageAlignment  =   4
          End
          Begin XtremeSuiteControls.CheckBox CheckBox1 
@@ -1665,10 +1675,9 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.GroupBox GroupBox1 
             Height          =   3855
-            Left            =   -69880
+            Left            =   120
             TabIndex        =   58
             Top             =   360
-            Visible         =   0   'False
             Width           =   3735
             _Version        =   851972
             _ExtentX        =   6588
@@ -1678,9 +1687,9 @@ Begin VB.Form Form1
             UseVisualStyle  =   -1  'True
             Begin VB.ComboBox Combo7 
                Height          =   315
-               ItemData        =   "Form1.frx":4CB8
+               ItemData        =   "Form1.frx":4D04
                Left            =   1800
-               List            =   "Form1.frx":4CCB
+               List            =   "Form1.frx":4D17
                TabIndex        =   64
                Text            =   "1920"
                Top             =   600
@@ -1689,9 +1698,9 @@ Begin VB.Form Form1
             Begin VB.ComboBox Combo6 
                Appearance      =   0  'Flat
                Height          =   315
-               ItemData        =   "Form1.frx":4CE8
+               ItemData        =   "Form1.frx":4D34
                Left            =   1800
-               List            =   "Form1.frx":4CFB
+               List            =   "Form1.frx":4D47
                TabIndex        =   61
                Text            =   "720"
                Top             =   240
@@ -2017,9 +2026,10 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.CheckBox pritimer 
             Height          =   255
-            Left            =   3960
+            Left            =   -66040
             TabIndex        =   102
             Top             =   1440
+            Visible         =   0   'False
             Width           =   855
             _Version        =   851972
             _ExtentX        =   1508
@@ -2030,9 +2040,10 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.FlatEdit FlatEdit3 
             Height          =   255
-            Left            =   3960
+            Left            =   -66040
             TabIndex        =   115
             Top             =   1080
+            Visible         =   0   'False
             Width           =   975
             _Version        =   851972
             _ExtentX        =   1720
@@ -2046,9 +2057,10 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.FlatEdit FlatEdit1 
             Height          =   255
-            Left            =   3960
+            Left            =   -66040
             TabIndex        =   111
             Top             =   600
+            Visible         =   0   'False
             Width           =   975
             _Version        =   851972
             _ExtentX        =   1720
@@ -2191,9 +2203,10 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.Label Label24 
             Height          =   255
-            Left            =   4200
+            Left            =   -65800
             TabIndex        =   110
             Top             =   360
+            Visible         =   0   'False
             Width           =   615
             _Version        =   851972
             _ExtentX        =   1085
@@ -2203,9 +2216,10 @@ Begin VB.Form Form1
          End
          Begin XtremeSuiteControls.Label Far 
             Height          =   255
-            Left            =   4200
+            Left            =   -65800
             TabIndex        =   114
             Top             =   840
+            Visible         =   0   'False
             Width           =   615
             _Version        =   851972
             _ExtentX        =   1085
@@ -2790,9 +2804,9 @@ Begin VB.Form Form1
    End
    Begin VB.ListBox kutuid 
       Height          =   255
-      ItemData        =   "Form1.frx":4D16
+      ItemData        =   "Form1.frx":4D62
       Left            =   10200
-      List            =   "Form1.frx":4D18
+      List            =   "Form1.frx":4D64
       TabIndex        =   153
       Top             =   1800
       Width           =   735
@@ -3244,6 +3258,9 @@ Private Sub Check5_Click()
 
 If Check5.value = "1" Then
 Check5.Caption = "Stop"
+
+
+
 If CharClass = "Warrior" Then 'warrior
 wartimer.Enabled = True
 End If
@@ -4332,7 +4349,7 @@ End Sub
 
 Private Sub Timer11_Timer()
 RogueAtak
-'AsasAtak
+AsasAtak
 End Sub
 
 Private Sub Timer14_Timer()
