@@ -345,7 +345,7 @@ Public Function AttachKO() As Boolean
 Dim RecvMailSlot2 As String
 Dim RecvMailSlot As String
 
-RecvMailSlot = "\\.\mailslot\ByS0x" & hex$(GetTickCount)
+RecvMailSlot = "\\.\mailslot\ByS0x" & Hex$(GetTickCount)
 
     GetWindowThreadProcessId FindWindow(vbNullString, "Knight OnLine Client"), KO_PID
     KO_HANDLE = OpenProcess(PROCESS_ALL_ACCESS, False, KO_PID)
@@ -423,7 +423,7 @@ ReDim pBytes(1 To pSize)
 ReadByteArray DINPUT_lpBaseOfDLL, pBytes, pSize
 For X = 1 To pSize - 10
 If pBytes(X) = &H57 And pBytes(X + 1) = &H6A And pBytes(X + 2) = &H40 And pBytes(X + 3) = &H33 And pBytes(X + 4) = &HC0 And pBytes(X + 5) = &H59 And pBytes(X + 6) = &HBF Then
-FindDInputKeyPtr = val("&H" & IIf(Len(hex$(pBytes(X + 10))) = 1, "0" & hex$(pBytes(X + 10)), hex$(pBytes(X + 10))) & IIf(Len(hex$(pBytes(X + 9))) = 1, "0" & hex$(pBytes(X + 9)), hex$(pBytes(X + 9))) & IIf(Len(hex$(pBytes(X + 8))) = 1, "0" & hex$(pBytes(X + 8)), hex$(pBytes(X + 8))) & IIf(Len(hex$(pBytes(X + 7))) = 1, "0" & hex$(pBytes(X + 7)), hex$(pBytes(X + 7))))
+FindDInputKeyPtr = val("&H" & IIf(Len(Hex$(pBytes(X + 10))) = 1, "0" & Hex$(pBytes(X + 10)), Hex$(pBytes(X + 10))) & IIf(Len(Hex$(pBytes(X + 9))) = 1, "0" & Hex$(pBytes(X + 9)), Hex$(pBytes(X + 9))) & IIf(Len(Hex$(pBytes(X + 8))) = 1, "0" & Hex$(pBytes(X + 8)), Hex$(pBytes(X + 8))) & IIf(Len(Hex$(pBytes(X + 7))) = 1, "0" & Hex$(pBytes(X + 7)), Hex$(pBytes(X + 7))))
 Exit For
 End If
 Next
@@ -682,8 +682,8 @@ If X <> CharX Or Y <> CharY Then
 WriteFloat ReadLong(KO_PTR_CHR) + KO_OFF_X, x1
 WriteFloat ReadLong(KO_PTR_CHR) + KO_OFF_Y, y1
 WriteFloat ReadLong(KO_PTR_CHR) + KO_OFF_Z, CharZ
-Paket "06" & Formathex(hex$(CInt(CharX) * 10), 4) & Formathex(hex$(CInt(CharY) * 10), 4) & Formathex(hex$(CInt(CharZ) * 10), 4) & "2D0003" _
-& Formathex(hex$(CInt(CharX) * 10), 4) & Formathex(hex$(CInt(CharY) * 10), 4) & Formathex(hex$(CInt(CharZ) * 10), 4)
+Paket "06" & Formathex(Hex$(CInt(CharX) * 10), 4) & Formathex(Hex$(CInt(CharY) * 10), 4) & Formathex(Hex$(CInt(CharZ) * 10), 4) & "2D0003" _
+& Formathex(Hex$(CInt(CharX) * 10), 4) & Formathex(Hex$(CInt(CharY) * 10), 4) & Formathex(Hex$(CInt(CharZ) * 10), 4)
 End If
 End If
 End Function
@@ -735,7 +735,7 @@ Dim Tmphex As String
 Dim i As Long
 TmpStr = ""
 For i = Len(pStrhex$) To 1 Step -1
-    Tmphex$ = hex$(Asc(mID$(pStrhex$, i, 1)))
+    Tmphex$ = Hex$(Asc(mID$(pStrhex$, i, 1)))
     If Len(Tmphex$) = 1 Then Tmphex$ = "0" & Tmphex$
     TmpStr = TmpStr & Tmphex$
 Next
@@ -776,8 +776,8 @@ End Function
 Function AlignDWORD(Dec As Long, Optional Length As Long = 8) As String
 'Coded By Aktay28
 Dim DTH As String ' DecTohex$
-DTH = hex$(Dec)
-Select Case Len(hex$(Dec))
+DTH = Hex$(Dec)
+Select Case Len(Hex$(Dec))
     Case 1
     AlignDWORD = Strings.Left("0" & DTH & "000000", Length)
     Case 2
@@ -900,7 +900,7 @@ Public Function hexItemID(ByVal Slot As Integer) As String
           'item id adress
         
         Sonuc = ReadLong(ReadLong(offset + &H68)) + ReadLong(ReadLong(offset + &H6C))
-        hex$ ItemID = Strings.mID(AlignDWORD(Sonuc), 1, 8)
+        Hex$ ItemID = Strings.mID(AlignDWORD(Sonuc), 1, 8)
 End Function
 Public Function LongItemID(ByVal Slot As Integer) As Long
         Dim offset, X, offset3, offset4 As Long
@@ -1444,38 +1444,144 @@ If SkillSeç = "001" Then
 Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "0100010000000000000000000000"
 End If
 End If
-kUzaklýk = 7: Paket "080101" + Formathex(hex$(UserID), 4) + "FF000000"
+kUzaklýk = 7: Paket "080101" + Formathex(Hex$(UserID), 4) + "FF000000"
 End Function
 Function AsasAtak()
-If VampiricTime <= 0 And CharSkill2 >= "50" And MobUzaklýK <= 14 And CharMP >= "50" And Form1.asaslist.Selected(10) = True Then VampiricTime = 61: kUzaklýk = 14: AsasSkill zMobID, Form1.asaslist.ItemData(10): Exit Function
-If BloodTime <= 0 And CharSkill2 >= "10" And MobUzaklýK <= 14 And CharMP >= "20" And Form1.asaslist.Selected(4) = True Then BloodTime = 61: kUzaklýk = 14: AsasSkill zMobID, Form1.asaslist.ItemData(4): Exit Function
-If IllusionTime <= 0 And CharSkill2 >= "30" And MobUzaklýK <= 14 And CharMP >= "30" And Form1.asaslist.Selected(7) = True Then IllusionTime = 11: kUzaklýk = 14: AsasSkill zMobID, Form1.asaslist.ItemData(7): Exit Function
-If CriticalTime <= 0 And CharSkill2 >= "80" And MobUzaklýK <= 14 And CharMP >= "200" And Form1.asaslist.Selected(15) = True Then CriticalTime = 61: kUzaklýk = 14: AsasSkill zMobID, Form1.asaslist.ItemData(15): Exit Function
-If BeastTime <= 0 And CharSkill2 >= "75" And MobUzaklýK <= 14 And CharMP >= "250" And Form1.asaslist.Selected(14) = True Then BeastTime = 41: kUzaklýk = 14: AsasSkill zMobID, Form1.asaslist.ItemData(14): Exit Function
-If BlindingTime <= 0 And CharSkill2 >= "72" And MobUzaklýK <= 14 And CharMP >= "200" And Form1.asaslist.Selected(13) = True Then BlindingTime = 61: kUzaklýk = 14: AsasSkill zMobID, Form1.asaslist.ItemData(13): Exit Function
-If BloodyTime <= 0 And CharSkill2 >= "70" And MobUzaklýK <= 14 And CharMP >= "100" And Form1.asaslist.Selected(12) = True Then BloodyTime = 6: kUzaklýk = 14: AsasSkill zMobID, Form1.asaslist.ItemData(12): Exit Function
-If SpikeTime <= 0 And CharSkill2 >= "55" And MobUzaklýK <= 14 And CharMP >= "100" And Form1.asaslist.Selected(11) = True Then SpikeTime = 12: kUzaklýk = 14: AsasSkill zMobID, Form1.asaslist.ItemData(11): Exit Function
-If CutTime <= 0 And CharSkill2 >= "40" And MobUzaklýK <= 14 And CharMP >= "50" And Form1.asaslist.Selected(9) = True Then CutTime = 6: kUzaklýk = 14: AsasSkill zMobID, Form1.asaslist.ItemData(9): Exit Function
-If ThrustTime <= 0 And CharSkill2 >= "35" And MobUzaklýK <= 14 And CharMP >= "50" And Form1.asaslist.Selected(8) = True Then ThrustTime = 11: kUzaklýk = 14: AsasSkill zMobID, Form1.asaslist.ItemData(8): Exit Function
-If ShockTime <= 0 And CharSkill2 >= "20" And MobUzaklýK <= 14 And CharMP >= "20" And Form1.asaslist.Selected(6) = True Then ShockTime = 6: kUzaklýk = 14: AsasSkill zMobID, Form1.asaslist.ItemData(6): Exit Function
-If PierceTime <= 0 And CharSkill2 >= "15" And MobUzaklýK <= 14 And CharMP >= "20" And Form1.asaslist.Selected(5) = True Then PierceTime = 11: kUzaklýk = 14: AsasSkill zMobID, Form1.asaslist.ItemData(5): Exit Function
-If JabTime <= 0 And CharMP >= "10" And MobUzaklýK <= 14 And Form1.asaslist.Selected(3) = True Then JabTime = 6: kUzaklýk = 14: AsasSkill zMobID, Form1.asaslist.ItemData(3): Exit Function
-If Stab2Time <= 0 And CharMP >= "5" And MobUzaklýK <= 14 And Form1.asaslist.Selected(2) = True Then Stab2Time = 6: kUzaklýk = 14: AsasSkill zMobID, Form1.asaslist.ItemData(2): Exit Function
-If StabTime <= 0 And CharMP >= "5" And MobUzaklýK <= 14 And Form1.asaslist.Selected(1) = True Then StabTime = 6: kUzaklýk = 14: AsasSkill zMobID, Form1.asaslist.ItemData(1): Exit Function
-If Form1.asaslist.Selected(0) = True And CharMP >= "2" And MobUzaklýK <= 14 Then kUzaklýk = 14: StrokeAtak zMobID: Exit Function
-If Form1.Check5.value = 1 And MobUzaklýK <= 7 Then
-kUzaklýk = 7: Paket "080101" + Formathex(hex$(zMobID), 4) + "FF000000"
+Dim SkillSeç As String
+Dim SkillID As String
+Dim UserID As Long
+If DüþmanId = "FFFF" Then
+Else
+If Form1.asaslist.Text = "Stroke" Then
+SkillSeç = "003"
+End If
+If Form1.asaslist.Text = "Stab" Then
+SkillSeç = "005"
+End If
+If Form1.asaslist.Text = "Stab 2" Then
+SkillSeç = "505"
+End If
+If Form1.asaslist.Text = "Jab" Then
+SkillSeç = "600"
+End If
+If Form1.asaslist.Text = "Blood Drain" Then
+SkillSeç = "610"
+End If
+If Form1.asaslist.Text = "Pierce" Then
+SkillSeç = "615"
+End If
+If Form1.asaslist.Text = "Shock" Then
+SkillSeç = "620"
+Pause 0.18
+End If
+If Form1.asaslist.Text = "Illusion" Then
+SkillSeç = "630"
+End If
+If Form1.asaslist.Text = "Thrust" Then
+SkillSeç = "635"
+End If
+If Form1.asaslist.Text = "Cut" Then
+SkillSeç = "640"
+End If
+If Form1.asaslist.Text = "Vampiric Touch" Then
+SkillSeç = "650"
+End If
+If Form1.asaslist.Text = "Spike" Then
+SkillSeç = "655"
+End If
+If Form1.asaslist.Text = "Bloody Beast" Then
+SkillSeç = "670"
+End If
+If Form1.asaslist.Text = "Blinding" Then
+SkillSeç = "675"
+End If
+If Form1.asaslist.Text = "Beast Hiding" Then
+SkillSeç = "680"
+End If
+If Form1.asaslist.Text = "Critical Point" Then
+SkillSeç = "685"
+End If
+
+
+SkillID = Strings.mID(AlignDWORD(SýnýfBul & SkillSeç), 1, 6)
+'Paket "3101" & SkillID & "00" & CharID & MobID & "0000000000000000000000000D00"
+'Paket "3102" & SkillID & "00" & CharID & MobID & "000000000000010000000000"
+'Paket "3103" & SkillID & "00" & CharID & MobID & "0000000000000100000000000000"
+If SkillSeç = "003" Then
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
+Pause 0.18
+Paket "3102" + SkillID + "00" + KarakterID + DüþmanId + "000000000000000000000000"
+Pause 0.18
+Paket "3103" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000000"
+End If
+
+If SkillSeç = "005" Then
+Paket "3103" + SkillID + "00" + KarakterID + DüþmanId + "0100010000000000000000000000"
+End If
+
+If SkillSeç = "600" Then 'jab
+Paket "3103" + SkillID + "00" + KarakterID + DüþmanId + "0100010000000000000000000000"
+End If
+
+If SkillSeç = "610" Then
+Paket "3103" + SkillID + "00" + KarakterID + DüþmanId + "0100010000000000000000000000"
+End If
+
+
+If SkillSeç = "615" Then
+Paket "3103" + SkillID + "00" + KarakterID + DüþmanId + "0100010000000000000000000000"
+End If
+
+If SkillSeç = "620" Then
+Paket "3103" + SkillID + "00" + KarakterID + DüþmanId + "0100010000000000000000000000"
+End If
+
+If SkillSeç = "630" Then
+Paket "3103" + SkillID + "00" + KarakterID + DüþmanId + "0100010000000000000000000000"
+End If
+
+If SkillSeç = "635" Then
+Paket "3103" + SkillID + "00" + KarakterID + DüþmanId + "0100010000000000000000000000"
+End If
+
+If SkillSeç = "640" Then
+Paket "3103" + SkillID + "00" + KarakterID + DüþmanId + "0100010000000000000000000000"
+End If
+
+If SkillSeç = "650" Then 'explosive shot
+Paket "3103" + SkillID + "00" + KarakterID + DüþmanId + "0100010000000000000000000000"
+End If
+
+If SkillSeç = "655" Then
+Paket "3103" + SkillID + "00" + KarakterID + DüþmanId + "0100010000000000000000000000"
+End If
+
+If SkillSeç = "670" Then 'counterstrike
+Paket "3103" + SkillID + "00" + KarakterID + DüþmanId + "0100010000000000000000000000"
+End If
+
+If SkillSeç = "675" Then 'explosive shot
+Paket "3103" + SkillID + "00" + KarakterID + DüþmanId + "0100010000000000000000000000"
+End If
+
+If SkillSeç = "680" Then
+Paket "3103" + SkillID + "00" + KarakterID + DüþmanId + "0100010000000000000000000000"
+End If
+
+If SkillSeç = "685" Then 'counterstrike
+Paket "3103" + SkillID + "00" + KarakterID + DüþmanId + "0100010000000000000000000000"
+End If
 End If
 End Function
 Function AsasSkill(UserID As Long, SkillNo As Long)
 On Error Resume Next
 If SkillNo = "1610" Or SkillNo = "1650" Then 'Yüzde ise
-Paket "3101" + Strings.mID(AlignDWORD(ClassOku & Right$(SkillNo, 3)), 1, 6) + "00" + CharId + Formathex(hex$(UserID), 4) + Formathex(hex$(zMobID), 4) + "0000000000000000000000001000"
-Paket "3103" + Strings.mID(AlignDWORD(ClassOku & Right$(SkillNo, 3)), 1, 6) + "00" + CharId + Formathex(hex$(UserID), 4) + Formathex(hex$(zMobID), 4) + "000000000000000000000000"
+Paket "3101" + Strings.mID(AlignDWORD(ClassOku & Right$(SkillNo, 3)), 1, 6) + "00" + CharId + Formathex(Hex$(UserID), 4) + Formathex(Hex$(zMobID), 4) + "0000000000000000000000001000"
+Paket "3103" + Strings.mID(AlignDWORD(ClassOku & Right$(SkillNo, 3)), 1, 6) + "00" + CharId + Formathex(Hex$(UserID), 4) + Formathex(Hex$(zMobID), 4) + "000000000000000000000000"
 Else
-Paket "3103" + Strings.mID(AlignDWORD(ClassOku & Right$(SkillNo, 3)), 1, 6) + "00" + CharId + Formathex(hex$(UserID), 4) + Formathex(hex$(zMobID), 4) + "0100010000000000000000000000"
+Paket "3103" + Strings.mID(AlignDWORD(ClassOku & Right$(SkillNo, 3)), 1, 6) + "00" + CharId + Formathex(Hex$(UserID), 4) + Formathex(Hex$(zMobID), 4) + "0100010000000000000000000000"
 If Form1.warcheck.value = 1 And MobUzaklýK <= 7 Then
-kUzaklýk = 7: Paket "080101" + Formathex(hex$(UserID), 4) + Formathex(hex$(zMobID), 4) + "FF000000"
+kUzaklýk = 7: Paket "080101" + Formathex(Hex$(UserID), 4) + Formathex(Hex$(zMobID), 4) + "FF000000"
 End If
 End If
 End Function
@@ -1504,6 +1610,7 @@ SkillSeç = "520"
 End If
 If Form1.List3.Text = "Perfect Shot" Then
 SkillSeç = "525"
+Pause 0.18
 End If
 If Form1.List3.Text = "Fire Shot" Then
 SkillSeç = "530"
@@ -1563,14 +1670,59 @@ Pause 0.18
 Paket "3103" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000000"
 End If
 
+If SkillSeç = "500" Then
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
+End If
+
+If SkillSeç = "505" Then
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
+End If
+
+If SkillSeç = "510" Then
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
+End If
+
+
 'Multiple
 If SkillSeç = "515" Then
-
 Paket "3101" + SkillID + "00" + CharId + MobID + "0000000000000000000000000D00"
 Paket "3102" + SkillID + "00" + CharId + MobID + "0D020600B7019BFF0000F0000F00"
 Paket "3103" + SkillID + "00" + CharId + MobID + "0000000000000400000000000000"
 Paket "3103" + SkillID + "00" + CharId + MobID + "0000000000000400000000000000"
 Paket "3103" + SkillID + "00" + CharId + MobID + "0000000000000500000000000000"
+End If
+
+
+If SkillSeç = "520" Then
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
+End If
+
+If SkillSeç = "525" Then
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
+End If
+
+If SkillSeç = "530" Then
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
+End If
+
+If SkillSeç = "535" Then
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
+End If
+
+If SkillSeç = "540" Then
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
+End If
+
+If SkillSeç = "545" Then 'explosive shot
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
+End If
+
+If SkillSeç = "550" Then
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
+End If
+
+If SkillSeç = "552" Then 'counterstrike
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
 End If
 
 If SkillSeç = "555" Then
@@ -1593,16 +1745,43 @@ Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000
 Paket "3102" + SkillID + "00" + KarakterID + DüþmanId + "000000000000000000000000"
 Paket "3103" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000000"
 Paket "3104" + SkillID + "00" + KarakterID + DüþmanId + "0000000000000000"
-' (30)
-'Paket "3103" & SkillID & "00" & KarakterID & MobID & "0000000000001500000000000000"
-' (30)
-'Paket "3103" & SkillID & "00" & KarakterID & MobID & "0000000000001500000000000000"
-' (30)
-'Paket "3103" & SkillID & "00" & KarakterID & MobID & "0000000000001600000000000000"
-' (30)
-'Paket "3103" & SkillID & "00" & KarakterID & MobID & "0000000000001700000000000000"
-' (30)
-'Paket "3103" & SkillID & "00" & KarakterID & MobID & "0000000000001800000000000000"
+
+If SkillSeç = "557" Then
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
+End If
+
+If SkillSeç = "560" Then
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
+End If
+
+If SkillSeç = "562" Then
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
+End If
+
+If SkillSeç = "566" Then
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
+End If
+
+If SkillSeç = "570" Then
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
+End If
+
+If SkillSeç = "575" Then
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
+End If
+
+If SkillSeç = "580" Then
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
+End If
+
+If SkillSeç = "585" Then 'powershot
+Paket "3101" + SkillID + "00" + KarakterID + DüþmanId + "00000000000000000000000000000D00"
+End If
+
+
+If SkillSeç = "" Then
+End If
+
 End If
 End If
 End Sub
@@ -1681,7 +1860,7 @@ End Function
 Public Function StringTohex(ByVal StrTohex As String) As String
 Dim strTemp As String, strReturn As String, i As Long
 For i = 1 To Len(StrTohex$)
-    strTemp = hex$(Asc(mID$(StrTohex, i, 1)))
+    strTemp = Hex$(Asc(mID$(StrTohex, i, 1)))
     If Len(strTemp) = 1 Then strTemp = "0" & strTemp
     strReturn = strReturn & strTemp
 Next i
@@ -1695,7 +1874,7 @@ If KO_MSLOT <= 0 Then Exit Function: MsgBox "memory could not be opened!", vbCri
 CF = GetProcAddress(GetModuleHandle("kernel32.dll"), "CreateFileA")
 WF = GetProcAddress(GetModuleHandle("kernel32.dll"), "WriteFile")
 Ch = GetProcAddress(GetModuleHandle("kernel32.dll"), "CloseHandle")
-Debug.Print hex$(KO_MSLOT)
+Debug.Print Hex$(KO_MSLOT)
 hex2byte StringTohex(MailSlotName), p
 ByteDizisiYaz KO_MSLOT + &H400, p, UBound(p) - LBound(p) + 1
 pHook = "558BEC83C4F433C08945FC33D28955F86A0068800000006A036A006A01680000004068" & AlignDWORD(KO_MSLOT + &H400) & "E8" & AlignDWORD(getCallDiff(KO_MSLOT + &H27, CF)) & "8945F86A008D4DFC51FF750CFF7508FF75F8E8" & AlignDWORD(getCallDiff(KO_MSLOT + &H3E, WF)) & "8945F4FF75F8E8" & AlignDWORD(getCallDiff(KO_MSLOT + &H49, Ch)) & "8BE55DC3" '&H49
@@ -1721,7 +1900,7 @@ End Sub
 
 Public Function recv()
 Dim RecvMailSlot As String
-RecvMailSlot = "\\.\mailslot\zuhas" & hex$(GetTickCount)
+RecvMailSlot = "\\.\mailslot\zuhas" & Hex$(GetTickCount)
 RecvHandle = EstablishMailSlot(RecvMailSlot)
 FindHook RecvMailSlot
 End Function
@@ -2143,7 +2322,7 @@ Function hexString(ByVal EvalString As String) As String
         EvalString = Trim$(EvalString)
         intStrLen = Len(EvalString)
         For intLoop = 1 To intStrLen
-            strhex$ = strhex$ & hex$(Asc(mID$(EvalString, intLoop, 1)))
+            strhex$ = strhex$ & Hex$(Asc(mID$(EvalString, intLoop, 1)))
         Next
         hexString = strhex$
         hexSözcük = strhex$
@@ -2434,40 +2613,40 @@ If Form1.canta.Selected(15) Then
   Paket "5B02" + "01" + "1427" + ItemNo15 + "0F" + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
 End If
 If Form1.canta.Selected(16) Then
- Paket "5B02" + "01" + "1427" + ItemNo16 + hex$(CLng("16")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
+ Paket "5B02" + "01" + "1427" + ItemNo16 + Hex$(CLng("16")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
 End If
 If Form1.canta.Selected(17) Then
- Paket "5B02" + "01" + "1427" + ItemNo17 + hex$(CLng("17")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
+ Paket "5B02" + "01" + "1427" + ItemNo17 + Hex$(CLng("17")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
 End If
 If Form1.canta.Selected(18) Then
- Paket "5B02" + "01" + "1427" + ItemNo18 + hex$(CLng("18")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
+ Paket "5B02" + "01" + "1427" + ItemNo18 + Hex$(CLng("18")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
 End If
 If Form1.canta.Selected(19) Then
- Paket "5B02" + "01" + "1427" + ItemNo19 + hex$(CLng("19")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
+ Paket "5B02" + "01" + "1427" + ItemNo19 + Hex$(CLng("19")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
 End If
 If Form1.canta.Selected(20) Then
-Paket "5B02" + "01" + "1427" + ItemNo20 + hex$(CLng("20")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
+Paket "5B02" + "01" + "1427" + ItemNo20 + Hex$(CLng("20")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
 End If
 If Form1.canta.Selected(21) Then
-Paket "5B02" + "01" + "1427" + ItemNo21 + hex$(CLng("21")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
+Paket "5B02" + "01" + "1427" + ItemNo21 + Hex$(CLng("21")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
 End If
 If Form1.canta.Selected(22) Then
-Paket "5B02" + "01" + "1427" + ItemNo22 + hex$(CLng("22")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
+Paket "5B02" + "01" + "1427" + ItemNo22 + Hex$(CLng("22")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
 End If
 If Form1.canta.Selected(23) Then
- Paket "5B02" + "01" + "1427" + ItemNo23 + hex$(CLng("23")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
+ Paket "5B02" + "01" + "1427" + ItemNo23 + Hex$(CLng("23")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
 End If
 If Form1.canta.Selected(24) Then
-  Paket "5B02" + "01" + "1427" + ItemNo24 + hex$(CLng("24")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
+  Paket "5B02" + "01" + "1427" + ItemNo24 + Hex$(CLng("24")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
 End If
 If Form1.canta.Selected(25) Then
-  Paket "5B02" + "01" + "1427" + ItemNo25 + hex$(CLng("25")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
+  Paket "5B02" + "01" + "1427" + ItemNo25 + Hex$(CLng("25")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
 End If
 If Form1.canta.Selected(26) Then
-  Paket "5B02" + "01" + "1427" + ItemNo26 + hex$(CLng("26")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
+  Paket "5B02" + "01" + "1427" + ItemNo26 + Hex$(CLng("26")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
 End If
 If Form1.canta.Selected(27) Then
- Paket "5B02" + "01" + "1427" + ItemNo27 + hex$(CLng("27")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
+ Paket "5B02" + "01" + "1427" + ItemNo27 + Hex$(CLng("27")) + ScrollID + Form1.Text21.Text + "00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF00000000FF"
 End If
 
 Next i28
@@ -2534,7 +2713,7 @@ Paket "06" _
 & Left$(AlignDWORD(ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_Y) * 10), 4) _
 & Left$(AlignDWORD(ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_Z) * 10), 4) _
 & "2D0000" _
-& Formathex(hex$(CInt(CharX) * 10), 4) & Formathex(hex$(CInt(CharY) * 10), 4) & Formathex(hex$(CInt(CharZ) * 10), 4)
+& Formathex(Hex$(CInt(CharX) * 10), 4) & Formathex(Hex$(CInt(CharY) * 10), 4) & Formathex(Hex$(CInt(CharZ) * 10), 4)
 End If
 Next
 WriteFloat ReadLong(KO_PTR_CHR) + KO_OFF_X, crx
@@ -2546,7 +2725,7 @@ Paket "06" _
 & Left$(AlignDWORD(ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_Y) * 10), 4) _
 & Left$(AlignDWORD(ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_Z) * 10), 4) _
 & "2D0000" _
-& Formathex(hex$(CInt(CharX) * 10), 4) & Formathex(hex$(CInt(CharY) * 10), 4) & Formathex(hex$(CInt(CharZ) * 10), 4)
+& Formathex(Hex$(CInt(CharX) * 10), 4) & Formathex(Hex$(CInt(CharY) * 10), 4) & Formathex(Hex$(CInt(CharZ) * 10), 4)
 Pause 0.1
 End Function
 
