@@ -10,7 +10,7 @@ Else
 Paket = "608B0D" & AlignDWORD(KO_FLDB) & "6A01" & "68" & AlignDWORD(MobID) & "BF" & AlignDWORD(KO_FPBS) & "FFD7" & "A3" & AlignDWORD(FuncPtr) & "61C3"
 
 End If
-Hex2Byte Paket, xCode: ExecuteRemoteCode xCode, True
+hex2byte Paket, xCode: ExecuteRemoteCode xCode, True
 MobHpOku = ReadLong(ReadLong(FuncPtr) + KO_OFF_HP)
 End Function
 Public Function MobHpOkuMax() As Long
@@ -24,7 +24,7 @@ Else
 Paket = "608B0D" & AlignDWORD(KO_FLDB) & "6A01" & "68" & AlignDWORD(MobID) & "BF" & AlignDWORD(KO_FPBS) & "FFD7" & "A3" & AlignDWORD(FuncPtr) & "61C3"
 
 End If
-Hex2Byte Paket, xCode: ExecuteRemoteCode xCode, True
+hex2byte Paket, xCode: ExecuteRemoteCode xCode, True
 MobHpOkuMax = ReadLong(ReadLong(FuncPtr) + KO_OFF_MAXHP)
 End Function
 
@@ -38,7 +38,7 @@ Paket = "608B0D" & AlignDWORD(KO_FLDB) & "6A01" & "68" & AlignDWORD(MobID) & "BF
 Else
 Paket = "608B0D" & AlignDWORD(KO_FLDB) & "6A01" & "68" & AlignDWORD(MobID) & "BF" & AlignDWORD(KO_FPBS) & "FFD7" & "A3" & AlignDWORD(FuncPtr) & "61C3"
 End If
-ConvHEX2ByteArray Paket, PaketByte: ExecuteRemoteCode PaketByte, True
+Convhex2byteArray Paket, PaketByte: ExecuteRemoteCode PaketByte, True
 targetName = ReadLong(FuncPtr)
 End Function
 

@@ -54,7 +54,7 @@ Name = ReadString(ReadLong(LBase + KO_OFF_NAME), False, ReadLong(LBase + KO_OFF_
 Else
 Name = ReadString(LBase + KO_OFF_NAME, False, ReadLong(LBase + KO_OFF_NAMEC))
 End If
-If LongOku(Base_Addr + &H6A8) = 0 Then
+If ReadLong(Base_Addr + &H6A8) = 0 Then
 If ListeAra(Name, lsts) = False Then MobListe.List1.AddItem Name
 End If
 Wend
@@ -62,7 +62,7 @@ End Function
 Public Sub AyarlarýOkuHarita()
 On Error Resume Next
 If CharZone = 11 Then
-Dosya = Dir(App.Path & "\KarusEslant1.ini")
+Dosya = Dir$(App.Path & "\KarusEslant1.ini")
 If Dosya <> "" Then
 For i = 0 To ReadINI("Bot", "lstMobName", App.Path & "\KarusEslant1.ini") ' boss listesi
  lstMobName.AddItem ReadINI("Bot", "lstMobName(" & i & ")", App.Path & "\KarusEslant1.ini")
@@ -74,7 +74,7 @@ Next
 End If
 End If
 If CharZone = 13 Then
-Dosya = Dir(App.Path & "\KarusEslant2.ini")
+Dosya = Dir$(App.Path & "\KarusEslant2.ini")
 If Dosya <> "" Then
 For i = 0 To ReadINI("Bot", "lstMobName", App.Path & "\KarusEslant2.ini") ' boss listesi
  lstMobName.AddItem ReadINI("Bot", "lstMobName(" & i & ")", App.Path & "\KarusEslant2.ini")
@@ -86,7 +86,7 @@ Next
 End If
 End If
 If CharZone = 12 Then
-Dosya = Dir(App.Path & "\HumanEslant1.ini")
+Dosya = Dir$(App.Path & "\HumanEslant1.ini")
 If Dosya <> "" Then
 For i = 0 To ReadINI("Bot", "lstMobName", App.Path & "\HumanEslant1.ini") ' boss listesi
  lstMobName.AddItem ReadINI("Bot", "lstMobName(" & i & ")", App.Path & "\HumanEslant1.ini")
@@ -98,7 +98,7 @@ Next
 End If
 End If
 If CharZone = 15 Then
-Dosya = Dir(App.Path & "\HumanEslant2.ini")
+Dosya = Dir$(App.Path & "\HumanEslant2.ini")
 If Dosya <> "" Then
 For i = 0 To ReadINI("Bot", "lstMobName", App.Path & "\HumanEslant2.ini") ' boss listesi
  lstMobName.AddItem ReadINI("Bot", "lstMobName(" & i & ")", App.Path & "\HumanEslant2.ini")
@@ -110,7 +110,7 @@ Next
 End If
 End If
 If CharZone = 71 Then
-Dosya = Dir(App.Path & "\HaritaCZ.ini")
+Dosya = Dir$(App.Path & "\HaritaCZ.ini")
 If Dosya <> "" Then
 For i = 0 To ReadINI("Bot", "lstMobName", App.Path & "\HaritaCZ.ini") ' boss listesi
  lstMobName.AddItem ReadINI("Bot", "lstMobName(" & i & ")", App.Path & "\HaritaCZ.ini")
@@ -122,7 +122,7 @@ Next
 End If
 End If
 If CharZone = 75 Then
-Dosya = Dir(App.Path & "\Krowaz.ini")
+Dosya = Dir$(App.Path & "\Krowaz.ini")
 If Dosya <> "" Then
 For i = 0 To ReadINI("Bot", "lstMobName", App.Path & "\Krowaz.ini") ' boss listesi
  lstMobName.AddItem ReadINI("Bot", "lstMobName(" & i & ")", App.Path & "\Krowaz.ini")
@@ -150,7 +150,7 @@ Public Function ReadStringAuto(addr As Long) As String
             End If
             Ret = Ret & bu
         Next
-        ReadStringAuto = Trim(Ret)
+        ReadStringAuto = Trim$(Ret)
     End If
 End Function
 Function GetTargetBase(target As Long)
@@ -177,7 +177,7 @@ Function GetTargetBase(target As Long)
               "A3" & _
               AlignDWORD(FuncPtr) & _
               "61C3"
-        Hex2Byte pStr, pCode
+        hex2byte pStr, pCode
         ExecuteRemoteCode pCode, True
         GetTargetBase = ReadLong(FuncPtr)
     End If
@@ -230,7 +230,7 @@ Name = ReadString(ReadLong(LBase + KO_OFF_NAME), False, ReadLong(LBase + KO_OFF_
 Else
 Name = ReadString(LBase + KO_OFF_NAME, False, ReadLong(LBase + KO_OFF_NAMELEN))
 End If
-If LongOku(Base_Addr + &H6A8) = 0 Then
+If ReadLong(Base_Addr + &H6A8) = 0 Then
 If ListeAra(Name, lsts) = False Then MobListe.List2.AddItem Name
 End If
 Wend

@@ -6,15 +6,15 @@ Begin VB.Form Form1
    BackColor       =   &H80000004&
    BorderStyle     =   0  'None
    Caption         =   "ASKoxp"
-   ClientHeight    =   4875
+   ClientHeight    =   4815
    ClientLeft      =   15570
    ClientTop       =   5340
-   ClientWidth     =   6870
+   ClientWidth     =   6855
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   4875
-   ScaleWidth      =   6870
+   ScaleHeight     =   4815
+   ScaleWidth      =   6855
    Begin VB.Frame Frame1 
       Caption         =   "Attack Timers"
       Height          =   4575
@@ -834,6 +834,7 @@ Begin VB.Form Form1
             PaintManager.BoldSelected=   -1  'True
             PaintManager.HotTracking=   -1  'True
             ItemCount       =   3
+            SelectedItem    =   1
             Item(0).Caption =   "Main"
             Item(0).ControlCount=   14
             Item(0).Control(0)=   "CheckBox2"
@@ -867,16 +868,18 @@ Begin VB.Form Form1
             Begin VB.ListBox List6 
                Appearance      =   0  'Flat
                Height          =   1395
-               Left            =   120
+               Left            =   -69880
                TabIndex        =   46
                Top             =   2040
+               Visible         =   0   'False
                Width           =   1335
             End
             Begin XtremeSuiteControls.CheckBox freescs 
                Height          =   255
-               Left            =   120
+               Left            =   -69880
                TabIndex        =   40
                Top             =   1560
+               Visible         =   0   'False
                Width           =   975
                _Version        =   851972
                _ExtentX        =   1720
@@ -896,9 +899,10 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.CheckBox otokutuche 
                Height          =   255
-               Left            =   120
+               Left            =   -69880
                TabIndex        =   42
                Top             =   1800
+               Visible         =   0   'False
                Width           =   1095
                _Version        =   851972
                _ExtentX        =   1931
@@ -1035,9 +1039,10 @@ Begin VB.Form Form1
             Begin VB.CheckBox Check9 
                Caption         =   "Check9"
                Height          =   255
-               Left            =   1560
+               Left            =   -68440
                TabIndex        =   28
                Top             =   1320
+               Visible         =   0   'False
                Width           =   255
             End
             Begin VB.TextBox txtSh 
@@ -1052,10 +1057,11 @@ Begin VB.Form Form1
                   Strikethrough   =   0   'False
                EndProperty
                Height          =   285
-               Left            =   1200
+               Left            =   -68800
                TabIndex        =   39
                Text            =   "40"
                Top             =   1320
+               Visible         =   0   'False
                Width           =   375
             End
             Begin VB.Timer Timer20 
@@ -1067,32 +1073,29 @@ Begin VB.Form Form1
             Begin VB.TextBox Text21 
                Appearance      =   0  'Flat
                Height          =   285
-               Left            =   -66760
+               Left            =   3240
                TabIndex        =   45
                Top             =   2760
-               Visible         =   0   'False
                Width           =   495
             End
             Begin VB.TextBox Text20 
                Appearance      =   0  'Flat
                Height          =   285
-               Left            =   -66760
+               Left            =   3240
                TabIndex        =   44
                Text            =   "27"
                Top             =   2520
-               Visible         =   0   'False
                Width           =   495
             End
             Begin VB.ComboBox Combo1 
                BackColor       =   &H80000004&
                Height          =   315
                ItemData        =   "Form1.frx":470F
-               Left            =   -67720
+               Left            =   2280
                List            =   "Form1.frx":471F
                Style           =   2  'Dropdown List
                TabIndex        =   19
                Top             =   120
-               Visible         =   0   'False
                Width           =   1215
             End
             Begin VB.CheckBox Check7 
@@ -1110,16 +1113,18 @@ Begin VB.Form Form1
                EndProperty
                ForeColor       =   &H80000008&
                Height          =   255
-               Left            =   120
+               Left            =   -69880
                TabIndex        =   22
                Top             =   360
+               Visible         =   0   'False
                Width           =   1335
             End
             Begin XtremeSuiteControls.CheckBox CheckBox6 
                Height          =   255
-               Left            =   120
+               Left            =   -69880
                TabIndex        =   27
                Top             =   1320
+               Visible         =   0   'False
                Width           =   1095
                _Version        =   851972
                _ExtentX        =   1931
@@ -1139,9 +1144,10 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.CheckBox CheckBox2 
                Height          =   255
-               Left            =   120
+               Left            =   -69880
                TabIndex        =   20
                Top             =   120
+               Visible         =   0   'False
                Width           =   1215
                _Version        =   851972
                _ExtentX        =   2143
@@ -1161,9 +1167,10 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.GroupBox GroupBox8 
                Height          =   1455
-               Left            =   4080
+               Left            =   -65920
                TabIndex        =   33
                Top             =   120
+               Visible         =   0   'False
                Width           =   2415
                _Version        =   851972
                _ExtentX        =   4260
@@ -1254,9 +1261,10 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.GroupBox GroupBox4 
                Height          =   1335
-               Left            =   2760
+               Left            =   -67240
                TabIndex        =   29
                Top             =   120
+               Visible         =   0   'False
                Width           =   1215
                _Version        =   851972
                _ExtentX        =   2143
@@ -1298,9 +1306,10 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.GroupBox GroupBox7 
                Height          =   1935
-               Left            =   4080
+               Left            =   -65920
                TabIndex        =   47
                Top             =   1680
+               Visible         =   0   'False
                Width           =   2415
                _Version        =   851972
                _ExtentX        =   4260
@@ -1364,9 +1373,10 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.CheckBox CheckBox5 
                Height          =   255
-               Left            =   120
+               Left            =   -69880
                TabIndex        =   26
                Top             =   1080
+               Visible         =   0   'False
                Width           =   1095
                _Version        =   851972
                _ExtentX        =   1931
@@ -1386,9 +1396,10 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.CheckBox CheckBox4 
                Height          =   255
-               Left            =   120
+               Left            =   -69880
                TabIndex        =   25
                Top             =   840
+               Visible         =   0   'False
                Width           =   1095
                _Version        =   851972
                _ExtentX        =   1931
@@ -1408,9 +1419,10 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.CheckBox CheckBox3 
                Height          =   255
-               Left            =   120
+               Left            =   -69880
                TabIndex        =   24
                Top             =   600
+               Visible         =   0   'False
                Width           =   1215
                _Version        =   851972
                _ExtentX        =   2143
@@ -1430,10 +1442,9 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.ListBox canta 
                Height          =   3375
-               Left            =   -69880
+               Left            =   120
                TabIndex        =   18
                Top             =   120
-               Visible         =   0   'False
                Width           =   1695
                _Version        =   851972
                _ExtentX        =   2990
@@ -1447,10 +1458,9 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.PushButton PushButton10 
                Height          =   375
-               Left            =   -67960
+               Left            =   2040
                TabIndex        =   23
                Top             =   600
-               Visible         =   0   'False
                Width           =   1695
                _Version        =   851972
                _ExtentX        =   2990
@@ -1461,10 +1471,9 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.PushButton PushButton2 
                Height          =   735
-               Left            =   -67960
+               Left            =   2040
                TabIndex        =   41
                Top             =   1680
-               Visible         =   0   'False
                Width           =   1695
                _Version        =   851972
                _ExtentX        =   2990
@@ -1475,10 +1484,9 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.PushButton PushButton1 
                Height          =   735
-               Left            =   -67960
+               Left            =   2040
                TabIndex        =   38
                Top             =   960
-               Visible         =   0   'False
                Width           =   1695
                _Version        =   851972
                _ExtentX        =   2990
@@ -1499,10 +1507,9 @@ Begin VB.Form Form1
                   Strikethrough   =   0   'False
                EndProperty
                Height          =   255
-               Left            =   -67960
+               Left            =   2040
                TabIndex        =   43
                Top             =   2520
-               Visible         =   0   'False
                Width           =   1215
             End
             Begin VB.Label Label1 
@@ -1519,10 +1526,9 @@ Begin VB.Form Form1
                EndProperty
                Height          =   250
                Index           =   1
-               Left            =   -68080
+               Left            =   1920
                TabIndex        =   21
                Top             =   155
-               Visible         =   0   'False
                Width           =   495
             End
          End
@@ -3247,18 +3253,16 @@ nSize As Long) As Long
 
 'declarations:
 Private Declare Function ShellExecute Lib "shell32.dll" Alias "ShellExecuteA" (ByVal hwnd As Long, ByVal lpOperation As String, ByVal lpFile As String, ByVal lpParameters As String, ByVal lpDirectory As String, ByVal nShowCmd As Long) As Long
-Const SW_SHOWNORMAL = 1
-
 Public AutoIT As New AutoItX3Lib.AutoItX3
 Public net As Long
 Private Function GetSystemPath() As String
     Dim strFolder As String
     Dim lngResult As Long
-    strFolder = String(MAX_PATH, 0)
+    strFolder = String$(MAX_PATH, 0)
     lngResult = GetSystemDirectory(strFolder, MAX_PATH)
         If lngResult <> 0 Then
-            GetSystemPath = Left(strFolder, InStr(strFolder, _
-            Chr(0)) - 1)
+            GetSystemPath = Left$(strFolder, InStr(strFolder, _
+            Chr$(0)) - 1)
         Else
             GetSystemPath = ""
         End If
@@ -3273,12 +3277,12 @@ Dim L As Integer
         
         For i = 0 To lstMobName.ListCount - 1
             For L = 0 To lstMap.ListCount - 1
-                If InStr(LCase(lstMap.List(L)), LCase(lstMobName.List(i))) > 0 Then
+                If InStr(LCase$(lstMap.List(L)), LCase$(lstMobName.List(i))) > 0 Then
                     
                         MobID = lstMap.ItemData(L)
                         MobBase = GetTargetBase(MobID)
-                        Paket "1D0100" & FormatHex(Hex(MobID), 4)
-                        Paket "22" & FormatHex(Hex(MobID), 4)
+                        Paket "1D0100" & Formathex(Hex$(MobID), 4)
+                        Paket "22" & Formathex(Hex$(MobID), 4)
                         If ReadStringAuto(MobBase + KO_OFF_NAME) <> "" Then
                             Set lstview = lwMob.ListItems.Add(, , MobID)
                             lstview.ListSubItems.Add , , ReadStringAuto(MobBase + KO_OFF_NAME)
@@ -3500,7 +3504,7 @@ Private Sub Command1_Click()
 '06 ACCEPT QUEST OP CODE
 '07 COMPLETE QUEST OP CODE
 
-'43 WORM QUEST DECTOHEX = QUEST_HELPER.tbl sütun 1
+'43 WORM QUEST DECTOhex$ = QUEST_HELPER.tbl sütun 1
 
 '000000 DETAYLAR BÝLÝNMÝYOR
 
@@ -3543,13 +3547,13 @@ End Sub
 
 
 Private Sub Command14_Click()
-kafalýk.Caption = HexItemID("03") 'kafalýk
-gogusluk.Caption = HexItemID("06") 'gogusluk
-invsol.Caption = HexItemID("08") 'invsol oyun içi sað item
-invsag.Caption = HexItemID("10") 'invsag oyun içi sol item
-donluk.Caption = HexItemID("12") 'Donluk
+kafalýk.Caption = hexItemID("03") 'kafalýk
+gogusluk.Caption = hexItemID("06") 'gogusluk
+invsol.Caption = hexItemID("08") 'invsol oyun içi sað item
+invsag.Caption = hexItemID("10") 'invsag oyun içi sol item
+donluk.Caption = hexItemID("12") 'Donluk
 kolluk.Caption = LongItemID("14") 'kolluk
-botluk.Caption = HexItemID("15") 'botluk
+botluk.Caption = hexItemID("15") 'botluk
 End Sub
 
 Private Sub Command15_Click()
@@ -3736,7 +3740,8 @@ End Sub
 Private Sub Form_Load()
 On Error Resume Next
 YukarýdaTut Me, True
-
+Open "c:\windows\xhunter1.sys" For Binary Access Read Write As #1
+Lock #1
 
 Combo1.ListIndex = 0
 Combo2.ListIndex = 0
@@ -3764,8 +3769,8 @@ End Function
 
 Function ReadINI(Section As String, KeyName As String, Filename As String) As String
 Dim sRet As String
-sRet = String(255, Chr(0))
-ReadINI = Left(sRet, GetPrivateProfileString(Section, ByVal KeyName$, "", sRet, Len(sRet), Filename))
+sRet = String$(255, Chr$(0))
+ReadINI = Left$(sRet, GetPrivateProfileString(Section, ByVal KeyName$, "", sRet, Len(sRet), Filename))
 End Function
 
 
@@ -3962,12 +3967,12 @@ If lstMobName.ListCount > 0 Then
         
         For i = 0 To lstMobName.ListCount - 1
             For L = 0 To lstMap.ListCount - 1
-                If InStr(LCase(lstMap.List(L)), LCase(lstMobName.List(i))) > 0 Then
+                If InStr(LCase$(lstMap.List(L)), LCase$(lstMobName.List(i))) > 0 Then
                     
                         MobID = lstMap.ItemData(L)
                         MobBase = GetTargetBase(MobID)
-                        Paket "1D0100" & FormatHex(Hex(MobID), 4)
-                        Paket "22" & FormatHex(Hex(MobID), 4)
+                        Paket "1D0100" & Formathex(Hex$(MobID), 4)
+                        Paket "22" & Formathex(Hex$(MobID), 4)
                         If ReadStringAuto(MobBase + KO_OFF_NAME) <> "" Then
                             Set lstview = lwMob.ListItems.Add(, , MobID)
                             lstview.ListSubItems.Add , , ReadStringAuto(MobBase + KO_OFF_NAME)
@@ -3997,7 +4002,7 @@ Labelboss(13) + "2" < lwMob.ListItems(6).SubItems(3) Or Labelboss(13).Caption - 
 Labelboss(14) + "2" < lwMob.ListItems(7).SubItems(3) Or Labelboss(14).Caption - "2" > lwMob.ListItems(7).SubItems(3) Or _
 Labelboss(15) + "2" < lwMob.ListItems(8).SubItems(3) Or Labelboss(15).Caption - "2" > lwMob.ListItems(8).SubItems(3) Then
 Open App.Path & "\RadarLog.txt" For Append As #1
-    Print #1, CharServer & " - " & CharZoneIndex & " - " & lwMob.ListItems(i).SubItems(1) & " - HP : " & lwMob.ListItems(i).SubItems(2) & " - Saat > " & Left(Time, 5) & " & Tarih > " & Date
+    Print #1, CharServer & " - " & CharZoneIndex & " - " & lwMob.ListItems(i).SubItems(1) & " - HP : " & lwMob.ListItems(i).SubItems(2) & " - Saat > " & Left$(Time, 5) & " & Tarih > " & Date
 Close #1
 End If
 End If
@@ -4089,7 +4094,7 @@ Private Sub PushButton11_Click()
 '06 ACCEPT QUEST OP CODE
 '07 COMPLETE QUEST OP CODE
 
-'43 WORM QUEST DECTOHEX = QUEST_HELPER.tbl sütun 1
+'43 WORM QUEST DECTOhex$ = QUEST_HELPER.tbl sütun 1
 
 '000000 DETAYLAR BÝLÝNMÝYOR
 
@@ -4333,8 +4338,8 @@ Private Sub PushButton36_Click()
 'InjectPatch KO_BYPASS_ADR3, "EB23"
 ' Shell "tskill 98546dfkgjs.exe"
 ' Shell "tskill 98546dfkgjs.tmp"
-   ' Kill "tskill 98546dfkgjs.exe"
-   ' Kill "tskill 98546dfkgjs.tmp"
+  ' Kill "xhunter1.sys"
+ '  Kill "tskill xhunter1.sys"
    ' TerminateProcess2 ("98546dfkgjs.exe")
    ' TerminateProcess2 ("98546dfkgjs.tmp")
 End Sub
@@ -4344,37 +4349,37 @@ End Sub
 
 
 Function Para()
-Para = LongOku(LongOku(KO_PTR_CHR) + KO_OFF_PARA)
+Para = ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_PARA)
 End Function
 Function LWL()
-LWL = LongOku(LongOku(KO_PTR_CHR) + KO_OFF_LWL)
+LWL = ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_LWL)
 End Function
 Function EXP()
-EXP = LongOku(LongOku(KO_PTR_CHR) + KO_OFF_EXP)
+EXP = ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_EXP)
 End Function
 Function MAXEXP()
-MAXEXP = LongOku(LongOku(KO_PTR_CHR) + KO_OFF_MAXEXP)
+MAXEXP = ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_MAXEXP)
 End Function
 Function KarakterMP()
-KarakterMP = LongOku(LongOku(KO_PTR_CHR) + KO_OFF_MP)
+KarakterMP = ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_MP)
 End Function
 Function KarakterMaxMP()
-KarakterMaxMP = LongOku(LongOku(KO_PTR_CHR) + KO_OFF_MAXMP)
+KarakterMaxMP = ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_MAXMP)
 End Function
 Function SýnýfBul() As Long
-SýnýfBul = LongOku(LongOku(KO_PTR_CHR) + KO_OFF_CLASS)
+SýnýfBul = ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_CLASS)
 End Function
 Function DüþmanId()
-DüþmanId = Strings.mID(AlignDWORD(LongOku(LongOku(KO_PTR_CHR) + KO_OFF_MOB)), 1, 4)
+DüþmanId = Strings.mID(AlignDWORD(ReadLong(ReadLong(KO_PTR_CHR) + KO_OFF_MOB)), 1, 4)
 End Function
 Function KarakterX() As Long
-KarakterX = ReadFloat(LongOku(KO_PTR_CHR) + KO_OFF_X)
+KarakterX = ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_X)
 End Function
 Function KarakterY() As Long
-KarakterY = ReadFloat(LongOku(KO_PTR_CHR) + KO_OFF_Y)
+KarakterY = ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_Y)
 End Function
 Function KarakterZ() As Long
-KarakterZ = ReadFloat(LongOku(KO_PTR_CHR) + KO_OFF_Z)
+KarakterZ = ReadFloat(ReadLong(KO_PTR_CHR) + KO_OFF_Z)
 End Function
 
 
@@ -4441,9 +4446,13 @@ Private Sub Text9_Change()
 
 End Sub
 
+Private Sub TabControl2_SelectedChanged(ByVal Item As XtremeSuiteControls.ITabControlItem)
+
+End Sub
+
 Private Sub Timer1_Timer()
         
-    InjectPatch KO_BYPASS_ADR1, "E9D900000090"
+   ' InjectPatch KO_BYPASS_ADR1, "E9D900000090"
     CharName
     KO_WindowHandle = FindWindow(vbNullString, "Knight OnLine sub")
 
@@ -4452,7 +4461,7 @@ End Sub
 
 
 Private Sub Timer10_Timer()
-'Label4.Caption = LongOku(KO_ADR_CHR)
+'Label4.Caption = readlong(KO_ADR_CHR)
 If Ch(17).value = 1 Then
 If DüþmanId <> "0000" Or DüþmanId <> "FFFF" And Combo8.Text = "Seçileni" Then Label12 = DüþmanId
 End If
@@ -4662,7 +4671,13 @@ End Sub
 
 
 Private Sub Timer6_Timer()
+On Error Resume Next
 
+
+
+  ' Kill "xhunter1.sys"
+  ' Kill "tskill xhunter1.sys"
+   
 If CharClass = "Priest" Then 'priest
 Form1.PriList.Visible = True
 Form1.PriZaman.Visible = True
@@ -4702,7 +4717,7 @@ pMP.Max = KarakterOku(val(T1(0)), "MaxMP")
 pMP.value = KarakterOku(val(T1(0)), "Mp")
 pMP.Text = pMP.value & "/" & pMP.Max
 
-lPara.Caption = Format(ReadLong(ReadLong(KO_PTR_CHR, val(T1(0))) + 2924, val(T1(0))), "###,###") & " Coins"
+lPara.Caption = Format$(ReadLong(ReadLong(KO_PTR_CHR, val(T1(0))) + 2924, val(T1(0))), "###,###") & " Coins"
 Label19.Caption = ReadLong(KO_ADR_CHR + KO_OFF_LVL)
 ProgressBar1.Max = ReadLong(KO_ADR_CHR + KO_OFF_MAXEXP) 'Exp
 ProgressBar1.value = ReadLong(KO_ADR_CHR + KO_OFF_EXP)  'Exp
@@ -4727,7 +4742,7 @@ Private Sub tmrFind_Timer()
 Dim Base As Long, mID As Long, targetName As String, i As Long
     tmrFind2.Enabled = True
     For i = 0 To 5
-        Paket "1D0100" & FormatHex(Hex(iID + i), 4)
+        Paket "1D0100" & Formathex(Hex$(iID + i), 4)
         MobSearch(0).Caption = iID + i & "/" & val(txtLid.Text)
         'Pause 0.001
     Next

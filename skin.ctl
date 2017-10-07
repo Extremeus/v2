@@ -195,32 +195,6 @@ Private Declare Function SendMessage Lib "user32" Alias "SendMessageA" (ByVal hw
  
 Private Const HTCAPTION = 2
 Private Const WM_NCLBUTTONDOWN = &HA1
- 
-Private Const WM_SYSCOMMAND = &H112
-
-Private Const LWA_COLORKEY = &H1
-Private Const LWA_ALPHA = &H2
-Private Const GWL_EXSTYLE = (-20)
-Private Const WS_EX_LAYERED = &H80000
-
-Private Declare Function GetWindowLong Lib "user32" Alias "GetWindowLongA" _
-    (ByVal hwnd As Long, ByVal nIndex As Long) As Long
-Private Declare Function SetWindowLong Lib "user32" Alias "SetWindowLongA" _
-    (ByVal hwnd As Long, ByVal nIndex As Long, ByVal dwNewLong As Long) As Long
-Private Declare Function SetLayeredWindowAttributes Lib "user32" _
-    (ByVal hwnd As Long, ByVal crKey As Long, ByVal bAlpha As Byte, ByVal dwFlags As Long) As Long
-    
-    Private Declare Function ShellExecute _
-                            Lib "shell32.dll" _
-                            Alias "ShellExecuteA" ( _
-                            ByVal hwnd As Long, _
-                            ByVal lpOperation As String, _
-                            ByVal lpFile As String, _
-                            ByVal lpParameters As String, _
-                            ByVal lpDirectory As String, _
-                            ByVal nShowCmd As Long) _
-                            As Long
-
 
     Dim lR As Long
     Dim mamin As Integer
