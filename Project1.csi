@@ -6,8 +6,8 @@
 5=#P0#=mb	#P1#=WarriorAtakVur	#P2#=ASKoxp/AMainModular/WarriorAtakVur	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20171006192104	#P7#=0	#P8#=3	.
 6=#P0#=mb	#P1#=Check5_Click	#P2#=ASKoxp/Form1/Check5_Click	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20171006190748	#P7#=0	#P8#=17	.
 7=#P0#=mb	#P1#=Timer6_Timer	#P2#=ASKoxp/Form1/Timer6_Timer	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20171006190341	#P7#=0	#P8#=1	.
-8=#P0#=mb	#P1#=GetDistance	#P2#=ASKoxp/Get/GetDistance	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20171006181259	#P7#=0	#P8#=2	.
-9=#P0#=mb	#P1#=Form_Load	#P2#=ASKoxp/Form1/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20171006181011	#P7#=0	#P8#=18	.
+8=#P0#=mb	#P1#=GetDistance	#P2#=ASKoxp/Get/GetDistance	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20171006181259	#P7#=0	#P8#=-3	.
+9=#P0#=mb	#P1#=Form_Load	#P2#=ASKoxp/Form1/Form_Load	#P3#=	#P4#=	#P5#=MembEventProcPrivate	#P6#=20171006181011	#P7#=0	#P8#=1	.
 10=#P0#=mb	#P1#=Bypass	#P2#=ASKoxp/KoxpModular/Bypass	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20171006175935	#P7#=0	#P8#=2	.
 11=#P0#=mb	#P1#=hexString	#P2#=ASKoxp/AMainModular/hexString	#P3#=	#P4#=	#P5#=MembMethodPrivate	#P6#=20171006175930	#P7#=0	#P8#=11	.
 12=#P0#=mb	#P1#=Bekle2	#P2#=ASKoxp/AMainModular/Bekle2	#P3#=	#P4#=	#P5#=MembMethodPublic	#P6#=20171006175913	#P7#=0	#P8#=51	.

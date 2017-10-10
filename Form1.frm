@@ -4320,6 +4320,10 @@ Private Sub Text9_Change()
 
 End Sub
 
+Private Sub TabControl2_SelectedChanged(ByVal Item As XtremeSuiteControls.ITabControlItem)
+
+End Sub
+
 Private Sub Timer1_Timer()
         
    ' InjectPatch KO_BYPASS_ADR1, "E9D900000090"
