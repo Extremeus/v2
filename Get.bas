@@ -60,19 +60,20 @@ End If
 Wend
 End Function
 Public Sub AyarlarýOkuHarita()
-On Error Resume Next
-If CharZone = 11 Then
+'On Error Resume Next
+'If CharZone = 11 Then
 Dosya = Dir$(App.Path & "\KarusEslant1.ini")
 If Dosya <> "" Then
 For i = 0 To ReadINI("Bot", "lstMobName", App.Path & "\KarusEslant1.ini") ' boss listesi
  lstMobName.AddItem ReadINI("Bot", "lstMobName(" & i & ")", App.Path & "\KarusEslant1.ini")
+
 Next
 For i = 0 To ReadINI("Map", "MapListCount", App.Path & "\KarusEslant1.ini")
      lstMap.AddItem ReadINI("Map", "MapListName(" & i & ")", App.Path & "\KarusEslant1.ini")
      lstMap.ItemData(lstMap.NewIndex) = ReadINI("Map", "MapListID(" & i & ")", App.Path & "\KarusEslant1.ini")
 Next
 End If
-End If
+'End If
 If CharZone = 13 Then
 Dosya = Dir$(App.Path & "\KarusEslant2.ini")
 If Dosya <> "" Then

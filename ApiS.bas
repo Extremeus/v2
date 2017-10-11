@@ -900,7 +900,7 @@ Public Function hexItemID(ByVal Slot As Integer) As String
           'item id adress
         
         Sonuc = ReadLong(ReadLong(offset + &H68)) + ReadLong(ReadLong(offset + &H6C))
-        Hex$ ItemID = Strings.mID(AlignDWORD(Sonuc), 1, 8)
+        hexItemID = Strings.mID(AlignDWORD(Sonuc), 1, 8)
 End Function
 Public Function LongItemID(ByVal Slot As Integer) As Long
         Dim offset, X, offset3, offset4 As Long
