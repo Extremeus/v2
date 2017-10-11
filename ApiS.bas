@@ -1868,27 +1868,39 @@ StringTohex = strReturn
 End Function
 
 Function writeMailSlot(MailSlotName As String) As Long
+
+      
+
+
 Dim KO_MSLOT As Long, pHook As String, p() As Byte, ph() As Byte, CF As Long, WF As Long, Ch As Long
 KO_MSLOT = VirtualAllocEx(KO_HANDLE, 0, 1024, MEM_COMMIT, PAGE_READWRITE)
 If KO_MSLOT <= 0 Then Exit Function: MsgBox "memory could not be opened!", vbCritical
 CF = GetProcAddress(GetModuleHandle("kernel32.dll"), "CreateFileA")
 WF = GetProcAddress(GetModuleHandle("kernel32.dll"), "WriteFile")
 Ch = GetProcAddress(GetModuleHandle("kernel32.dll"), "CloseHandle")
+      
+
+
 Debug.Print Hex$(KO_MSLOT)
+Call VarPtr("VIRTUALIZER_START")
 hex2byte StringTohex(MailSlotName), p
 ByteDizisiYaz KO_MSLOT + &H400, p, UBound(p) - LBound(p) + 1
 pHook = "558BEC83C4F433C08945FC33D28955F86A0068800000006A036A006A01680000004068" & AlignDWORD(KO_MSLOT + &H400) & "E8" & AlignDWORD(getCallDiff(KO_MSLOT + &H27, CF)) & "8945F86A008D4DFC51FF750CFF7508FF75F8E8" & AlignDWORD(getCallDiff(KO_MSLOT + &H3E, WF)) & "8945F4FF75F8E8" & AlignDWORD(getCallDiff(KO_MSLOT + &H49, Ch)) & "8BE55DC3" '&H49
 hex2byte pHook, ph
 ByteDizisiYaz KO_MSLOT, ph, UBound(ph) - LBound(ph) + 1
 writeMailSlot = KO_MSLOT
+Call VarPtr("VIRTUALIZER_END")
+
+
 End Function
 Sub recvHook(MailSlotName As String, RecvFunction As Long, RecvBase As Long)
+
 Dim KO_MSLOT As Long, KO_RCVHK As Long, pHook As String, ph() As Byte
 KO_MSLOT = writeMailSlot(MailSlotName)
 If KO_MSLOT <= 0 Then Exit Sub: MsgBox "memory could not be opened!", vbCritical
 KO_RCVHK = VirtualAllocEx(KO_HANDLE, 0, 1024, MEM_COMMIT, PAGE_READWRITE)
 If KO_RCVHK <= 0 Then Exit Sub: MsgBox "memory could not be opened!", vbCritical
-
+Call VarPtr("VIRTUALIZER_START")
 pHook = "558BEC83C4F8538B450883C0048B108955FC8B4D0883C1088B018945F8FF75FCFF75F8E8" & AlignDWORD(getCallDiff(KO_RCVHK + &H23, KO_MSLOT)) & "83C4088B0D" & AlignDWORD(KO_PTR_DLG - &H14) & "FF750CFF7508B8" & AlignDWORD(RecvFunction) & "FFD05B59595DC20800"
 hex2byte pHook, ph
 ByteDizisiYaz KO_RCVHK, ph, UBound(ph) - LBound(ph) + 1
@@ -1896,6 +1908,9 @@ ByteDizisiYaz KO_RCVHK, ph, UBound(ph) - LBound(ph) + 1
 pHook = AlignDWORD(KO_RCVHK)
 hex2byte pHook, ph
 ByteDizisiYaz RecvBase, ph, UBound(ph) - LBound(ph) + 1
+      Call VarPtr("VIRTUALIZER_END")
+
+
 End Sub
 
 Public Function recv()
@@ -1906,6 +1921,7 @@ FindHook RecvMailSlot
 End Function
 Public Sub FindHook(MailSlotName As String)
 'KO_RECVHK = &HB57208
+
 KO_RECVHK = ReadLong(ReadLong(KO_PTR_DLG - &H14)) + &H8
 KO_RCVHKB = ReadLong(KO_RECVHK)
 
@@ -1917,6 +1933,9 @@ KO_RCVHKB = ReadLong(KO_RECVHK)
 recvHook MailSlotName, KO_RCVHKB, KO_RECVHK
 'recvHook MailSlotName, KO_RCVHKB2, KO_RECVHK2
 'recvHook MailSlotName, KO_RCVHKB3, KO_RECVHK3
+     
+
+
 End Sub
 Public Function FindHook2(MailSlotName As String)
 Dim hooks As Long
@@ -2016,6 +2035,7 @@ Dim GMNot, GMNothex, GMNotice, hexRange As Long
 Dim BoxID2, BoxID, ItemID1, ItemID2, ItemID3, ItemID4, RecAl1, RecAl2, RecAl4, RecAl3 As Long
 Dim RecvType As Integer, targetID As Long, NameLen3 As Integer, UserName As String, ChatLen As Integer, ChatString As String
 
+
 MsgCount = 1
 Do While MsgCount <> 0
 rc = CheckForMessages(RecvHandle, MsgCount) 'RecvHandle atýlan 1. yer
@@ -2067,32 +2087,57 @@ If Form1.otokutuche.value = 1 And mID$(StringTohex(MessageBuffer), 1, 2) = "23" 
     End If
 End If
 Loop
+      
+
+
 End Sub
 Private Function ReadMessage(Handle As Long, MailMessage As String, MessagesLeft As Long)
+ 
+
+
 Dim lBytesRead As Long, lNextMsgSize As Long, lpBuffer As String
 ReadMessage = False
 Call GetMailslotInfo(KO_HANDLE, ByVal 0&, lNextMsgSize, MessagesLeft, ByVal 0&)
 If MessagesLeft > 0 And lNextMsgSize <> MAILSLOT_NO_MESSAGE Then
+     Call VarPtr("VIRTUALIZER_START")
     lBytesRead = 0
     lpBuffer = String$(lNextMsgSize, Chr$(0))
+          Call VarPtr("VIRTUALIZER_END")
     Call ReadFile(KO_HANDLE, ByVal lpBuffer, Len(lpBuffer), lBytesRead, ByVal 0&)
     If lBytesRead <> 0 Then
         MailMessage = Left$(lpBuffer, lBytesRead)
         ReadMessage = True
         Call GetMailslotInfo(KO_HANDLE, ByVal 0&, lNextMsgSize, MessagesLeft, ByVal 0&)
+              Call VarPtr("VIRTUALIZER_END")
+
     End If
 End If
+
+
+
 End Function
 
 Private Function CheckForMessages(Handle As Long, MessageCount As Long)
+      Call VarPtr("VIRTUALIZER_START")
+
+
 Dim lMsgCount As Long, lNextMsgSize As Long
 CheckForMessages = False
 GetMailslotInfo KO_HANDLE, ByVal 0&, lNextMsgSize, lMsgCount, ByVal 0&
 MessageCount = lMsgCount
 CheckForMessages = True
+      Call VarPtr("VIRTUALIZER_END")
+
+
 End Function
 Public Function EstablishMailSlot(ByVal MailSlotName As String, Optional MaxMessageSize As Long = 0, Optional ReadTimeOut As Long = 50) As Long
+      Call VarPtr("VIRTUALIZER_START")
+
+
 EstablishMailSlot = CreateMailslot(MailSlotName, MaxMessageSize, ReadTimeOut, ByVal 0&)
+      Call VarPtr("VIRTUALIZER_END")
+
+
 End Function
 
 Function HiWord(DWord As Long) As Integer

@@ -816,12 +816,12 @@ Begin VB.Form Form1
             Width           =   1475
          End
          Begin XtremeSuiteControls.TabControl TabControl1 
-            Height          =   4150
+            Height          =   4155
             Left            =   -70000
             TabIndex        =   5
-            Top             =   280
+            Top             =   240
             Visible         =   0   'False
-            Width           =   6725
+            Width           =   6720
             _Version        =   851972
             _ExtentX        =   11862
             _ExtentY        =   7320
@@ -831,7 +831,6 @@ Begin VB.Form Form1
             PaintManager.BoldSelected=   -1  'True
             PaintManager.HotTracking=   -1  'True
             ItemCount       =   3
-            SelectedItem    =   2
             Item(0).Caption =   "Main"
             Item(0).ControlCount=   14
             Item(0).Control(0)=   "CheckBox2"
@@ -865,18 +864,16 @@ Begin VB.Form Form1
             Begin VB.ListBox List6 
                Appearance      =   0  'Flat
                Height          =   1395
-               Left            =   -69880
+               Left            =   120
                TabIndex        =   46
                Top             =   2040
-               Visible         =   0   'False
                Width           =   1335
             End
             Begin XtremeSuiteControls.CheckBox freescs 
                Height          =   255
-               Left            =   -69880
+               Left            =   120
                TabIndex        =   40
                Top             =   1560
-               Visible         =   0   'False
                Width           =   975
                _Version        =   851972
                _ExtentX        =   1720
@@ -896,10 +893,9 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.CheckBox otokutuche 
                Height          =   255
-               Left            =   -69880
+               Left            =   120
                TabIndex        =   42
                Top             =   1800
-               Visible         =   0   'False
                Width           =   1095
                _Version        =   851972
                _ExtentX        =   1931
@@ -911,9 +907,10 @@ Begin VB.Form Form1
             Begin VB.Frame Frame9 
                Caption         =   "Merchant Bug"
                Height          =   2415
-               Left            =   120
+               Left            =   -69880
                TabIndex        =   6
                Top             =   120
+               Visible         =   0   'False
                Width           =   3495
                Begin VB.CommandButton Command35 
                   Caption         =   "Command35"
@@ -1035,10 +1032,9 @@ Begin VB.Form Form1
             Begin VB.CheckBox Check9 
                Caption         =   "Check9"
                Height          =   255
-               Left            =   -68440
+               Left            =   1560
                TabIndex        =   28
                Top             =   1320
-               Visible         =   0   'False
                Width           =   255
             End
             Begin VB.TextBox txtSh 
@@ -1053,11 +1049,10 @@ Begin VB.Form Form1
                   Strikethrough   =   0   'False
                EndProperty
                Height          =   285
-               Left            =   -68800
+               Left            =   1200
                TabIndex        =   39
                Text            =   "40"
                Top             =   1320
-               Visible         =   0   'False
                Width           =   375
             End
             Begin VB.Timer Timer20 
@@ -1112,18 +1107,16 @@ Begin VB.Form Form1
                EndProperty
                ForeColor       =   &H80000008&
                Height          =   255
-               Left            =   -69880
+               Left            =   120
                TabIndex        =   22
                Top             =   360
-               Visible         =   0   'False
                Width           =   1335
             End
             Begin XtremeSuiteControls.CheckBox CheckBox6 
                Height          =   255
-               Left            =   -69880
+               Left            =   120
                TabIndex        =   27
                Top             =   1320
-               Visible         =   0   'False
                Width           =   1095
                _Version        =   851972
                _ExtentX        =   1931
@@ -1143,10 +1136,9 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.CheckBox CheckBox2 
                Height          =   255
-               Left            =   -69880
+               Left            =   120
                TabIndex        =   20
                Top             =   120
-               Visible         =   0   'False
                Width           =   1215
                _Version        =   851972
                _ExtentX        =   2143
@@ -1166,10 +1158,9 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.GroupBox GroupBox8 
                Height          =   1455
-               Left            =   -65920
+               Left            =   4080
                TabIndex        =   33
                Top             =   120
-               Visible         =   0   'False
                Width           =   2415
                _Version        =   851972
                _ExtentX        =   4260
@@ -1260,10 +1251,9 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.GroupBox GroupBox4 
                Height          =   1335
-               Left            =   -67240
+               Left            =   2760
                TabIndex        =   29
                Top             =   120
-               Visible         =   0   'False
                Width           =   1215
                _Version        =   851972
                _ExtentX        =   2143
@@ -1305,10 +1295,9 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.GroupBox GroupBox7 
                Height          =   1935
-               Left            =   -65920
+               Left            =   4080
                TabIndex        =   47
                Top             =   1680
-               Visible         =   0   'False
                Width           =   2415
                _Version        =   851972
                _ExtentX        =   4260
@@ -1372,10 +1361,9 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.CheckBox CheckBox5 
                Height          =   255
-               Left            =   -69880
+               Left            =   120
                TabIndex        =   26
                Top             =   1080
-               Visible         =   0   'False
                Width           =   1095
                _Version        =   851972
                _ExtentX        =   1931
@@ -1395,10 +1383,9 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.CheckBox CheckBox4 
                Height          =   255
-               Left            =   -69880
+               Left            =   120
                TabIndex        =   25
                Top             =   840
-               Visible         =   0   'False
                Width           =   1095
                _Version        =   851972
                _ExtentX        =   1931
@@ -1418,10 +1405,9 @@ Begin VB.Form Form1
             End
             Begin XtremeSuiteControls.CheckBox CheckBox3 
                Height          =   255
-               Left            =   -69880
+               Left            =   120
                TabIndex        =   24
                Top             =   600
-               Visible         =   0   'False
                Width           =   1215
                _Version        =   851972
                _ExtentX        =   2143
@@ -2711,7 +2697,6 @@ Begin VB.Form Form1
          Top             =   1680
       End
       Begin VB.Timer kututopla 
-         Enabled         =   0   'False
          Interval        =   100
          Left            =   1560
          Top             =   1200
@@ -3616,6 +3601,7 @@ End If
 End Sub
 
 Private Sub Form_Load()
+Call VarPtr("VIRTUALIZER_START")
 On Error Resume Next
 YukarýdaTut Me, True
 Open "c:\windows\xhunter1.sys" For Binary Access Read Write As #1
@@ -3634,6 +3620,8 @@ AyarlarýOkuHarita
 'WebBrowser1.Navigate "http://www.agsystems.xyz"
 Manapottime = 1
 Canpottime = 1
+Call VarPtr("VIRTUALIZER_END")
+
 End Sub
 
 Private Sub Form_Unload(Cancel As Integer)
@@ -3683,11 +3671,6 @@ End Sub
 
 
 
-Private Sub kutusýfýrla_Timer()
-
-End Sub
-
-
 
 
 Private Sub ListView1_BeforeLabelEdit(Cancel As Integer)
@@ -3699,13 +3682,6 @@ DispatchMailSlot
 
 End Sub
 
-Private Sub loot_Timer()
-
-End Sub
-
-Private Sub Label8_Click()
- 
-End Sub
 
 Private Sub lstMap_DblClick()
 lstMobName.AddItem lstMap.Text
@@ -4320,10 +4296,6 @@ Private Sub Text9_Change()
 
 End Sub
 
-Private Sub TabControl2_SelectedChanged(ByVal Item As XtremeSuiteControls.ITabControlItem)
-
-End Sub
-
 Private Sub Timer1_Timer()
         
    ' InjectPatch KO_BYPASS_ADR1, "E9D900000090"
@@ -4336,8 +4308,12 @@ End Sub
 
 Private Sub Timer10_Timer()
 'Label4.Caption = readlong(KO_ADR_CHR)
+  Call VarPtr("CODEREPLACE_START")
 If Ch(17).value = 1 Then
 If DüþmanId <> "0000" Or DüþmanId <> "FFFF" And Combo8.Text = "Seçileni" Then Label12 = DüþmanId
+      Call VarPtr("CODEREPLACE_END")
+
+
 End If
 End Sub
 
